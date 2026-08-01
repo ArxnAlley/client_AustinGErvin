@@ -1,0 +1,259 @@
+{
+    "sceneMode": "cinematic",
+
+    "palette": {
+        "gold": "#C19E61",
+        "goldDark": "#A98445",
+        "goldLight": "#D0AF77",
+        "goldInk": "#8A6A33",
+        "black": "#0B0B0D",
+        "blackDeep": "#060607",
+        "charcoal": "#18181B",
+        "surface": "#242529",
+        "white": "#F6F5F3",
+        "warm": "#FAF8F5",
+        "warmDeep": "#F0EDE7",
+        "text": "#D2D3D6",
+        "muted": "#8A8C93",
+        "mutedInk": "#6A6C72"
+    },
+
+    "tokens": {
+        "surfaceBase": {
+            "contrastRole": "decorative",
+            "light": "@warm",
+            "dusk": "@charcoal",
+            "dark": "@black"
+        },
+        "surfaceRaised": {
+            "contrastRole": "decorative",
+            "light": "@white",
+            "dusk": "@surface",
+            "dark": "@surface"
+        },
+        "surfaceSunken": {
+            "contrastRole": "decorative",
+            "light": "@warm",
+            "dusk": "@black",
+            "dark": "@blackDeep"
+        },
+        "textPrimary": {
+            "contrastRole": "text",
+            "light": "@black",
+            "dusk": "@white",
+            "dark": "@white"
+        },
+        "textSecondary": {
+            "contrastRole": "text",
+            "light": "@mutedInk",
+            "dusk": "@text",
+            "dark": "@text"
+        },
+        "textMuted": {
+            "contrastRole": "text",
+            "light": "@mutedInk",
+            "dusk": "@text",
+            "dark": "@text"
+        },
+        "textLink": {
+            "contrastRole": "text",
+            "light": "@goldInk",
+            "dusk": "@gold",
+            "dark": "@gold"
+        },
+        "textOnAccent": {
+            "contrastRole": "decorative",
+            "light": "@black",
+            "dusk": "@black",
+            "dark": "@black"
+        },
+        "accentPrimary": {
+            "contrastRole": "decorative",
+            "light": "@gold",
+            "dusk": "@gold",
+            "dark": "@gold"
+        },
+        "accentStroke": {
+            "contrastRole": "nonText",
+            "light": "@goldDark",
+            "dusk": "@gold",
+            "dark": "@gold"
+        },
+        "borderSubtle": {
+            "contrastRole": "decorative",
+            "light": "@black/0.10",
+            "dusk": "@white/0.10",
+            "dark": "@white/0.10"
+        },
+        "borderInteractive": {
+            "contrastRole": "nonText",
+            "light": "@black/0.52",
+            "dusk": "@white/0.44",
+            "dark": {
+                "default": "@white/0.44",
+                "surfaceSunken": "@white/0.48"
+            }
+        },
+        "focusRing": {
+            "contrastRole": "nonText",
+            "light": "@goldDark",
+            "dusk": "@gold",
+            "dark": "@gold"
+        }
+    },
+
+    "typography": {
+        "families": {
+            "display": {
+                "name": "Cormorant Garamond",
+                "fallback": "Georgia, 'Times New Roman', serif",
+                "files": [
+                    { "path": "assets/fonts/cormorantGaramond-500-subset.woff2", "weight": 500, "style": "normal", "preload": false },
+                    { "path": "assets/fonts/cormorantGaramond-600-subset.woff2", "weight": 600, "style": "normal", "preload": true }
+                ],
+                "metricOverrides": {
+                    "ascentOverride": "95%",
+                    "descentOverride": "25%",
+                    "lineGapOverride": "0%",
+                    "sizeAdjust": "100%"
+                }
+            },
+            "body": {
+                "name": "Inter",
+                "fallback": "system-ui, -apple-system, 'Segoe UI', sans-serif",
+                "files": [
+                    { "path": "assets/fonts/inter-variable-subset.woff2", "weight": [400, 600], "style": "normal", "preload": true }
+                ],
+                "metricOverrides": {
+                    "ascentOverride": "90%",
+                    "descentOverride": "22%",
+                    "lineGapOverride": "0%",
+                    "sizeAdjust": "100%"
+                }
+            }
+        },
+        "scale": {
+            "displayXl":      { "role": "display", "min": 46, "max": 116, "preferred": "1.536rem + 5.714vw", "lineHeight": 1.02 },
+            "displayLg":      { "role": "display", "min": 34, "max": 72,  "preferred": "1.398rem + 3.102vw", "lineHeight": 1.06 },
+            "displayMd":      { "role": "display", "min": 26, "max": 40,  "preferred": "1.357rem + 1.143vw", "lineHeight": 1.12 },
+            "processNumeral": { "role": "display", "min": 32, "max": 67,  "preferred": "1.230rem + 3.286vw", "lineHeight": 1.00 },
+            "headingSm":      { "role": "heading", "min": 20, "max": 24,  "preferred": "1.173rem + 0.327vw", "lineHeight": 1.25 },
+            "bodyLg":         { "role": "body",    "min": 18, "max": 21,  "preferred": "1.068rem + 0.245vw", "lineHeight": 1.55 },
+            "body":           { "role": "body",    "min": 17, "max": 18,  "stepAt": 1024,                    "lineHeight": 1.65 },
+            "bodySm":         { "role": "body",    "min": 15, "max": 16,  "preferred": "0.918rem + 0.082vw", "lineHeight": 1.60 },
+            "caption":        { "role": "caption", "min": 14, "max": 15,  "preferred": "0.856rem + 0.082vw", "lineHeight": 1.40 }
+        },
+
+        "elementDefaults": {
+            "body": "body",
+            "h1": "displayXl",
+            "h2": "displayLg",
+            "h3": "displayMd",
+            "heading": "headingSm",
+            "caption": "caption"
+        },
+
+        "tracking": {
+            "display": "-0.02em",
+            "body": "0",
+            "caption": "0.14em"
+        },
+
+        "measure": {
+            "display": "14ch",
+            "heading": "18ch",
+            "body": "68ch"
+        }
+    },
+
+    "spacing": {
+        "scale": {
+            "space1": 4,
+            "space2": 8,
+            "space3": 12,
+            "space4": 16,
+            "space5": 24,
+            "space6": 32,
+            "space7": 40,
+            "space8": 48,
+            "space9": 64,
+            "space10": 80,
+            "space11": 96,
+            "space12": 128,
+            "space13": 160,
+            "space14": 200
+        },
+
+        "sectionPaddingBlock": "clamp(4.5rem, 2rem + 9vw, 12.5rem)",
+
+        "sectionPaddingBlockTight": "clamp(3rem, 1.5rem + 5.5vw, 7.5rem)"
+    },
+
+    "layout": {
+        "breakpoints": {
+            "sm": 480,
+            "md": 768,
+            "lg": 1024,
+            "xl": 1200,
+            "xxl": 1440
+        },
+
+        "containers": {
+            "max": 1240,
+            "wide": 1440,
+            "narrow": 760
+        },
+
+        "gutter": "clamp(1.25rem, 0.5rem + 3vw, 4rem)",
+
+        "hairline": "1px",
+
+        "headerClearance": 96,
+
+        "grid": [
+            { "at": "@base", "columns": 4,  "gap": "@space5" },
+            { "at": "@md",   "columns": 8,  "gap": "@space6" },
+            { "at": "@lg",   "columns": 12, "gap": "@space6" }
+        ]
+    },
+
+    "motion": {
+        "durations": {
+            "respond": 200,
+            "exit": 220,
+            "reveal": 620,
+            "settle": 700,
+            "descend": 900
+        },
+        "easings": {
+            "entrance": "cubic-bezier(0.16, 1, 0.30, 1)",
+            "exit": "cubic-bezier(0.40, 0.00, 1.00, 1.00)",
+            "respond": "cubic-bezier(0.33, 0.00, 0.33, 1.00)",
+            "environmental": "cubic-bezier(0.45, 0.05, 0.55, 0.95)"
+        },
+        "stagger": 60,
+        "staggerMaxItems": 6,
+        "reducedMotionSceneFloor": 200
+    },
+
+    "zIndex": {
+        "backdrop": -1,
+        "base": 0,
+        "raised": 10,
+        "header": 100,
+        "megaPanel": 110,
+        "overlay": 200,
+        "skipLink": 300
+    },
+
+    "radii": {
+        "none": "0",
+        "button": "2px",
+        "card": "2px",
+        "image": "0"
+    },
+
+    "navCollapseBreakpoint": "@xl",
+
+    "navSafetyMargin": 64
+}

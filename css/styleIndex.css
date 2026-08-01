@@ -1,0 +1,1797 @@
+/* ============================================================
+   FRAMEWORK FILE — COPIED, NOT AUTHORED HERE.
+
+   Edit it in the framework, then regenerate. A local edit is
+   overwritten on the next run and does not reach any other site.
+============================================================ */
+
+/* ============================================================
+   HOMEPAGE COMPOSITIONS — LAYER 4
+
+   The fourteen sections, in the order they appear.
+
+   Every section declares its own scene through `data-scene`, so
+   the descent from daylight to focus is present with the whole
+   script layer deleted. M4 adds the fixed backdrop that
+   crossfades between them; this file is what makes the page
+   correct without it.
+
+   Geometry here is Phase 2's, and the figures it depends on are
+   derived rather than transcribed — `bin/measureDesignSystem.js`
+   is the authority for any number in this file.
+============================================================ */
+
+
+/* ============================================================
+   SCENE BACKDROP · M4
+
+   One fixed, full-viewport surface that the whole page sits on,
+   built from three stacked layers — one per scene — that change
+   only their opacity. Nothing moves: the environment changes
+   value, not position, which is what makes the descent
+   intrinsically vestibular-safe rather than accidentally so.
+
+   The layers accumulate rather than swap. Light is always
+   opaque at the bottom, dusk covers it, dark covers both, so
+   the backdrop is 100% opaque at every instant of a crossfade.
+   Two layers crossfading against each other would sit at 75%
+   coverage halfway through and let the canvas show, which is
+   the one moment the page would flash.
+
+   Sections keep painting their own scene until the observer
+   announces itself on the root element. That is the no-JS
+   floor: with this stylesheet's `[data-sceneMode]` rule never
+   matching, the descent is still correct, because each section
+   carries its own `data-scene`. See project_memory.md §9.10.
+============================================================ */
+
+.sceneBackdrop
+{
+
+    position: fixed;
+
+    z-index: var(--zBackdrop);
+
+    inset: 0;
+
+    pointer-events: none;
+
+}
+
+
+.sceneLayer
+{
+
+    position: absolute;
+
+    inset: 0;
+
+    background-color: var(--surfaceBase);
+
+    opacity: 0;
+
+    transition: opacity var(--durationDescend) var(--easeEnvironmental);
+
+}
+
+
+/* The floor. Never fades, so the backdrop is never transparent. */
+
+.sceneLayer[data-scene='light']
+{
+
+    opacity: 1;
+
+}
+
+
+body[data-scene='dusk'] .sceneLayer[data-scene='dusk'],
+body[data-scene='dark'] .sceneLayer[data-scene='dusk'],
+body[data-scene='dark'] .sceneLayer[data-scene='dark']
+{
+
+    opacity: 1;
+
+}
+
+
+/* Once the backdrop is doing the painting, the sections stop.
+   A section that declares its own surface — the sunken final
+   CTA — keeps it, because a sunken surface is a departure from
+   the base rather than a restatement of it. */
+
+[data-scene-mode='observed'] main > section[data-scene]:not([data-surface])
+{
+
+    background-color: transparent;
+
+}
+
+
+/* ============================================================
+   SITE HEADER · S01
+============================================================ */
+
+.siteHeader
+{
+
+    position: sticky;
+
+    z-index: var(--zHeader);
+
+    inset-block-start: 0;
+
+    background-color: var(--surfaceBase);
+
+    border-block-end: var(--borderHairline) solid var(--borderSubtle);
+
+}
+
+
+/* The header inherits the body's scene, so it crosses from light
+   to dark with the backdrop rather than staying behind as a lit
+   bar over a dark page. It has to be opaque — content scrolls
+   beneath it — so it cannot simply let the backdrop through, and
+   it therefore carries the only colour transition on the page
+   that is not an opacity.
+
+   The elements are enumerated rather than swept with a
+   descendant wildcard: the consultation button owns a 200ms
+   response transition, and a wildcard here would quietly
+   stretch it to the scene duration. Every selector below names
+   something whose colour is scene-dependent and nothing whose
+   colour is state-dependent.
+
+   Text and surface change together. Fading the surface while
+   the text snaps would leave near-white type on a near-white
+   bar for the length of the descent. */
+
+.siteHeader,
+.siteHeader .logoLockup,
+.siteHeader .logoMark,
+.siteHeader .primaryNavLink,
+.siteHeader .headerPhone,
+.siteHeader .menuToggleBar
+{
+
+    transition:
+        color var(--durationDescend) var(--easeEnvironmental),
+        background-color var(--durationDescend) var(--easeEnvironmental),
+        border-color var(--durationDescend) var(--easeEnvironmental);
+
+}
+
+
+/* The scene floor, applied the way base.css applies it. Its
+   `[data-motion="scene"]` exemption reaches the element that
+   carries the attribute and its two pseudo-elements, not a
+   subtree, and tagging ten nodes in the markup to say one thing
+   about the header is worse than restating the floor once
+   here. ACC-007: reduced motion holds at 200ms, never zero. */
+
+@media (prefers-reduced-motion: reduce)
+{
+
+    .siteHeader,
+    .siteHeader .logoLockup,
+    .siteHeader .logoMark,
+    .siteHeader .primaryNavLink,
+    .siteHeader .headerPhone,
+    .siteHeader .menuToggleBar
+    {
+
+        transition-duration: var(--durationSceneReduced) !important;
+
+    }
+
+}
+
+
+.siteHeaderInner
+{
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: var(--space5);
+
+    min-height: var(--headerClearance);
+
+}
+
+
+.headerActions
+{
+
+    display: flex;
+
+    align-items: center;
+
+    gap: var(--space5);
+
+}
+
+
+.headerPhone
+{
+
+    color: var(--textPrimary);
+
+    font-size: var(--fontBodySm);
+
+    font-weight: 500;
+
+    text-decoration: none;
+
+}
+
+
+.headerPhone:hover
+{
+
+    color: var(--textLink);
+
+}
+
+
+/* ── Navigation · S02 ──
+
+   Collapsed below the firm's declared nav breakpoint. The width
+   at which it collapses is a measurement, not a preference:
+   RES-002 derives it from the lockup, the labels, and the CTA. */
+
+.primaryNav
+{
+
+    display: none;
+
+}
+
+
+.primaryNavList
+{
+
+    display: flex;
+
+    align-items: center;
+
+    gap: var(--space6);
+
+    margin: 0;
+
+    padding: 0;
+
+    list-style: none;
+
+}
+
+
+.primaryNavLink
+{
+
+    color: var(--textPrimary);
+
+    font-family: var(--fontFamilyBody);
+
+    font-size: var(--fontBodySm);
+
+    font-weight: 500;
+
+    letter-spacing: 0.01em;
+
+    text-decoration: none;
+
+}
+
+
+.primaryNavLink:hover
+{
+
+    color: var(--textLink);
+
+}
+
+
+.headerCta
+{
+
+    display: none;
+
+}
+
+
+.menuToggle
+{
+
+    display: inline-flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 6px;
+
+    width: 48px;
+
+    height: 48px;
+
+}
+
+
+.menuToggleBar
+{
+
+    width: 22px;
+
+    height: var(--borderHairline);
+
+    background-color: var(--textPrimary);
+
+}
+
+
+@media (min-width: 1200px)
+{
+
+    .primaryNav
+    {
+
+        display: block;
+
+    }
+
+    /* inline-flex, not block — the button centres its own label. */
+    .headerCta
+    {
+
+        display: inline-flex;
+
+    }
+
+    .menuToggle
+    {
+
+        display: none;
+
+    }
+
+}
+
+
+/* ── Mobile menu ── */
+
+.mobileMenu
+{
+
+    position: fixed;
+
+    z-index: var(--zOverlay);
+
+    inset: 0;
+
+    overflow-y: auto;
+
+    background-color: var(--surfaceBase);
+
+}
+
+
+.mobileMenuInner
+{
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: var(--space8);
+
+    padding-block: var(--space8);
+
+}
+
+
+.mobileMenuHead
+{
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+}
+
+
+.menuClose
+{
+
+    min-height: 48px;
+
+    padding-inline: var(--space4);
+
+    color: var(--textPrimary);
+
+    font-size: var(--fontBodySm);
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+}
+
+
+.mobileMenuList
+{
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: var(--space5);
+
+    margin: 0;
+
+    padding: 0;
+
+    list-style: none;
+
+}
+
+
+.mobileMenuLink
+{
+
+    display: block;
+
+    min-height: 48px;
+
+    color: var(--textPrimary);
+
+    font-family: var(--fontFamilyDisplay);
+
+    font-size: var(--fontDisplayMd);
+
+    line-height: var(--lineHeightDisplayMd);
+
+    text-decoration: none;
+
+}
+
+
+/* ============================================================
+   HERO · S04
+============================================================ */
+
+.heroSection
+{
+
+    padding-block-start: var(--space12);
+
+    padding-block-end: var(--space12);
+
+    background-color: var(--surfaceBase);
+
+}
+
+
+.heroGrid
+{
+
+    align-items: center;
+
+    row-gap: var(--space10);
+
+}
+
+
+.heroType
+{
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: var(--space5);
+
+}
+
+
+/* The H1 caps at 104px, below `--fontDisplayXl`'s 116px maximum.
+   The cap belongs to this headline and not to the token, because
+   the token is correct for every other display heading: at 116px
+   the longest art-directed line overruns the seven-column type
+   column, and at 104px it fits at every viewport from 1200 up.
+
+   Frozen decision A8. Do not raise it — the ceiling is what
+   keeps the three lines in §A9 at three lines. */
+
+.heroHeadline
+{
+
+    margin: 0;
+
+    max-width: var(--measureDisplay);
+
+    font-size: min(var(--fontDisplayXl), 104px);
+
+}
+
+
+/* The headline breaks on exactly three lines at every width.
+   The shape of this headline is a brand constant, which is why
+   the breaks are explicit spans and never automatic wrapping
+   (TYP-009). */
+.headlineLine
+{
+
+    display: block;
+
+}
+
+
+.heroLede
+{
+
+    margin: 0;
+
+    max-width: 42ch;
+
+    color: var(--textSecondary);
+
+    font-size: var(--fontBodyLg);
+
+    line-height: var(--lineHeightBodyLg);
+
+}
+
+
+.heroType .ctaGroup
+{
+
+    margin-block-start: var(--space6);
+
+}
+
+
+@media (min-width: 1200px)
+{
+
+    .heroSection
+    {
+
+        padding-block-start: var(--space13);
+
+    }
+
+    .heroType
+    {
+
+        grid-column: span 7;
+
+    }
+
+    .heroPortrait
+    {
+
+        grid-column: span 5;
+
+    }
+
+}
+
+
+/* ============================================================
+   TRUST STRIP · S05
+============================================================ */
+
+.trustStrip
+{
+
+    padding-block: var(--space8);
+
+    background-color: var(--surfaceBase);
+
+    border-block-start: var(--borderHairline) solid var(--borderSubtle);
+
+    border-block-end: var(--borderHairline) solid var(--borderSubtle);
+
+}
+
+
+.trustList
+{
+
+    margin: 0;
+
+    padding: 0;
+
+    list-style: none;
+
+    row-gap: var(--space6);
+
+}
+
+
+.trustItem
+{
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: var(--space1);
+
+}
+
+
+@media (min-width: 768px)
+{
+
+    .trustList > .trustItem
+    {
+
+        grid-column: span 2;
+
+    }
+
+}
+
+
+@media (min-width: 1024px)
+{
+
+    .trustList > .trustItem
+    {
+
+        grid-column: span 3;
+
+    }
+
+}
+
+
+.trustItemValue
+{
+
+    color: var(--textPrimary);
+
+    font-family: var(--fontFamilyBody);
+
+    font-size: var(--fontBodySm);
+
+    font-weight: 600;
+
+}
+
+
+/* Informational captions use the secondary token, never the
+   muted one. TYP-004 — a caption that carries a fact must not be
+   the lightest thing on the page. */
+.trustItemLabel
+{
+
+    color: var(--textSecondary);
+
+    font-size: var(--fontCaption);
+
+    line-height: var(--lineHeightCaption);
+
+}
+
+
+/* ============================================================
+   POSITIONING STATEMENT · S06
+
+   Owns the light → dusk transition. One of only two sections
+   permitted to carry a scene trigger, chosen because it is
+   type-sparse: the least reading interrupted by the change.
+============================================================ */
+
+.positioningSection
+{
+
+    padding-block: var(--sectionPaddingBlock);
+
+    background-color: var(--surfaceBase);
+
+    text-align: center;
+
+}
+
+
+.positioningSection .eyebrow
+{
+
+    margin-block-end: var(--space6);
+
+}
+
+
+.statementBlock
+{
+
+    max-width: 14ch;
+
+    margin-inline: auto;
+
+    margin-block: 0;
+
+}
+
+
+.statementLine
+{
+
+    display: block;
+
+}
+
+
+.positioningParagraph
+{
+
+    max-width: 52ch;
+
+    margin-inline: auto;
+
+    margin-block-start: var(--space8);
+
+    color: var(--textSecondary);
+
+    font-size: var(--fontBodyLg);
+
+    line-height: var(--lineHeightBodyLg);
+
+    text-align: start;
+
+}
+
+
+@media (min-width: 768px)
+{
+
+    .positioningParagraph
+    {
+
+        text-align: center;
+
+    }
+
+}
+
+
+/* ============================================================
+   ATTORNEY · S07
+============================================================ */
+
+.attorneySection
+{
+
+    padding-block: var(--sectionPaddingBlock);
+
+    background-color: var(--surfaceBase);
+
+}
+
+
+.attorneyGrid
+{
+
+    row-gap: var(--space9);
+
+}
+
+
+.attorneyBody
+{
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: flex-start;
+
+    gap: var(--space5);
+
+}
+
+
+.attorneyName
+{
+
+    margin: 0;
+
+}
+
+
+.attorneyLede
+{
+
+    margin: 0;
+
+    color: var(--textPrimary);
+
+    font-size: var(--fontBodyLg);
+
+    line-height: var(--lineHeightBodyLg);
+
+}
+
+
+.attorneyProse
+{
+
+    margin: 0;
+
+    color: var(--textSecondary);
+
+}
+
+
+.credentialList
+{
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: var(--space3);
+
+    width: 100%;
+
+    margin: 0;
+
+}
+
+
+.credentialRow
+{
+
+    display: flex;
+
+    flex-wrap: wrap;
+
+    gap: var(--space4);
+
+    padding-block: var(--space3);
+
+    border-block-end: var(--borderHairline) solid var(--borderSubtle);
+
+}
+
+
+.credentialLabel
+{
+
+    flex: 0 0 12rem;
+
+    color: var(--textSecondary);
+
+    font-size: var(--fontCaption);
+
+    letter-spacing: var(--trackingCaption);
+
+    text-transform: uppercase;
+
+}
+
+
+.credentialValue
+{
+
+    margin: 0;
+
+    color: var(--textPrimary);
+
+    font-size: var(--fontBodySm);
+
+}
+
+
+@media (min-width: 1024px)
+{
+
+    .attorneyPortrait
+    {
+
+        grid-column: span 5;
+
+    }
+
+    .attorneyBody
+    {
+
+        grid-column: span 7;
+
+    }
+
+}
+
+
+/* ============================================================
+   PROCESS · S08
+
+   Non-optional. This is the section that turns the firm's
+   documented reputational weakness into an on-site promise, and
+   no competitor identified in the research does it.
+============================================================ */
+
+.processSection
+{
+
+    padding-block: var(--sectionPaddingBlock);
+
+    background-color: var(--surfaceBase);
+
+}
+
+
+.processList
+{
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: var(--space8);
+
+    margin-block: var(--space9) 0;
+
+    padding: 0;
+
+    list-style: none;
+
+}
+
+
+.processStep
+{
+
+    display: flex;
+
+    gap: var(--space5);
+
+    padding-block-end: var(--space8);
+
+    border-block-end: var(--borderHairline) solid var(--borderSubtle);
+
+}
+
+
+/* Weight 500, not 600. The numerals share a size with the
+   section heading at desktop; dropping them a weight keeps the
+   heading dominant and stops the numbers competing with the
+   content they label. */
+.processNumeral
+{
+
+    flex: 0 0 auto;
+
+    min-width: 2.5rem;
+
+    color: var(--accentPrimary);
+
+    font-family: var(--fontFamilyDisplay);
+
+    font-size: var(--fontProcessNumeral);
+
+    font-weight: 500;
+
+    line-height: var(--lineHeightProcessNumeral);
+
+}
+
+
+.processStepBody
+{
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: var(--space3);
+
+}
+
+
+/* Inter, not the display face. A step heading is scanned by
+   someone deciding whether to call, and a grotesque scans
+   faster than a high-contrast serif. */
+.processStepHeading
+{
+
+    margin: 0;
+
+    font-family: var(--fontFamilyBody);
+
+    font-size: var(--fontHeadingSm);
+
+    font-weight: 600;
+
+    letter-spacing: 0;
+
+    line-height: var(--lineHeightHeadingSm);
+
+}
+
+
+.processStepText
+{
+
+    margin: 0;
+
+    max-width: 54ch;
+
+    color: var(--textSecondary);
+
+}
+
+
+@media (min-width: 1024px)
+{
+
+    .processList
+    {
+
+        display: grid;
+
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+
+        gap: var(--space8);
+
+    }
+
+    .processStep
+    {
+
+        flex-direction: column;
+
+    }
+
+}
+
+
+/* ============================================================
+   REVIEWS · S09
+
+   Owns the dusk → dark transition.
+============================================================ */
+
+.reviewsSection
+{
+
+    padding-block: var(--sectionPaddingBlock);
+
+    background-color: var(--surfaceBase);
+
+}
+
+
+.reviewList
+{
+
+    margin-block: var(--space9) 0;
+
+    padding: 0;
+
+    list-style: none;
+
+}
+
+
+.reviewCard
+{
+
+    padding: var(--space6);
+
+    border: var(--borderHairline) solid var(--borderSubtle);
+
+    border-radius: var(--radiusCard);
+
+}
+
+
+@media (min-width: 1024px)
+{
+
+    .reviewList > .reviewCard
+    {
+
+        grid-column: span 4;
+
+    }
+
+}
+
+
+.reviewsSection .verificationBlock
+{
+
+    margin-block-start: var(--space9);
+
+}
+
+
+/* ============================================================
+   PRACTICE AREAS · S10
+============================================================ */
+
+.practiceSection
+{
+
+    padding-block: var(--sectionPaddingBlock);
+
+    background-color: var(--surfaceBase);
+
+}
+
+
+.sectionHeading
+{
+
+    margin-block: var(--space5) 0;
+
+}
+
+
+.sectionLede
+{
+
+    margin-block: var(--space5) 0;
+
+    max-width: 58ch;
+
+    color: var(--textSecondary);
+
+    font-size: var(--fontBodyLg);
+
+    line-height: var(--lineHeightBodyLg);
+
+}
+
+
+.practiceGrid
+{
+
+    margin-block: var(--space9) 0;
+
+    padding: 0;
+
+    list-style: none;
+
+    row-gap: var(--gridGap);
+
+}
+
+
+/* A card is a 76px list row on mobile, not a shrunken card.
+   A list row scans measurably faster under stress, which is the
+   condition most of this audience arrives in (frozen A11). */
+.practiceCard
+{
+
+    position: relative;
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: center;
+
+    gap: var(--space2);
+
+    min-height: 76px;
+
+    padding-block: var(--space4);
+
+    border-block-end: var(--borderHairline) solid var(--borderSubtle);
+
+}
+
+
+.practiceCardTitle
+{
+
+    margin: 0;
+
+    font-family: var(--fontFamilyBody);
+
+    font-size: var(--fontHeadingSm);
+
+    font-weight: 600;
+
+    letter-spacing: 0;
+
+}
+
+
+/* A stretched link, not a wrapping anchor: one link, one
+   accessible name, no nested-link trap. The card carries
+   position: relative for exactly this. */
+.practiceCardLink
+{
+
+    color: var(--textPrimary);
+
+    text-decoration: none;
+
+}
+
+
+.practiceCardLink::after
+{
+
+    content: '';
+
+    position: absolute;
+
+    inset: 0;
+
+}
+
+
+.practiceCardBlurb
+{
+
+    display: none;
+
+    margin: 0;
+
+    color: var(--textSecondary);
+
+    font-size: var(--fontBodySm);
+
+    line-height: var(--lineHeightBodySm);
+
+}
+
+
+@media (min-width: 768px)
+{
+
+    .practiceGrid > .practiceCard
+    {
+
+        grid-column: span 4;
+
+        min-height: 0;
+
+        padding: var(--space6);
+
+        border: var(--borderHairline) solid var(--borderSubtle);
+
+        border-radius: var(--radiusCard);
+
+        transition: border-color var(--durationRespond) var(--easeRespond);
+
+    }
+
+    .practiceCard:hover
+    {
+
+        border-color: var(--borderInteractive);
+
+    }
+
+    .practiceCardBlurb
+    {
+
+        display: block;
+
+    }
+
+}
+
+
+@media (min-width: 1024px)
+{
+
+    .practiceGrid > .practiceCard
+    {
+
+        grid-column: span 3;
+
+    }
+
+}
+
+
+/* ============================================================
+   SERVICE AREAS · S11
+============================================================ */
+
+.serviceAreaSection
+{
+
+    padding-block: var(--sectionPaddingBlock);
+
+    background-color: var(--surfaceBase);
+
+}
+
+
+.serviceAreaGrid
+{
+
+    row-gap: var(--space9);
+
+}
+
+
+.sectionNote
+{
+
+    margin-block: var(--space5) 0;
+
+    max-width: 52ch;
+
+    color: var(--textSecondary);
+
+    font-size: var(--fontBodySm);
+
+    line-height: var(--lineHeightBodySm);
+
+}
+
+
+.serviceAreaLists
+{
+
+    display: flex;
+
+    flex-wrap: wrap;
+
+    gap: var(--space9);
+
+}
+
+
+.serviceAreaGroup
+{
+
+    flex: 1 1 12rem;
+
+}
+
+
+.countyList
+{
+
+    margin-block: var(--space5) 0;
+
+    padding: 0;
+
+    list-style: none;
+
+}
+
+
+.countyItem
+{
+
+    display: flex;
+
+    flex-wrap: wrap;
+
+    justify-content: space-between;
+
+    gap: var(--space3);
+
+    padding-block: var(--space3);
+
+    border-block-end: var(--borderHairline) solid var(--borderSubtle);
+
+    color: var(--textPrimary);
+
+    font-size: var(--fontBodySm);
+
+}
+
+
+.countySeat
+{
+
+    color: var(--textSecondary);
+
+    font-size: var(--fontCaption);
+
+}
+
+
+@media (min-width: 1024px)
+{
+
+    .serviceAreaIntro
+    {
+
+        grid-column: span 5;
+
+    }
+
+    .serviceAreaLists
+    {
+
+        grid-column: span 7;
+
+    }
+
+}
+
+
+/* ============================================================
+   FAQ · S12
+
+   Native <details>. Correct keyboard and screen-reader
+   behaviour at zero cost, and it survives the entire script
+   layer being deleted.
+============================================================ */
+
+.faqSection
+{
+
+    padding-block: var(--sectionPaddingBlock);
+
+    background-color: var(--surfaceBase);
+
+}
+
+
+.faqList
+{
+
+    margin-block: var(--space9) var(--space8);
+
+}
+
+
+.faqItem
+{
+
+    border-block-end: var(--borderHairline) solid var(--borderSubtle);
+
+}
+
+
+.faqQuestion
+{
+
+    padding-block: var(--space5);
+
+    color: var(--textPrimary);
+
+    font-family: var(--fontFamilyBody);
+
+    font-size: var(--fontHeadingSm);
+
+    font-weight: 600;
+
+    line-height: var(--lineHeightHeadingSm);
+
+    cursor: pointer;
+
+    list-style: none;
+
+}
+
+
+.faqQuestion::-webkit-details-marker
+{
+
+    display: none;
+
+}
+
+
+.faqQuestion::after
+{
+
+    content: '+';
+
+    float: inline-end;
+
+    margin-inline-start: var(--space4);
+
+    color: var(--accentPrimary);
+
+}
+
+
+.faqItem[open] .faqQuestion::after
+{
+
+    content: '–';
+
+}
+
+
+.faqAnswer
+{
+
+    padding-block-end: var(--space6);
+
+    color: var(--textSecondary);
+
+}
+
+
+.faqAnswer p
+{
+
+    margin: 0;
+
+}
+
+
+/* ============================================================
+   FINAL CTA · S13
+============================================================ */
+
+.finalCtaSection
+{
+
+    padding-block: var(--sectionPaddingBlock);
+
+    text-align: center;
+
+}
+
+
+.finalCtaHeading
+{
+
+    max-width: 16ch;
+
+    margin-inline: auto;
+
+    margin-block: 0;
+
+}
+
+
+.finalCtaLede
+{
+
+    max-width: 46ch;
+
+    margin-inline: auto;
+
+    margin-block-start: var(--space6);
+
+    color: var(--textSecondary);
+
+    font-size: var(--fontBodyLg);
+
+    line-height: var(--lineHeightBodyLg);
+
+}
+
+
+.finalCtaSection .ctaGroup
+{
+
+    margin-block-start: var(--space8);
+
+}
+
+
+.finalCtaNote
+{
+
+    max-width: 54ch;
+
+    margin-inline: auto;
+
+    margin-block-start: var(--space8);
+
+    color: var(--textSecondary);
+
+    font-size: var(--fontCaption);
+
+    line-height: var(--lineHeightCaption);
+
+    text-align: start;
+
+}
+
+
+/* ============================================================
+   SITE FOOTER · S14
+============================================================ */
+
+.siteFooter
+{
+
+    padding-block: var(--space10) var(--space8);
+
+    background-color: var(--surfaceBase);
+
+    border-block-start: var(--borderHairline) solid var(--borderSubtle);
+
+}
+
+
+.siteFooterGrid
+{
+
+    row-gap: var(--space9);
+
+}
+
+
+.siteFooterIdentity
+{
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: flex-start;
+
+    gap: var(--space4);
+
+}
+
+
+.siteFooterName
+{
+
+    margin: 0;
+
+    color: var(--textPrimary);
+
+    font-family: var(--fontFamilyDisplay);
+
+    font-size: var(--fontHeadingSm);
+
+}
+
+
+.siteFooterAddress
+{
+
+    color: var(--textSecondary);
+
+    font-size: var(--fontBodySm);
+
+    font-style: normal;
+
+    line-height: var(--lineHeightBodySm);
+
+}
+
+
+.siteFooterPhone
+{
+
+    color: var(--textPrimary);
+
+    font-size: var(--fontBodySm);
+
+    font-weight: 600;
+
+    text-decoration: none;
+
+}
+
+
+.siteFooterList
+{
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: var(--space3);
+
+    margin-block: var(--space5) 0;
+
+    padding: 0;
+
+    list-style: none;
+
+}
+
+
+.siteFooterList a
+{
+
+    color: var(--textSecondary);
+
+    font-size: var(--fontBodySm);
+
+    text-decoration: none;
+
+}
+
+
+.siteFooterList a:hover
+{
+
+    color: var(--textLink);
+
+}
+
+
+.siteFooterLegal
+{
+
+    margin-block-start: var(--space9);
+
+    padding-block-start: var(--space6);
+
+    border-block-start: var(--borderHairline) solid var(--borderSubtle);
+
+}
+
+
+.disclaimerText
+{
+
+    margin: 0;
+
+    max-width: 72ch;
+
+    color: var(--textSecondary);
+
+    font-size: var(--fontCaption);
+
+    line-height: var(--lineHeightCaption);
+
+}
+
+
+.siteFooterCopyright
+{
+
+    margin-block-start: var(--space5);
+
+    color: var(--textMuted);
+
+    font-size: var(--fontCaption);
+
+}
+
+
+@media (min-width: 768px)
+{
+
+    .siteFooterGrid > .siteFooterIdentity
+    {
+
+        grid-column: span 8;
+
+    }
+
+    .siteFooterGrid > .siteFooterColumn
+    {
+
+        grid-column: span 4;
+
+    }
+
+}
+
+
+@media (min-width: 1024px)
+{
+
+    .siteFooterGrid > .siteFooterIdentity
+    {
+
+        grid-column: span 3;
+
+    }
+
+    .siteFooterGrid > .siteFooterColumn
+    {
+
+        grid-column: span 3;
+
+    }
+
+}

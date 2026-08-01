@@ -1,0 +1,22 @@
+{
+    "legalName": "Austin G. Ervin, Attorney at Law, LLC",
+    "displayName": "Austin G. Ervin, Attorney at Law",
+    "shortName": "Austin G. Ervin",
+    "entityType": "llc",
+    "primaryLocation": "portsmouth-office",
+    "attorneyOfRecord": "austin-g-ervin",
+    "featuredAttorney": "austin-g-ervin",
+    "narrativeMode": "urgent",
+    "logo": {
+        "mark": "assets/logos/logoMark.svg",
+        "lockupHorizontal": "assets/logos/logoLockupHorizontal.svg",
+        "lockupStacked": "assets/logos/logoLockupStacked.svg"
+    },
+    "verification": {
+        "verified": true,
+        "source": "Avvo, Martindale, Facebook, and the Scioto County court attorney directory",
+        "verifiedOn": "2026-07-23",
+        "verifiedBy": "Nulo Studio research",
+        "note": "Legal name, office address, and phone are consistent across all four sources. LLC filing date and ownership structure are NOT verified and are deliberately absent."
+    }
+}

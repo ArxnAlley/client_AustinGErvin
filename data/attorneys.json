@@ -1,0 +1,74 @@
+[
+    {
+        "id": "austin-g-ervin",
+        "status": "published",
+        "displayOrder": 0,
+        "fullName": "Austin Gage Ervin",
+        "preferredName": "Austin",
+        "credentialSuffix": "J.D.",
+        "title": "Attorney",
+        "admissions": [
+            {
+                "jurisdiction": "OH",
+                "year": 2022,
+                "status": "active",
+                "verification": {
+                    "verified": true,
+                    "source": "Avvo and Martindale attorney profiles, both showing active Ohio licensure acquired 2022",
+                    "verifiedOn": "2026-07-23",
+                    "verifiedBy": "Nulo Studio research"
+                }
+            },
+            {
+                "jurisdiction": "KY",
+                "year": 2023,
+                "status": "active",
+                "verification": {
+                    "verified": true,
+                    "source": "Avvo and Martindale attorney profiles, both showing active Kentucky licensure acquired 2023",
+                    "verifiedOn": "2026-07-23",
+                    "verifiedBy": "Nulo Studio research"
+                }
+            }
+        ],
+        "education": [
+            {
+                "institution": "University of Dayton School of Law",
+                "degree": "J.D.",
+                "year": 2022,
+                "verification": {
+                    "verified": true,
+                    "source": "Avvo profile and LinkedIn snippet, both listing a 2022 J.D. from the University of Dayton School of Law",
+                    "verifiedOn": "2026-07-23",
+                    "verifiedBy": "Nulo Studio research"
+                }
+            },
+            {
+                "institution": "Shawnee State University",
+                "degree": "Baccalaureate",
+                "year": 2020,
+                "verification": {
+                    "verified": false,
+                    "note": "PARTIAL. The May 2020 commencement program lists Austin Gage Ervin among baccalaureate graduates, but its multi-column layout means the major is inferred, not stated. Confirm degree and major with the attorney before publication. Will not render while verified is false (LEG-001)."
+                }
+            }
+        ],
+        "practiceAreas": [
+            "criminal-defense",
+            "ovi-dui",
+            "family-law",
+            "divorce",
+            "child-custody",
+            "protection-orders",
+            "estate-planning",
+            "probate"
+        ],
+        "locations": ["portsmouth-office"],
+        "portrait": {
+            "src": "assets/images/portraitAustinHero.jpg",
+            "alt": "Austin G. Ervin, attorney at law, Portsmouth, Ohio"
+        },
+        "biography": "content/attorneys/austin-g-ervin.md",
+        "biographyShort": "Austin G. Ervin is an attorney in Portsmouth, Ohio, licensed in both Ohio and Kentucky. He earned his J.D. from the University of Dayton School of Law in 2022 and represents clients across southern Ohio and northeastern Kentucky."
+    }
+]

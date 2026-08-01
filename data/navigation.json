@@ -1,0 +1,16 @@
+{
+    "primary": [
+        { "label": "Practice Areas", "type": "link", "target": "/practice-areas/", "displayOrder": 0 },
+        { "label": "About",          "type": "link", "target": "/about/",          "displayOrder": 1 },
+        { "label": "FAQ",            "type": "link", "target": "/faq/",            "displayOrder": 2 },
+        { "label": "Contact",        "type": "link", "target": "/contact/",        "displayOrder": 3 }
+    ],
+    "footer": {
+        "groups": [
+            { "label": "Practice Areas", "items": ["criminal-defense", "ovi-dui", "family-law", "estate-planning"] },
+            { "label": "Firm",           "items": ["/about/", "/attorney/", "/contact/"] },
+            { "label": "Legal",          "items": ["/disclaimer/", "/privacy-policy/", "/accessibility-statement/"] }
+        ]
+    },
+    "redirects": []
+}

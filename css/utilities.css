@@ -1,0 +1,172 @@
+/* ============================================================
+   FRAMEWORK FILE — COPIED, NOT AUTHORED HERE.
+
+   Edit it in the framework, then regenerate. A local edit is
+   overwritten on the next run and does not reach any other site.
+============================================================ */
+
+/* ============================================================
+   UTILITIES — LAYER 5
+
+   Escape hatches, and deliberately few of them.
+
+   A utility layer grows to whatever size it is allowed to grow
+   to, and every class in it is a decision moved out of the
+   component that should have owned it. Each of the following
+   earns its place by being either an accessibility primitive
+   that must be identical everywhere, or a browser defect that
+   every project has to work around.
+
+   Nothing here sets a colour, a size, or a spacing value.
+   Those belong to components.
+
+   Load order: tokens.css → base.css → layout.css → components
+               → utilities.css
+============================================================ */
+
+
+/* ============================================================
+   ACCESSIBILITY PRIMITIVES
+============================================================ */
+
+/* Available to assistive technology, invisible to everyone else.
+   Not `display: none`, which removes it from the accessibility
+   tree, and not zero width and height, which some screen readers
+   skip. The exception for focus is what lets a skip link be
+   hidden until it is tabbed to. */
+.visuallyHidden:not(:focus):not(:active)
+{
+
+    position: absolute;
+
+    width: 1px;
+
+    height: 1px;
+
+    margin: -1px;
+
+    padding: 0;
+
+    overflow: hidden;
+
+    clip-path: inset(50%);
+
+    white-space: nowrap;
+
+    border: 0;
+
+}
+
+
+/* The first tabbable element on every page. It must clear
+   everything, which is what the top of the z-index scale is
+   for. */
+.skipLink
+{
+
+    position: absolute;
+
+    z-index: var(--zSkipLink);
+
+    inset-block-start: 0.5rem;
+
+    inset-inline-start: 0.5rem;
+
+    padding: 0.75rem 1rem;
+
+    background-color: var(--surfaceRaised);
+
+    color: var(--textPrimary);
+
+    border: var(--borderHairline) solid var(--borderInteractive);
+
+    border-radius: var(--radiusButton);
+
+    text-decoration: none;
+
+}
+
+
+.skipLink:not(:focus)
+{
+
+    position: absolute;
+
+    width: 1px;
+
+    height: 1px;
+
+    overflow: hidden;
+
+    clip-path: inset(50%);
+
+    white-space: nowrap;
+
+}
+
+
+/* ============================================================
+   BROWSER DEFECTS
+
+   Both of these are real and both bite silently.
+============================================================ */
+
+/* `[hidden]` is a UA rule at `display: none`, so any component
+   rule setting `display: flex` or `display: grid` silently beats
+   it and the element stays visible. The `!important` is not
+   emphasis — it is the only way to restore the behaviour the
+   attribute is supposed to have. */
+[hidden]
+{
+
+    display: none !important;
+
+}
+
+
+/* Locks background scrolling behind a full-screen overlay.
+   `overflow: hidden` alone loses the reader's scroll position on
+   iOS, so the position is preserved by the script that applies
+   this class and restored when it removes it. */
+.noScroll
+{
+
+    overflow: hidden;
+
+    /* Prevents the rubber-band scroll from reaching the page
+       underneath on touch devices. */
+    overscroll-behavior: none;
+
+}
+
+
+/* ============================================================
+   TEXT BEHAVIOUR
+
+   Line breaking is a typographic decision this design makes
+   explicitly rather than leaving to the browser. These two are
+   the only cases where the decision is structural rather than
+   compositional.
+============================================================ */
+
+/* Keeps a phone number, an address line, or a date from breaking
+   across lines. On a site whose central affordance is a phone
+   number, a wrapped one reads as two numbers. */
+.noWrap
+{
+
+    white-space: nowrap;
+
+}
+
+
+/* Tabular figures for anything a reader compares or dials —
+   phone numbers, dates, times, fee figures. Proportional digits
+   make a column of numbers look ragged and a phone number look
+   uneven. */
+.tabularFigures
+{
+
+    font-variant-numeric: tabular-nums;
+
+}

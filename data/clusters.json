@@ -1,0 +1,5 @@
+[
+    { "id": "criminal-defense", "label": "Criminal Defense", "displayOrder": 0, "description": "Defense of misdemeanor and felony charges in southern Ohio courts." },
+    { "id": "family-law",       "label": "Family Law",       "displayOrder": 1, "description": "Divorce, custody, support, and protection order matters." },
+    { "id": "estate-planning",  "label": "Estate Planning",  "displayOrder": 2, "description": "Wills, directives, probate, and transfers after a death." }
+]

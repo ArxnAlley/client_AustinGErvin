@@ -1,0 +1,23 @@
+[
+    {
+        "id": "portsmouth-office",
+        "status": "published",
+        "label": "Portsmouth Office",
+        "street1": "602 Chillicothe Street",
+        "street2": "Suite 206",
+        "city": "Portsmouth",
+        "region": "OH",
+        "postalCode": "45662",
+        "country": "US",
+        "phone": "(740) 529-1420",
+        "serviceAreas": [
+            "scioto-county-oh",
+            "adams-county-oh",
+            "pike-county-oh",
+            "lawrence-county-oh",
+            "greenup-county-ky",
+            "boyd-county-ky"
+        ],
+        "isMailingOnly": false
+    }
+]

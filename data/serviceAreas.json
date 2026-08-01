@@ -1,0 +1,8 @@
+[
+    { "id": "scioto-county-oh",   "status": "published", "type": "county", "name": "Scioto County",   "jurisdiction": "OH", "tier": "primary",   "countySeat": "Portsmouth",  "hasPage": false },
+    { "id": "adams-county-oh",    "status": "published", "type": "county", "name": "Adams County",    "jurisdiction": "OH", "tier": "secondary", "countySeat": "West Union",  "hasPage": false },
+    { "id": "pike-county-oh",     "status": "published", "type": "county", "name": "Pike County",     "jurisdiction": "OH", "tier": "secondary", "countySeat": "Waverly",     "hasPage": false },
+    { "id": "lawrence-county-oh", "status": "published", "type": "county", "name": "Lawrence County", "jurisdiction": "OH", "tier": "secondary", "countySeat": "Ironton",     "hasPage": false },
+    { "id": "greenup-county-ky",  "status": "published", "type": "county", "name": "Greenup County",  "jurisdiction": "KY", "tier": "tertiary",  "countySeat": "Greenup",     "hasPage": false },
+    { "id": "boyd-county-ky",     "status": "published", "type": "county", "name": "Boyd County",     "jurisdiction": "KY", "tier": "tertiary",  "countySeat": "Catlettsburg", "hasPage": false }
+]

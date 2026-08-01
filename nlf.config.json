@@ -1,0 +1,6 @@
+{
+    "framework": "nlf@1.x",
+    "client": "client_AustinGErvin",
+    "tier": 1,
+    "output": "_site"
+}

@@ -1,0 +1,44 @@
+{
+    "disclaimers": [
+        {
+            "id": "attorney-advertising",
+            "text": "content/disclaimers/attorneyAdvertising.md",
+            "placement": "footer",
+            "requiredOn": ["all"]
+        },
+        {
+            "id": "no-relationship",
+            "text": "content/disclaimers/noRelationship.md",
+            "placement": "adjacentToForm",
+            "requiredOn": ["contact", "practiceArea", "home"]
+        },
+        {
+            "id": "no-guarantee",
+            "text": "content/disclaimers/noGuarantee.md",
+            "placement": "adjacentToResults",
+            "requiredOn": ["caseResults"]
+        }
+    ],
+    "prohibitedTerms": [
+        { "term": "best",       "matchType": "word",   "reason": "Superlative claims about quality cannot be factually substantiated (Ohio Prof. Cond. R. 7.1)." },
+        { "term": "top",        "matchType": "word",   "reason": "Ranking claims require a verifiable, disclosed methodology." },
+        { "term": "#1",         "matchType": "phrase", "reason": "Ranking claims require a verifiable, disclosed methodology." },
+        { "term": "guaranteed", "matchType": "word",   "reason": "No legal outcome may be guaranteed." },
+        { "term": "guarantee",  "matchType": "word",   "reason": "No legal outcome may be guaranteed." },
+        { "term": "expert",     "matchType": "word",   "reason": "Implies certification the attorney does not hold." },
+        { "term": "specialist", "matchType": "word",   "exemption": "certifiedSpecialist", "reason": "Permitted only where the claiming attorney holds a verified certification." },
+        { "term": "specializes","matchType": "word",   "exemption": "certifiedSpecialist", "reason": "Permitted only where the claiming attorney holds a verified certification." }
+    ],
+    "reviewCadenceMonths": 12,
+    "requiresLegalReviewPaths": [
+        "content/practiceAreas/**",
+        "content/faqs/**",
+        "content/attorneys/**",
+        "content/disclaimers/**",
+        "data/attorneys.json",
+        "data/testimonials.json",
+        "data/caseResults.json",
+        "data/compliance.json"
+    ],
+    "nonEngagementNotice": "content/disclaimers/nonEngagement.md"
+}

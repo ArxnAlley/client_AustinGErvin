@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="proof">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="robots" content="noindex, nofollow">
+
+    <title>Design System Proof — Austin G. Ervin, Attorney at Law</title>
+
+    <link rel="stylesheet" href="../css/tokens.css">
+
+    <link rel="stylesheet" href="../css/base.css">
+
+    <link rel="stylesheet" href="../css/layout.css">
+
+    <link rel="stylesheet" href="../css/utilities.css">
+
+    <!-- ============================================================
+         PROOF-PAGE STYLES
+
+         This page is a development instrument, not a page of the
+         site. Nothing here ships. It consumes only the emitted
+         tokens, so anything that looks wrong on this page is wrong
+         in tokens.css rather than wrong here.
+    ============================================================ -->
+    <style>
+
+        body
+        {
+
+            padding-block: var(--space9);
+
+        }
+
+        .proofSection
+        {
+
+            padding-block: var(--space9);
+
+            border-block-start: var(--borderHairline) solid var(--borderSubtle);
+
+        }
+
+        .proofHeading
+        {
+
+            font-family: var(--fontFamilyBody);
+
+            font-size: var(--fontCaption);
+
+            font-weight: 600;
+
+            letter-spacing: var(--trackingCaption);
+
+            line-height: var(--lineHeightCaption);
+
+            text-transform: uppercase;
+
+            color: var(--textSecondary);
+
+            margin-block-end: var(--space6);
+
+        }
+
+        .specimenRow
+        {
+
+            display: flex;
+
+            flex-wrap: wrap;
+
+            align-items: baseline;
+
+            gap: var(--space4);
+
+            padding-block: var(--space3);
+
+            border-block-end: var(--borderHairline) solid var(--borderSubtle);
+
+        }
+
+        .specimenLabel
+        {
+
+            flex: 0 0 14rem;
+
+            font-family: var(--fontFamilyBody);
+
+            font-size: var(--fontBodySm);
+
+            line-height: var(--lineHeightBodySm);
+
+            color: var(--textSecondary);
+
+            font-variant-numeric: tabular-nums;
+
+        }
+
+        .specimenValue
+        {
+
+            min-width: 0;
+
+            flex: 1 1 20rem;
+
+        }
+
+        .measuredValue
+        {
+
+            font-family: var(--fontFamilyBody);
+
+            font-size: var(--fontBodySm);
+
+            font-variant-numeric: tabular-nums;
+
+            color: var(--textLink);
+
+        }
+
+        /* ── Readout ── */
+
+        .readout
+        {
+
+            position: fixed;
+
+            z-index: var(--zHeader);
+
+            inset-block-end: 0;
+
+            inset-inline: 0;
+
+            display: flex;
+
+            flex-wrap: wrap;
+
+            gap: var(--space2) var(--space5);
+
+            padding: var(--space3) var(--space4);
+
+            background-color: var(--surfaceRaised);
+
+            border-block-start: var(--borderHairline) solid var(--borderInteractive);
+
+            font-family: var(--fontFamilyBody);
+
+            font-size: var(--fontCaption);
+
+            font-variant-numeric: tabular-nums;
+
+            line-height: var(--lineHeightCaption);
+
+        }
+
+        .readoutItem b
+        {
+
+            font-weight: 600;
+
+            color: var(--textLink);
+
+        }
+
+        /* ── Grid proof ── */
+
+        /* One cell per column, overriding layout.css's full-width
+           default — which is the default precisely so that a
+           component has to ask for anything narrower. */
+        .gridProof > *
+        {
+
+            grid-column: auto;
+
+            padding-block: var(--space4);
+
+            background-color: var(--surfaceRaised);
+
+            border: var(--borderHairline) solid var(--borderInteractive);
+
+            font-family: var(--fontFamilyBody);
+
+            font-size: var(--fontCaption);
+
+            text-align: center;
+
+        }
+
+        /* Spans are declared at the tier that has the columns.
+           Below it they fall back to full width. */
+        @media (min-width: 1024px)
+        {
+
+            .spanSeven
+            {
+
+                grid-column: span 7;
+
+            }
+
+            .spanFive
+            {
+
+                grid-column: span 5;
+
+            }
+
+        }
+
+        /* ── Spacing proof ── */
+
+        .spacingBar
+        {
+
+            height: var(--space4);
+
+            background-color: var(--accentStroke);
+
+        }
+
+        /* ── Scene switcher ── */
+
+        .sceneSwitch
+        {
+
+            display: flex;
+
+            flex-wrap: wrap;
+
+            gap: var(--space3);
+
+        }
+
+        .sceneButton
+        {
+
+            padding: var(--space3) var(--space5);
+
+            min-height: 44px;
+
+            border: var(--borderHairline) solid var(--borderInteractive);
+
+            border-radius: var(--radiusButton);
+
+            color: var(--textPrimary);
+
+            font-family: var(--fontFamilyBody);
+
+            font-size: var(--fontBodySm);
+
+            cursor: pointer;
+
+        }
+
+        .sceneButton[aria-pressed="true"]
+        {
+
+            background-color: var(--accentPrimary);
+
+            color: var(--textOnAccent);
+
+            border-color: var(--accentPrimary);
+
+        }
+
+        .surfacePanel
+        {
+
+            margin-block-start: var(--space5);
+
+            padding: var(--space6);
+
+            background-color: var(--surfaceSunken);
+
+            border: var(--borderHairline) solid var(--borderInteractive);
+
+        }
+
+    </style>
+
+</head>
+
+<body data-scene="light">
+
+    <!-- ============================================================
+         HEADER
+    ============================================================ -->
+
+    <header class="container">
+
+        <p class="proofHeading">
+            Nulo Legal Framework · M1 design system proof
+        </p>
+
+        <h1 class="measureDisplay">
+            Austin G. Ervin
+        </h1>
+
+        <p class="measureBody">
+            Every value on this page is read from <code>css/tokens.css</code>, which is generated from
+            <code>data/theme.json</code>. The figures in the readout at the bottom of the window are
+            measured from the rendered document with <code>getComputedStyle</code> — they are not
+            copied from any specification.
+        </p>
+
+        <p class="measureBody">
+            <strong>The subset <code>woff2</code> files do not exist yet</strong>, so type renders in the
+            metric-matched fallbacks. That is the studio-owned blocker on M1's font budget, and it is
+            enumerated by the validator as three TYP-008 failures.
+        </p>
+
+    </header>
+
+
+    <!-- ============================================================
+         SCENES
+    ============================================================ -->
+
+    <section class="container proofSection">
+
+        <h2 class="proofHeading">
+            Scenes — one token set, reassigned
+        </h2>
+
+        <div class="sceneSwitch" data-sceneSwitch>
+
+            <button class="sceneButton" type="button" data-scene-target="light" aria-pressed="true">
+                Light
+            </button>
+
+            <button class="sceneButton" type="button" data-scene-target="dusk" aria-pressed="false">
+                Dusk
+            </button>
+
+            <button class="sceneButton" type="button" data-scene-target="dark" aria-pressed="false">
+                Dark
+            </button>
+
+        </div>
+
+        <div class="surfacePanel" data-surface="sunken">
+
+            <p class="measureBody">
+                This panel paints <code>--surfaceSunken</code> and declares
+                <code>data-surface="sunken"</code>, so on the dark scene its border resolves to the
+                heavier interactive value. Nothing on this page is written twice for a second scene.
+            </p>
+
+            <p>
+                <a href="#top">A link, in this scene's link colour.</a>
+                Tab to it to see the scene-aware focus ring.
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <!-- ============================================================
+         TYPE SCALE
+    ============================================================ -->
+
+    <section class="container proofSection">
+
+        <h2 class="proofHeading">
+            Type scale — rendered size measured at this viewport
+        </h2>
+
+        <div data-typeSpecimens></div>
+
+    </section>
+
+
+    <!-- ============================================================
+         GRID
+    ============================================================ -->
+
+    <section class="container proofSection">
+
+        <h2 class="proofHeading">
+            Grid — column count and gap change by tier
+        </h2>
+
+        <div class="grid gridProof" data-gridProof>
+
+            <div><span>1</span></div>
+            <div><span>2</span></div>
+            <div><span>3</span></div>
+            <div><span>4</span></div>
+            <div><span>5</span></div>
+            <div><span>6</span></div>
+            <div><span>7</span></div>
+            <div><span>8</span></div>
+            <div><span>9</span></div>
+            <div><span>10</span></div>
+            <div><span>11</span></div>
+            <div><span>12</span></div>
+
+        </div>
+
+        <div class="grid gridProof" style="margin-block-start: var(--space5);">
+
+            <div class="spanSeven" data-span="7">
+                Columns 1–7 — the type column
+            </div>
+
+            <div class="spanFive" data-span="5">
+                Columns 8–12
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ============================================================
+         SPACING
+    ============================================================ -->
+
+    <section class="container proofSection">
+
+        <h2 class="proofHeading">
+            Spacing scale
+        </h2>
+
+        <div data-spacingSpecimens></div>
+
+    </section>
+
+
+    <!-- ============================================================
+         READOUT
+    ============================================================ -->
+
+    <div class="readout" data-readout role="status" aria-live="off"></div>
+
+
+    <!-- ============================================================
+         MEASUREMENT
+
+         Reads the document rather than the specification. A figure
+         printed here is what the browser computed.
+    ============================================================ -->
+    <script>
+
+        /* ── Constants ── */
+
+        const typeSteps = [
+            'displayXl',
+            'displayLg',
+            'displayMd',
+            'processNumeral',
+            'headingSm',
+            'bodyLg',
+            'body',
+            'bodySm',
+            'caption'
+        ];
+
+        const spacingSteps = [
+            'space1', 'space2', 'space3', 'space4', 'space5', 'space6', 'space7',
+            'space8', 'space9', 'space10', 'space11', 'space12', 'space13', 'space14'
+        ];
+
+        const tiers = [
+            { name: '2xl', minWidth: 1440 },
+            { name: 'xl', minWidth: 1200 },
+            { name: 'lg', minWidth: 1024 },
+            { name: 'md', minWidth: 768 },
+            { name: 'sm', minWidth: 480 },
+            { name: 'xs', minWidth: 0 }
+        ];
+
+
+        /* ── Selectors ── */
+
+        const typeContainer = document.querySelector('[data-typeSpecimens]');
+
+        const spacingContainer = document.querySelector('[data-spacingSpecimens]');
+
+        const gridProof = document.querySelector('[data-gridProof]');
+
+        const readout = document.querySelector('[data-readout]');
+
+        const sceneSwitch = document.querySelector('[data-sceneSwitch]');
+
+
+        /* ── Utility functions ── */
+
+        function tokenValue(name)
+        {
+
+            return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+
+        }
+
+        function roundTo(value, places)
+        {
+
+            return Number(value.toFixed(places));
+
+        }
+
+        function currentTier()
+        {
+
+            return tiers.find((tier) => window.innerWidth >= tier.minWidth).name;
+
+        }
+
+
+        /* ── Core functions ── */
+
+        function buildTypeSpecimens()
+        {
+
+            for (const step of typeSteps)
+            {
+
+                const row = document.createElement('div');
+
+                row.className = 'specimenRow';
+
+                const label = document.createElement('div');
+
+                label.className = 'specimenLabel';
+
+                label.innerHTML = '--font' + step.charAt(0).toUpperCase() + step.slice(1)
+                    + '<br><span class="measuredValue" data-measure="' + step + '"></span>';
+
+                const value = document.createElement('div');
+
+                value.className = 'specimenValue';
+
+                value.style.fontSize = 'var(--font' + step.charAt(0).toUpperCase() + step.slice(1) + ')';
+
+                value.style.lineHeight = 'var(--lineHeight' + step.charAt(0).toUpperCase() + step.slice(1) + ')';
+
+                value.style.fontFamily = step.startsWith('display') || step === 'processNumeral'
+                    ? 'var(--fontFamilyDisplay)'
+                    : 'var(--fontFamilyBody)';
+
+                value.style.letterSpacing = step.startsWith('display') || step === 'processNumeral'
+                    ? 'var(--trackingDisplay)'
+                    : 'var(--trackingBody)';
+
+                value.textContent = step === 'processNumeral'
+                    ? '01'
+                    : 'Representation that respects your time';
+
+                row.append(label, value);
+
+                typeContainer.append(row);
+
+            }
+
+        }
+
+        function buildSpacingSpecimens()
+        {
+
+            for (const step of spacingSteps)
+            {
+
+                const row = document.createElement('div');
+
+                row.className = 'specimenRow';
+
+                const label = document.createElement('div');
+
+                label.className = 'specimenLabel';
+
+                label.textContent = '--' + step;
+
+                const bar = document.createElement('div');
+
+                bar.className = 'spacingBar';
+
+                bar.style.width = 'var(--' + step + ')';
+
+                const value = document.createElement('div');
+
+                value.className = 'measuredValue';
+
+                value.textContent = tokenValue('--' + step);
+
+                row.append(label, bar, value);
+
+                spacingContainer.append(row);
+
+            }
+
+        }
+
+        function measureDocument()
+        {
+
+            for (const step of typeSteps)
+            {
+
+                const target = document.querySelector('[data-measure="' + step + '"]');
+
+                const specimen = target.closest('.specimenRow').querySelector('.specimenValue');
+
+                const size = parseFloat(getComputedStyle(specimen).fontSize);
+
+                target.textContent = roundTo(size, 2) + 'px';
+
+            }
+
+            const gridStyle = getComputedStyle(gridProof);
+
+            const columns = gridStyle.gridTemplateColumns.split(' ');
+
+            const columnWidth = parseFloat(columns[0]);
+
+            const container = gridProof.getBoundingClientRect().width;
+
+            const gutter = parseFloat(getComputedStyle(document.querySelector('.container')).paddingInlineStart);
+
+            const gap = parseFloat(gridStyle.columnGap);
+
+            const spanSeven = columns.length >= 7
+                ? (columnWidth * 7) + (gap * 6)
+                : null;
+
+            readout.innerHTML = [
+                ['tier', currentTier()],
+                ['viewport', window.innerWidth + 'px'],
+                ['gutter', roundTo(gutter, 2) + 'px'],
+                ['container', roundTo(container, 2) + 'px'],
+                ['columns', columns.length],
+                ['gap', roundTo(gap, 2) + 'px'],
+                ['column', roundTo(columnWidth, 2) + 'px'],
+                ['cols 1–7', spanSeven === null ? 'n/a' : roundTo(spanSeven, 2) + 'px'],
+                ['H1', roundTo(parseFloat(getComputedStyle(document.querySelector('h1')).fontSize), 2) + 'px']
+            ]
+                .map((entry) => '<span class="readoutItem">' + entry[0] + ' <b>' + entry[1] + '</b></span>')
+                .join('');
+
+        }
+
+        function selectScene(scene)
+        {
+
+            document.body.dataset.scene = scene;
+
+            for (const button of sceneSwitch.querySelectorAll('.sceneButton'))
+            {
+
+                button.setAttribute(
+                    'aria-pressed',
+                    button.dataset.sceneTarget === scene ? 'true' : 'false'
+                );
+
+            }
+
+        }
+
+
+        /* ── Event listeners ── */
+
+        sceneSwitch.addEventListener(
+            'click',
+            (event) =>
+            {
+
+                const button = event.target.closest('.sceneButton');
+
+                if (button)
+                {
+
+                    selectScene(button.dataset.sceneTarget);
+
+                }
+
+            }
+        );
+
+        window.addEventListener(
+            'resize',
+            measureDocument
+        );
+
+
+        /* ── Initialization ── */
+
+        buildTypeSpecimens();
+
+        buildSpacingSpecimens();
+
+        measureDocument();
+
+    </script>
+
+</body>
+
+</html>

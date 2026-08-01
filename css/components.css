@@ -1,0 +1,513 @@
+/* ============================================================
+   FRAMEWORK FILE — COPIED, NOT AUTHORED HERE.
+
+   Edit it in the framework, then regenerate. A local edit is
+   overwritten on the next run and does not reach any other site.
+============================================================ */
+
+/* ============================================================
+   COMPONENTS — LAYER 3
+
+   Reusable across every page and every firm.
+
+   Components consume semantic tokens only. There is no literal
+   colour in this file, which is what lets any component sit in
+   any scene with no variant code (MNT-002).
+
+   Breakpoint note: this layer uses width media queries, unlike
+   the foundation layer. The token layer owns breakpoints for
+   values; a component's *composition* changes at widths the
+   framework cannot emit into a custom property. Whether that
+   should become container queries is the open M2 decision — see
+   project_next_session.md §7.
+============================================================ */
+
+
+/* ============================================================
+   BUTTONS
+============================================================ */
+
+.buttonPrimary,
+.buttonGhost,
+.buttonText
+{
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    min-height: 48px;
+
+    padding-inline: var(--space6);
+
+    border-radius: var(--radiusButton);
+
+    font-family: var(--fontFamilyBody);
+
+    font-size: var(--fontBodySm);
+
+    font-weight: 600;
+
+    letter-spacing: 0.02em;
+
+    line-height: 1;
+
+    text-decoration: none;
+
+    cursor: pointer;
+
+    transition:
+        background-color var(--durationRespond) var(--easeRespond),
+        color var(--durationRespond) var(--easeRespond),
+        border-color var(--durationRespond) var(--easeRespond);
+
+}
+
+
+.buttonPrimary
+{
+
+    background-color: var(--accentPrimary);
+
+    color: var(--textOnAccent);
+
+    border: var(--borderHairline) solid var(--accentPrimary);
+
+}
+
+
+.buttonPrimary:hover
+{
+
+    background-color: var(--accentStroke);
+
+    border-color: var(--accentStroke);
+
+}
+
+
+/* The border is the only thing identifying this as a control,
+   so it uses the interactive token rather than the subtle one.
+   ACC-003 — the deprecated --borderStrong measured 1.73:1 here. */
+.buttonGhost
+{
+
+    background-color: transparent;
+
+    color: var(--textPrimary);
+
+    border: var(--borderHairline) solid var(--borderInteractive);
+
+}
+
+
+.buttonGhost:hover
+{
+
+    border-color: var(--accentStroke);
+
+    color: var(--textLink);
+
+}
+
+
+.buttonText
+{
+
+    min-height: 44px;
+
+    padding-inline: 0;
+
+    background: none;
+
+    border: 0;
+
+    color: var(--textLink);
+
+}
+
+
+.isFullWidth
+{
+
+    display: flex;
+
+    width: 100%;
+
+}
+
+
+/* ============================================================
+   LINK ARROW
+
+   A text link that reads as forward motion. The glyph shifts on
+   hover; the text does not, because moving the thing being read
+   is the reflex this system does not indulge.
+============================================================ */
+
+.linkArrow
+{
+
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: var(--space2);
+
+    min-height: 44px;
+
+    color: var(--textLink);
+
+    font-family: var(--fontFamilyBody);
+
+    font-size: var(--fontBodySm);
+
+    font-weight: 600;
+
+    text-decoration: none;
+
+}
+
+
+.linkArrowGlyph
+{
+
+    transition: transform var(--durationRespond) var(--easeRespond);
+
+}
+
+
+.linkArrow:hover .linkArrowGlyph
+{
+
+    transform: translateX(0.25rem);
+
+}
+
+
+/* ============================================================
+   EYEBROW
+
+   Tracked, uppercase, and set at the caption tier — which has a
+   14px floor because this element carries real information to
+   the oldest part of the audience (TYP-003, TYP-004).
+============================================================ */
+
+.eyebrow
+{
+
+    margin: 0;
+
+    color: var(--textSecondary);
+
+    font-family: var(--fontFamilyBody);
+
+    font-size: var(--fontCaption);
+
+    font-weight: 600;
+
+    letter-spacing: var(--trackingCaption);
+
+    line-height: var(--lineHeightCaption);
+
+    text-transform: uppercase;
+
+}
+
+
+/* ============================================================
+   DIVIDER
+============================================================ */
+
+.divider
+{
+
+    height: var(--borderHairline);
+
+    background-color: var(--borderSubtle);
+
+    border: 0;
+
+}
+
+
+/* ============================================================
+   CTA GROUP
+============================================================ */
+
+.ctaGroup
+{
+
+    display: flex;
+
+    flex-wrap: wrap;
+
+    align-items: center;
+
+    gap: var(--space5);
+
+}
+
+
+.ctaGroup.isCentred
+{
+
+    justify-content: center;
+
+}
+
+
+@media (max-width: 767px)
+{
+
+    .ctaGroup > .buttonPrimary,
+    .ctaGroup > .buttonGhost
+    {
+
+        width: 100%;
+
+    }
+
+}
+
+
+/* ============================================================
+   PORTRAIT PLACEHOLDER
+
+   Deliberately conspicuous. A placeholder that looks like a
+   design decision is a placeholder that ships.
+============================================================ */
+
+.portraitPlaceholder
+{
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: flex-end;
+
+    gap: var(--space3);
+
+    aspect-ratio: 4 / 5;
+
+    padding: var(--space5);
+
+    background-color: var(--surfaceRaised);
+
+    border: var(--borderHairline) dashed var(--borderInteractive);
+
+    border-radius: var(--radiusImage);
+
+}
+
+
+.portraitPlaceholderLabel
+{
+
+    color: var(--textPrimary);
+
+    font-family: var(--fontFamilyBody);
+
+    font-size: var(--fontCaption);
+
+    font-weight: 600;
+
+    letter-spacing: var(--trackingCaption);
+
+    text-transform: uppercase;
+
+}
+
+
+.portraitPlaceholderNote
+{
+
+    max-width: 32ch;
+
+    color: var(--textSecondary);
+
+    font-family: var(--fontFamilyBody);
+
+    font-size: var(--fontCaption);
+
+    line-height: var(--lineHeightCaption);
+
+}
+
+
+.portraitPlaceholder.isSecondary
+{
+
+    aspect-ratio: 1 / 1;
+
+}
+
+
+/* ============================================================
+   PLACEHOLDER COPY
+
+   Any element carrying data-placeholder is unapproved. It is
+   marked in the document so that nobody mistakes specimen text
+   for signed-off text — including the person who wrote it.
+============================================================ */
+
+[data-placeholder]
+{
+
+    position: relative;
+
+    padding-inline-start: var(--space4);
+
+    border-inline-start: 2px solid var(--accentStroke);
+
+}
+
+
+/* ============================================================
+   LOGO LOCKUP
+
+   The wordmark is type until R2 delivers an SVG. That is why it
+   is legible in all three scenes right now: a hardcoded colour
+   in a raster logo is exactly what breaks when the header
+   crosses from light to dark.
+============================================================ */
+
+.logoLockup
+{
+
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: var(--space3);
+
+    color: var(--textPrimary);
+
+    text-decoration: none;
+
+}
+
+
+.logoMark
+{
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    width: 2.25rem;
+
+    height: 2.25rem;
+
+    border: var(--borderHairline) solid var(--accentStroke);
+
+    color: var(--accentStroke);
+
+    font-family: var(--fontFamilyDisplay);
+
+    font-size: var(--fontCaption);
+
+    letter-spacing: 0.08em;
+
+}
+
+
+/* The wordmark is the only thing in the header that can give
+   way, so it is the thing that gives way.
+
+   Below `layout.breakpoints.sm` the row cannot hold the wordmark,
+   the phone number and the menu control at once: at 320px the
+   three of them measure 404px against a 280px container, which
+   pushed the menu control off the screen entirely and truncated
+   the phone number. Both of those are load-bearing — the phone
+   is reachable in every state on every device, and a navigation
+   control that is off the page is not a navigation control.
+
+   The monogram carries the brand at these widths, and the
+   lockup's `aria-label` carries the firm's name, so nothing is
+   lost to assistive technology when the text is not painted. */
+
+.logoWordmark
+{
+
+    display: none;
+
+    font-family: var(--fontFamilyDisplay);
+
+    font-size: var(--fontHeadingSm);
+
+    letter-spacing: 0.01em;
+
+    white-space: nowrap;
+
+}
+
+
+@media (min-width: 480px)
+{
+
+    .logoWordmark
+    {
+
+        display: inline;
+
+    }
+
+}
+
+
+/* ============================================================
+   VERIFICATION BLOCK
+
+   The designed zero-state. An absent testimonial set is a valid
+   configuration, not an accident, and it says why rather than
+   leaving a gap in the page.
+============================================================ */
+
+.verificationBlock
+{
+
+    max-width: var(--measureBody);
+
+    padding: var(--space8);
+
+    border: var(--borderHairline) solid var(--borderSubtle);
+
+    border-radius: var(--radiusCard);
+
+}
+
+
+.verificationBlockText
+{
+
+    margin: 0;
+
+    color: var(--textPrimary);
+
+    font-size: var(--fontBodyLg);
+
+    line-height: var(--lineHeightBodyLg);
+
+}
+
+
+.verificationBlockNote
+{
+
+    margin-block-start: var(--space5);
+
+    margin-block-end: 0;
+
+    color: var(--textSecondary);
+
+    font-size: var(--fontBodySm);
+
+    line-height: var(--lineHeightBodySm);
+
+}

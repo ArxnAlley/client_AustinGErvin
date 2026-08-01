@@ -1,0 +1,216 @@
+/* ============================================================
+   FRAMEWORK FILE — COPIED, NOT AUTHORED HERE.
+
+   Edit it in the framework, then regenerate. A local edit is
+   overwritten on the next run and does not reach any other site.
+============================================================ */
+
+/* ============================================================
+   LAYOUT — LAYER 2
+
+   Container, grid, section rhythm, flow, measure.
+
+   Framework file. It carries no media query, because every
+   breakpoint in this system is a firm's measurement and lives in
+   the generated token layer. `--gridColumns` and `--gridGap`
+   change underneath this file; the file itself does not know at
+   what width.
+
+   It references only token names the framework fixes. See
+   src/styles/tokenContract.ts.
+
+   Load order: tokens.css → base.css → layout.css → components
+============================================================ */
+
+
+/* ============================================================
+   CONTAINER
+
+   The site header, every section, and the footer share one
+   container, so the logo's left edge, every heading's left edge,
+   and every footer column's left edge sit on a single vertical
+   spine down the page. That spine is the main structural device
+   that makes the page read as designed rather than assembled.
+
+   A container maximum is a CONTENT width — the width the grid
+   gets — and the gutters sit outside it. `measureGrid` states
+   that rule as `min(maximum, viewport - 2 * gutter)`, and the
+   maximum has to be raised by both gutters here for the border
+   box to leave exactly that much content behind.
+
+   Capping the border box instead is the same number below the
+   cap and two gutters short above it, so the defect is invisible
+   at the width most work is done at and costs the widest
+   viewports a whole column. It cost this page 102.4px of grid at
+   1440 and broke the hero headline's line count. See L33.
+============================================================ */
+
+.container
+{
+
+    width: 100%;
+
+    max-width: calc(var(--containerMax) + (var(--containerGutter) * 2));
+
+    margin-inline: auto;
+
+    padding-inline: var(--containerGutter);
+
+}
+
+
+.containerWide
+{
+
+    max-width: calc(var(--containerWide) + (var(--containerGutter) * 2));
+
+}
+
+
+.containerNarrow
+{
+
+    max-width: calc(var(--containerNarrow) + (var(--containerGutter) * 2));
+
+}
+
+
+/* ============================================================
+   GRID
+
+   Column count and gap arrive from tokens.css and change by
+   tier. This file never learns at what width.
+
+   A grid child is full width until a component narrows it. That
+   default is mobile-first in the only sense that matters here:
+   a component that declares a seven-column span at desktop and
+   says nothing about mobile is correct on mobile rather than
+   overflowing it. Spanning more columns than a tier has would
+   generate implicit tracks and push the page sideways, and that
+   failure is invisible on the developer's own screen.
+============================================================ */
+
+.grid
+{
+
+    display: grid;
+
+    grid-template-columns: repeat(var(--gridColumns), minmax(0, 1fr));
+
+    gap: var(--gridGap);
+
+}
+
+
+.grid > *
+{
+
+    grid-column: 1 / -1;
+
+}
+
+
+/* ============================================================
+   SECTIONS
+
+   Whitespace is the primary carrier of "premium" in this design.
+   It is a token, not an improvisation.
+============================================================ */
+
+.section
+{
+
+    padding-block: var(--sectionPaddingBlock);
+
+}
+
+
+.sectionTight
+{
+
+    padding-block: var(--sectionPaddingBlockTight);
+
+}
+
+
+/* ============================================================
+   FLOW
+
+   Spacing between elements is owned by the parent, never by the
+   child's margin. This removes the entire class of
+   margin-collapse bugs and makes a component portable between
+   contexts — which is what the scene system depends on.
+============================================================ */
+
+.flow > * + *
+{
+
+    /* The fallback is one line of text. A component that wants a
+       different rhythm sets --flowSpace from its own spacing step,
+       which is where that decision belongs. */
+    margin-block-start: var(--flowSpace, 1rem);
+
+}
+
+
+/* ============================================================
+   MEASURE
+
+   Line length is a legibility control, not a stylistic one.
+   Legal prose is dense and long measures tire the reader this
+   site is least able to lose.
+============================================================ */
+
+.measureBody
+{
+
+    max-width: var(--measureBody);
+
+}
+
+
+.measureHeading
+{
+
+    max-width: var(--measureHeading);
+
+}
+
+
+.measureDisplay
+{
+
+    max-width: var(--measureDisplay);
+
+}
+
+
+/* ============================================================
+   SURFACES
+
+   A section declares which surface it paints. The scene layer
+   has already reassigned the token underneath it, so the same
+   declaration is correct in all three scenes — and any token
+   that varies by surface within a scene follows the same
+   attribute.
+============================================================ */
+
+[data-surface='raised']
+{
+
+    background-color: var(--surfaceRaised);
+
+}
+
+
+[data-surface='sunken']
+{
+
+    background-color: var(--surfaceSunken);
+
+}
+
+
+/* `.visuallyHidden` and `.skipLink` live in utilities.css, which
+   is Layer 5. They were here first and were moved rather than
+   duplicated. */

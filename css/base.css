@@ -1,0 +1,424 @@
+/* ============================================================
+   FRAMEWORK FILE — COPIED, NOT AUTHORED HERE.
+
+   Edit it in the framework, then regenerate. A local edit is
+   overwritten on the next run and does not reach any other site.
+============================================================ */
+
+/* ============================================================
+   BASE — LAYER 1
+
+   Reset, root typography, focus treatment, reduced motion,
+   forced colours, print.
+
+   Framework file. It is identical for every firm and contains no
+   client value and no breakpoint — every number that varies by
+   firm arrives through a custom property emitted into
+   tokens.css, which is the only generated stylesheet.
+
+   It also references only token names the framework fixes, never
+   a name a firm invented. `--fontHeadingSm` exists because one
+   client called a step `headingSm`; the element sizes that need
+   such a name are emitted into tokens.css instead, from
+   `typography.elementDefaults`. See src/styles/tokenContract.ts.
+
+   Where a literal appears here it is a rule constant, not a
+   design value: the 2px focus ring is ACC-004, not a preference.
+
+   Load order: tokens.css → base.css → layout.css → components
+============================================================ */
+
+
+/* ============================================================
+   RESET
+============================================================ */
+
+*,
+*::before,
+*::after
+{
+
+    box-sizing: border-box;
+
+}
+
+
+html
+{
+
+    /* A focused element must never land beneath the sticky header.
+       WCAG 2.2 SC 2.4.11, ACC-005. */
+    scroll-padding-block-start: var(--headerClearance);
+
+    -webkit-text-size-adjust: 100%;
+
+    text-size-adjust: 100%;
+
+}
+
+
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+figure,
+blockquote,
+dl,
+dd,
+ul,
+ol
+{
+
+    margin: 0;
+
+}
+
+
+ul[role='list'],
+ol[role='list']
+{
+
+    padding: 0;
+
+    list-style: none;
+
+}
+
+
+img,
+picture,
+svg,
+video
+{
+
+    display: block;
+
+    max-width: 100%;
+
+}
+
+
+img
+{
+
+    /* Photography is never rounded on this system. */
+    border-radius: var(--radiusImage);
+
+    height: auto;
+
+}
+
+
+input,
+button,
+textarea,
+select
+{
+
+    font: inherit;
+
+    color: inherit;
+
+}
+
+
+button
+{
+
+    background: none;
+
+    border: 0;
+
+    padding: 0;
+
+}
+
+
+/* ============================================================
+   ROOT TYPOGRAPHY
+
+   Sizes are not set here. Which step a heading uses is a fact
+   only the theme holds, so those assignments are emitted into
+   tokens.css from `typography.elementDefaults`. What is set here
+   is everything that is true of the elements regardless of firm.
+============================================================ */
+
+body
+{
+
+    background-color: var(--surfaceBase);
+
+    text-wrap: pretty;
+
+}
+
+
+/* An element that declares a scene establishes that scene's text
+   colour for everything inside it.
+
+   Without this, `color` is resolved once — at <body> — and
+   inherited as a computed colour that no descendant re-reads, so
+   a section reassigning `--textPrimary` reassigns a token
+   nothing consumes. Every heading on a dark section then renders
+   in the light scene's ink.
+
+   The defect hides whenever the body's scene happens to match
+   the section's, which is exactly what a scene observer arranges
+   at runtime: it was invisible with the script running and
+   measured 1:1 with the script deleted. Scene-scoped tokens only
+   work if something consumes them at the scope that sets them.
+   See L34. */
+
+[data-scene]
+{
+
+    color: var(--textPrimary);
+
+}
+
+
+/* Display headings never wrap by accident — the line breaks in
+   this design are art-directed, and `balance` is the floor
+   beneath that, not a substitute for it. */
+
+h1,
+h2,
+h3
+{
+
+    font-weight: 600;
+
+    text-wrap: balance;
+
+}
+
+
+/* Interface headings are set in the body face on purpose. They
+   are scanned under stress, and a grotesque scans measurably
+   faster than a high-contrast serif. Premium here means
+   legible. */
+
+h4,
+h5,
+h6
+{
+
+    font-family: var(--fontFamilyBody);
+
+    font-weight: 600;
+
+    letter-spacing: 0;
+
+    text-wrap: balance;
+
+}
+
+
+strong,
+b
+{
+
+    font-weight: 600;
+
+}
+
+
+/* ── Links ── */
+
+a
+{
+
+    color: var(--textLink);
+
+    text-decoration-thickness: from-font;
+
+    text-underline-offset: 0.18em;
+
+}
+
+
+a:hover
+{
+
+    text-decoration-thickness: 2px;
+
+}
+
+
+/* ── Rules ── */
+
+hr
+{
+
+    border: 0;
+
+    border-block-start: var(--borderHairline) solid var(--borderSubtle);
+
+    margin: 0;
+
+}
+
+
+::selection
+{
+
+    background-color: var(--accentPrimary);
+
+    color: var(--textOnAccent);
+
+}
+
+
+/* ============================================================
+   FOCUS — ACC-004
+
+   Scene-aware, because a gold ring is invisible on the light
+   scene and beautiful on the dark one. Never animated: focus
+   must be instantaneous, and a transition on an outline is the
+   difference between a keyboard-navigable site and a guessing
+   game.
+============================================================ */
+
+:focus-visible
+{
+
+    outline: 2px solid var(--focusRing);
+
+    outline-offset: 2px;
+
+    transition: none;
+
+}
+
+
+:focus:not(:focus-visible)
+{
+
+    outline: none;
+
+}
+
+
+/* ============================================================
+   MOTION PREFERENCE — ACC-007
+
+   Motion is removed, not accelerated. Scene changes are the one
+   exception and hold at the declared floor, because inverting
+   most of a viewport in a single frame strobes on a fast scroll
+   — the exact sensory event the preference exists to prevent.
+============================================================ */
+
+@media (prefers-reduced-motion: reduce)
+{
+
+    *,
+    *::before,
+    *::after
+    {
+
+        animation-duration: 0.01ms !important;
+
+        animation-iteration-count: 1 !important;
+
+        transition-duration: 0.01ms !important;
+
+        scroll-behavior: auto !important;
+
+    }
+
+    [data-motion='scene'],
+    [data-motion='scene']::before,
+    [data-motion='scene']::after
+    {
+
+        transition-duration: var(--durationSceneReduced) !important;
+
+    }
+
+}
+
+
+/* ============================================================
+   FORCED COLOURS
+
+   Not an AA requirement, but this design is unusually exposed to
+   it: hairline borders and value-based depth are exactly what a
+   forced palette discards.
+============================================================ */
+
+@media (forced-colors: active)
+{
+
+    hr,
+    [data-surface],
+    .card
+    {
+
+        border-color: CanvasText;
+
+    }
+
+    :focus-visible
+    {
+
+        outline-color: Highlight;
+
+    }
+
+}
+
+
+/* ============================================================
+   PRINT
+
+   A visitor printing a page is usually taking an address or a
+   phone number to a phone call. Give them the document, not the
+   interface.
+============================================================ */
+
+@media print
+{
+
+    body
+    {
+
+        background: #FFFFFF;
+
+        color: #000000;
+
+        font-size: 12pt;
+
+    }
+
+    a
+    {
+
+        color: #000000;
+
+        text-decoration: underline;
+
+    }
+
+    a[href^='http']::after
+    {
+
+        content: ' (' attr(href) ')';
+
+        font-size: 10pt;
+
+        word-break: break-all;
+
+    }
+
+    [data-print='hide']
+    {
+
+        display: none;
+
+    }
+
+}

@@ -1,0 +1,579 @@
+/* ============================================================
+   TOKENS — LAYER 0
+
+   GENERATED FROM data/theme.json. DO NOT EDIT.
+
+   Regenerate with:
+     node bin/generateStyles.js <clientRoot> <schemaRoot>
+
+   Hand-editing this file breaks the chain between what the
+   validator checks and what the browser paints, which is the
+   only reason the contrast gate means anything.
+============================================================ */
+
+/* ============================================================
+   FONT FACES
+============================================================ */
+
+@font-face
+{
+
+    font-family: 'Cormorant Garamond';
+
+    src: url('../fonts/cormorantGaramond-500-subset.woff2') format('woff2');
+
+    font-weight: 500;
+
+    font-style: normal;
+
+    font-display: swap;
+
+}
+
+@font-face
+{
+
+    font-family: 'Cormorant Garamond';
+
+    src: url('../fonts/cormorantGaramond-600-subset.woff2') format('woff2');
+
+    font-weight: 600;
+
+    font-style: normal;
+
+    font-display: swap;
+
+}
+
+@font-face
+{
+
+    font-family: 'Cormorant Garamond Fallback';
+
+    src: local('Georgia');
+
+    ascent-override: 95%;
+
+    descent-override: 25%;
+
+    line-gap-override: 0%;
+
+    size-adjust: 100%;
+
+}
+
+@font-face
+{
+
+    font-family: 'Inter';
+
+    src: url('../fonts/inter-variable-subset.woff2') format('woff2');
+
+    font-weight: 400 600;
+
+    font-style: normal;
+
+    font-display: swap;
+
+}
+
+@font-face
+{
+
+    font-family: 'Inter Fallback';
+
+    src: local('Segoe UI');
+
+    ascent-override: 90%;
+
+    descent-override: 22%;
+
+    line-gap-override: 0%;
+
+    size-adjust: 100%;
+
+}
+
+/* ============================================================
+   LAYER 1 — PRIMITIVES
+============================================================ */
+
+/* Raw brand values, named by what they ARE.
+   Components never consume this layer (MNT-002). */
+
+:root
+{
+
+    --colorGold: #C19E61;
+
+    --colorGoldDark: #A98445;
+
+    --colorGoldLight: #D0AF77;
+
+    --colorGoldInk: #8A6A33;
+
+    --colorBlack: #0B0B0D;
+
+    --colorBlackDeep: #060607;
+
+    --colorCharcoal: #18181B;
+
+    --colorSurface: #242529;
+
+    --colorWhite: #F6F5F3;
+
+    --colorWarm: #FAF8F5;
+
+    --colorWarmDeep: #F0EDE7;
+
+    --colorText: #D2D3D6;
+
+    --colorMuted: #8A8C93;
+
+    --colorMutedInk: #6A6C72;
+
+}
+
+/* ============================================================
+   LAYERS 2 & 3 — SEMANTIC TOKENS, SCENE-SCOPED
+============================================================ */
+
+/* Components consume this layer only. A scene change is a
+   data-attribute change, not a stylesheet swap — which is why
+   no component is written twice. */
+
+:root,
+[data-scene="light"]
+{
+
+    --surfaceBase: #FAF8F5;
+
+    --surfaceRaised: #F6F5F3;
+
+    --surfaceSunken: #FAF8F5;
+
+    --textPrimary: #0B0B0D;
+
+    --textSecondary: #6A6C72;
+
+    --textMuted: #6A6C72;
+
+    --textLink: #8A6A33;
+
+    --textOnAccent: #0B0B0D;
+
+    --accentPrimary: #C19E61;
+
+    --accentStroke: #A98445;
+
+    --borderSubtle: rgb(11 11 13 / 0.1);
+
+    --borderInteractive: rgb(11 11 13 / 0.52);
+
+    --focusRing: #A98445;
+
+}
+
+[data-scene="dusk"]
+{
+
+    --surfaceBase: #18181B;
+
+    --surfaceRaised: #242529;
+
+    --surfaceSunken: #0B0B0D;
+
+    --textPrimary: #F6F5F3;
+
+    --textSecondary: #D2D3D6;
+
+    --textMuted: #D2D3D6;
+
+    --textLink: #C19E61;
+
+    --textOnAccent: #0B0B0D;
+
+    --accentPrimary: #C19E61;
+
+    --accentStroke: #C19E61;
+
+    --borderSubtle: rgb(246 245 243 / 0.1);
+
+    --borderInteractive: rgb(246 245 243 / 0.44);
+
+    --focusRing: #C19E61;
+
+}
+
+[data-scene="dark"]
+{
+
+    --surfaceBase: #0B0B0D;
+
+    --surfaceRaised: #242529;
+
+    --surfaceSunken: #060607;
+
+    --textPrimary: #F6F5F3;
+
+    --textSecondary: #D2D3D6;
+
+    --textMuted: #D2D3D6;
+
+    --textLink: #C19E61;
+
+    --textOnAccent: #0B0B0D;
+
+    --accentPrimary: #C19E61;
+
+    --accentStroke: #C19E61;
+
+    --borderSubtle: rgb(246 245 243 / 0.1);
+
+    --borderInteractive: rgb(246 245 243 / 0.44);
+
+    --focusRing: #C19E61;
+
+}
+
+[data-scene="dark"] [data-surface="sunken"]
+{
+
+    --borderInteractive: rgb(246 245 243 / 0.48);
+
+}
+
+/* ============================================================
+   TYPOGRAPHY
+============================================================ */
+
+:root
+{
+
+    --fontFamilyDisplay: 'Cormorant Garamond', 'Cormorant Garamond Fallback', Georgia, 'Times New Roman', serif;
+
+    --fontFamilyBody: 'Inter', 'Inter Fallback', system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+}
+
+:root
+{
+
+    --fontDisplayXl: clamp(2.875rem, 1.536rem + 5.714vw, 7.25rem);
+
+    --lineHeightDisplayXl: 1.02;
+
+    --fontDisplayLg: clamp(2.125rem, 1.398rem + 3.102vw, 4.5rem);
+
+    --lineHeightDisplayLg: 1.06;
+
+    --fontDisplayMd: clamp(1.625rem, 1.357rem + 1.143vw, 2.5rem);
+
+    --lineHeightDisplayMd: 1.12;
+
+    --fontProcessNumeral: clamp(2rem, 1.230rem + 3.286vw, 4.1875rem);
+
+    --lineHeightProcessNumeral: 1;
+
+    --fontHeadingSm: clamp(1.25rem, 1.173rem + 0.327vw, 1.5rem);
+
+    --lineHeightHeadingSm: 1.25;
+
+    --fontBodyLg: clamp(1.125rem, 1.068rem + 0.245vw, 1.3125rem);
+
+    --lineHeightBodyLg: 1.55;
+
+    --fontBody: 1.0625rem;
+
+    --lineHeightBody: 1.65;
+
+    --fontBodySm: clamp(0.9375rem, 0.918rem + 0.082vw, 1rem);
+
+    --lineHeightBodySm: 1.6;
+
+    --fontCaption: clamp(0.875rem, 0.856rem + 0.082vw, 0.9375rem);
+
+    --lineHeightCaption: 1.4;
+
+}
+
+@media (min-width: 1024px)
+{
+
+    :root
+    {
+
+        --fontBody: 1.125rem;
+
+    }
+
+}
+
+:root
+{
+
+    --trackingDisplay: -0.02em;
+
+    --trackingBody: 0;
+
+    --trackingCaption: 0.14em;
+
+    --measureDisplay: 14ch;
+
+    --measureHeading: 18ch;
+
+    --measureBody: 68ch;
+
+}
+
+/* ============================================================
+   SPACING
+============================================================ */
+
+:root
+{
+
+    --space1: 0.25rem;
+
+    --space2: 0.5rem;
+
+    --space3: 0.75rem;
+
+    --space4: 1rem;
+
+    --space5: 1.5rem;
+
+    --space6: 2rem;
+
+    --space7: 2.5rem;
+
+    --space8: 3rem;
+
+    --space9: 4rem;
+
+    --space10: 5rem;
+
+    --space11: 6rem;
+
+    --space12: 8rem;
+
+    --space13: 10rem;
+
+    --space14: 12.5rem;
+
+    --sectionPaddingBlock: clamp(4.5rem, 2rem + 9vw, 12.5rem);
+
+    --sectionPaddingBlockTight: clamp(3rem, 1.5rem + 5.5vw, 7.5rem);
+
+}
+
+/* ============================================================
+   LAYOUT
+============================================================ */
+
+:root
+{
+
+    --breakpointSm: 480px;
+
+    --breakpointMd: 768px;
+
+    --breakpointLg: 1024px;
+
+    --breakpointXl: 1200px;
+
+    --breakpointXxl: 1440px;
+
+    --containerMax: 1240px;
+
+    --containerWide: 1440px;
+
+    --containerNarrow: 760px;
+
+    --containerGutter: clamp(1.25rem, 0.5rem + 3vw, 4rem);
+
+    --borderHairline: 1px;
+
+    --headerClearance: 6rem;
+
+}
+
+/* ── Grid geometry — the only breakpoints in the system ── */
+
+:root
+{
+
+    --gridColumns: 4;
+
+    --gridGap: var(--space5);
+
+}
+
+@media (min-width: 768px)
+{
+
+    :root
+    {
+
+        --gridColumns: 8;
+
+        --gridGap: var(--space6);
+
+    }
+
+}
+
+@media (min-width: 1024px)
+{
+
+    :root
+    {
+
+        --gridColumns: 12;
+
+        --gridGap: var(--space6);
+
+    }
+
+}
+
+/* ============================================================
+   RADII, STACKING, MOTION
+============================================================ */
+
+:root
+{
+
+    --radiusNone: 0;
+
+    --radiusButton: 2px;
+
+    --radiusCard: 2px;
+
+    --radiusImage: 0;
+
+    --zBackdrop: -1;
+
+    --zBase: 0;
+
+    --zRaised: 10;
+
+    --zHeader: 100;
+
+    --zMegaPanel: 110;
+
+    --zOverlay: 200;
+
+    --zSkipLink: 300;
+
+    --durationRespond: 200ms;
+
+    --durationExit: 220ms;
+
+    --durationReveal: 620ms;
+
+    --durationSettle: 700ms;
+
+    --durationDescend: 900ms;
+
+    --easeEntrance: cubic-bezier(0.16, 1, 0.30, 1);
+
+    --easeExit: cubic-bezier(0.40, 0.00, 1.00, 1.00);
+
+    --easeRespond: cubic-bezier(0.33, 0.00, 0.33, 1.00);
+
+    --easeEnvironmental: cubic-bezier(0.45, 0.05, 0.55, 0.95);
+
+    --motionStagger: 60ms;
+
+    --motionStaggerMaxItems: 6;
+
+    --durationSceneReduced: 200ms;
+
+}
+
+/* ============================================================
+   ELEMENT DEFAULTS
+============================================================ */
+
+/* Zero specificity. A component overrides any of these with a
+   single class and no !important. */
+
+:where(body)
+{
+
+    font-size: var(--fontBody);
+
+    line-height: var(--lineHeightBody);
+
+    font-family: var(--fontFamilyBody);
+
+    letter-spacing: var(--trackingBody);
+
+}
+
+:where(h1)
+{
+
+    font-size: var(--fontDisplayXl);
+
+    line-height: var(--lineHeightDisplayXl);
+
+    font-family: var(--fontFamilyDisplay);
+
+    letter-spacing: var(--trackingDisplay);
+
+}
+
+:where(h2)
+{
+
+    font-size: var(--fontDisplayLg);
+
+    line-height: var(--lineHeightDisplayLg);
+
+    font-family: var(--fontFamilyDisplay);
+
+    letter-spacing: var(--trackingDisplay);
+
+}
+
+:where(h3)
+{
+
+    font-size: var(--fontDisplayMd);
+
+    line-height: var(--lineHeightDisplayMd);
+
+    font-family: var(--fontFamilyDisplay);
+
+    letter-spacing: var(--trackingDisplay);
+
+}
+
+:where(h4, h5, h6)
+{
+
+    font-size: var(--fontHeadingSm);
+
+    line-height: var(--lineHeightHeadingSm);
+
+}
+
+:where(small, figcaption)
+{
+
+    font-size: var(--fontCaption);
+
+    line-height: var(--lineHeightCaption);
+
+    letter-spacing: var(--trackingCaption);
+
+}
+
+:where(p)
+{
+
+    max-width: var(--measureBody);
+
+}

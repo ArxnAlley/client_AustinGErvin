@@ -1,0 +1,38 @@
+[
+    {
+        "code": "OH",
+        "name": "Ohio",
+        "barName": "Supreme Court of Ohio",
+        "advertisingRules": {
+            "citation": "Ohio Rules of Professional Conduct 7.1-7.3",
+            "url": "https://www.supremecourt.ohio.gov/LegalResources/Rules/ProfConduct/profConductRules.pdf",
+            "lastReviewed": "2026-07-23",
+            "filingRequired": "no"
+        },
+        "prohibitedTerms": [],
+        "terminology": {
+            "impairedDriving": "OVI",
+            "protectionOrder": "Civil Protection Order",
+            "parentalRights": "allocation of parental rights and responsibilities"
+        },
+        "requiredDisclaimers": ["attorney-advertising", "no-relationship"]
+    },
+    {
+        "code": "KY",
+        "name": "Kentucky",
+        "barName": "Kentucky Bar Association",
+        "advertisingRules": {
+            "citation": "Kentucky SCR 3.130-7.01 et seq.",
+            "url": "https://www.kybar.org/page/rulesofprofconduct",
+            "lastReviewed": "2026-07-23",
+            "filingRequired": "unknown"
+        },
+        "prohibitedTerms": [],
+        "terminology": {
+            "impairedDriving": "DUI",
+            "protectionOrder": "Emergency Protective Order",
+            "parentalRights": "custody and timesharing"
+        },
+        "requiredDisclaimers": ["attorney-advertising", "no-relationship"]
+    }
+]
