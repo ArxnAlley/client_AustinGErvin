@@ -6,7 +6,7 @@ closeout. For why something is the way it is, read
 `docs/technicalDebt.md`.
 
 **Last closeout:** 2026-08-15
-**Branch:** `main` · **HEAD:** `75f4ea4` · **Origin:** `origin/main` at `e6066d9`
+**Branch:** `main` · **HEAD:** `edd0640` · **Origin:** `origin/main` at `e6066d9`
 **Working tree at closeout:** clean
 
 ---
@@ -373,8 +373,8 @@ next session's brief, as directed by Aron.
 
 ## 14 · Resume point
 
-**Everything is committed. The working tree is clean at `75f4ea4`.**
-`main` is **1 commit ahead of `origin/main`** and has **not** been
+**Everything is committed. The working tree is clean at `edd0640`.**
+`main` is **2 commits ahead of `origin/main`** and has **not** been
 pushed. Do not push without Aron asking.
 
 **Start here next session:**
