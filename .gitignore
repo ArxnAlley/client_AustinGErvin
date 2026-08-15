@@ -10,3 +10,5 @@ node_modules/
 # Environment
 .env
 .env.*
+# Local operational SOP — not shared, not deployed
+docs/sessionCloseout.md
