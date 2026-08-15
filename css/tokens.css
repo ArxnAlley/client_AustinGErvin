@@ -15,35 +15,13 @@
    FONT FACES
 ============================================================ */
 
-@font-face
-{
-
-    font-family: 'Cormorant Garamond';
-
-    src: url('../fonts/cormorantGaramond-500-subset.woff2') format('woff2');
-
-    font-weight: 500;
-
-    font-style: normal;
-
-    font-display: swap;
-
-}
-
-@font-face
-{
-
-    font-family: 'Cormorant Garamond';
-
-    src: url('../fonts/cormorantGaramond-600-subset.woff2') format('woff2');
-
-    font-weight: 600;
-
-    font-style: normal;
-
-    font-display: swap;
-
-}
+/* The subset woff2 files were never produced, so the two faces
+   that pointed at them have been removed: an @font-face whose
+   src 404s still claims the family name and competes with the
+   real face now loaded in index.html. The metric-matched
+   fallbacks below stay — they are what renders before the web
+   font arrives, and they are declared with local() so they
+   always resolve. */
 
 @font-face
 {
@@ -59,21 +37,6 @@
     line-gap-override: 0%;
 
     size-adjust: 100%;
-
-}
-
-@font-face
-{
-
-    font-family: 'Inter';
-
-    src: url('../fonts/inter-variable-subset.woff2') format('woff2');
-
-    font-weight: 400 600;
-
-    font-style: normal;
-
-    font-display: swap;
 
 }
 

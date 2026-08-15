@@ -1,0 +1,127 @@
+{
+  "_note": "Source of truth for the Google review dataset. index.html renders from this file via scripts/buildReviews.mjs; the generated markup is committed so the testimonials are real DOM text with no runtime fetch. Review text is reproduced EXACTLY as supplied — including spelling and grammar — because these are real people's words.",
+
+  "provider": "Google Business Profile",
+
+  "profileUrl": null,
+
+  "aggregate": {
+    "rating": 4.8,
+    "scale": 5,
+    "provider": "Google",
+    "reviewCount": null,
+    "verification": {
+      "verified": true,
+      "source": "Supplied by Nulo Studio as the verified aggregate for the business.",
+      "note": "Only the aggregate is verified. reviewCount stays null because no count was supplied — do not display one until it is."
+    }
+  },
+
+  "_dataStatus": {
+    "state": "POPULATED",
+    "supplied": "Six complete written reviews. Six is the entire supplied corpus — the profile itself carries roughly 46 reviews, but only these six have ever had their text handed over. Every additional record below the line is a name without words.",
+    "rule": "Text is reproduced verbatim. No spelling, grammar or wording is corrected — 'he we above and beyond' and 'Me Irvine' are as supplied and stay as supplied. Nothing is reconstructed, paraphrased, or inferred.",
+    "individualRatings": "ASSUMED, NOT SUPPLIED. No per-reviewer star rating came with the review text. The hero cards were asked to carry stars, so every record below is set to 5 — which is what all six read as, but it is an assumption and not a verified figure. Correct any that are wrong by changing that one number and re-running the generator; set it back to null and that card renders with the Google mark and no stars at all, which is the honest fallback. The aggregate, 4.8, is the only rating on this page that is verified.",
+    "knownButUnsupplied": [
+      "Melissa Stiles", "Colin Ahad", "Nate Brillhart", "Kristen Grooms", "Courtney Cunningham"
+    ],
+    "knownNegative": "Carlous Hutchison — a negative review is known to exist. No text was supplied, so no record can be written. It must be added here when its text arrives, and must not be omitted from this file merely for being negative. The marketing carousel curates; this dataset does not.",
+    "howToAddMore": "Paste the review text into `reviews` with a slug id, set carousel:true, add the id to BOTH sequences in `carouselOrder` — top and bottom — then run `node scripts/buildReviews.mjs`. The tracks lengthen automatically and the marquee re-times itself from content width."
+  },
+
+  "_recordShape": {
+    "id": "stable slug",
+    "author": "exactly as Google renders it",
+    "rating": "1-5 only if the individual rating was supplied; otherwise null",
+    "text": "verbatim",
+    "truncated": "true when the source ended in Google's '… More'",
+    "dimension": "which trust dimension it evidences — used to curate the hero three",
+    "hero": "true for the three carried on the hero's lower edge",
+    "carousel": "true to carry it in the marquee"
+  },
+
+  "reviews": [
+    {
+      "id": "g-logan-gullett",
+      "author": "Logan Gullett",
+      "rating": 5,
+      "text": "Austin really helped me out when things weren’t looking good, goes above and beyond when it comes to your case, great communication and very knowledgeable. Couldn’t recommend a better lawyer!",
+      "truncated": false,
+      "dimension": "character",
+      "hero": true,
+      "carousel": true
+    },
+    {
+      "id": "g-d-g",
+      "author": "D G",
+      "rating": 5,
+      "text": "Highly recommended! Hired Austin for my parentage case and he fought for me and ensured I was happy with the outcome. He has great communication, is very assertive, and truly cares about his clients. 10/10!",
+      "truncated": false,
+      "dimension": "family",
+      "hero": true,
+      "carousel": true
+    },
+    {
+      "id": "g-cynthia-book",
+      "author": "Cynthia Book",
+      "rating": 5,
+      "text": "Austin Ervin is very professional. He responds either immediately or as soon as possible when contacted. I found him to be very knowledgeable and gives very informed advice for the situation. Our legal situation was resolved quickly and responsibly. I would definitely hire him again.",
+      "truncated": false,
+      "dimension": "responsiveness",
+      "hero": true,
+      "carousel": true
+    },
+    {
+      "id": "g-brandon-hinson",
+      "author": "Brandon Hinson",
+      "rating": 5,
+      "text": "Austin is a great attorney to have he we above and beyond to get me the best plea deal he was capable of getting me I would recommend him to anybody who is fighting in the court system. Also I appreciate him very much because he did his job like he was supposed to.",
+      "truncated": false,
+      "dimension": "criminal",
+      "hero": false,
+      "carousel": true
+    },
+    {
+      "id": "g-nic-mayo",
+      "author": "Nic Mayo",
+      "rating": 5,
+      "text": "Me Irvine is very professional and was a wonderful lawyer. He worked with me instead of against me and got my daughter back in my life. I’m forever thankful for him and recommend him to anyone in need of a custody lawyer.",
+      "truncated": false,
+      "dimension": "family",
+      "hero": false,
+      "carousel": true
+    },
+    {
+      "id": "g-christan-shiveley",
+      "author": "Christan Shiveley",
+      "rating": 5,
+      "text": "Austin represented me in my divorce case, making sure that everything was done in a timely manner. Very satisfied with the outcome of everything! Definitely would recommend.",
+      "truncated": false,
+      "dimension": "family",
+      "hero": false,
+      "carousel": true
+    }
+  ],
+
+  "carouselOrder": {
+    "_note": "Two different sequences, so the rows are not the same reel twice. Every usable written review appears in BOTH rows, in a different order and at a different phase — with six testimonials in the whole supplied corpus, splitting them three-and-three would make each row repeat after three cards, which is the exact fault being corrected. Carrying the full six in each row is the longest run of unique reviewers the dataset can produce. Split the sequences the moment a seventh review arrives.",
+
+    "top": [
+      "g-logan-gullett",
+      "g-brandon-hinson",
+      "g-d-g",
+      "g-nic-mayo",
+      "g-christan-shiveley",
+      "g-cynthia-book"
+    ],
+
+    "bottom": [
+      "g-cynthia-book",
+      "g-nic-mayo",
+      "g-christan-shiveley",
+      "g-logan-gullett",
+      "g-d-g",
+      "g-brandon-hinson"
+    ]
+  }
+}

@@ -1,115 +1,435 @@
 /* ============================================================
-   FRAMEWORK FILE — COPIED, NOT AUTHORED HERE.
+   HOMEPAGE — SIX CHAPTERS
 
-   Edit it in the framework, then regenerate. A local edit is
-   overwritten on the next run and does not reach any other site.
+   AUTHORED HERE. This file is no longer copied from the
+   framework: this site is standalone, `_site/` is gone, and the
+   homepage composition is maintained in place. Do not
+   regenerate it from nuloLegalFramework — that would overwrite
+   the design.
+
+   The page is a sequence of scenes, not a stack of sections.
+   It descends daylight → charcoal → warm stone → near-black →
+   daylight → black, and each change is earned by the content
+   that sits in it rather than alternated for effect.
+
+   Chapters meet at a clean edge, and that is a decision rather
+   than a shortcut. A ramp from #FAF8F5 to #18181B passes
+   through mid-grey, which reads as fog rather than as a
+   dissolve — and while the ramp is still pale the header has
+   already taken the incoming chapter's scene, so its light type
+   would sit on a light ground. Cinema cuts more often than it
+   crossfades. Depth comes from within each scene instead: a
+   held gradient in the hero, and a soft rise at the head of the
+   dark chapters.
+
+   Load order: tokens → base → layout → components → THIS →
+   utilities.
 ============================================================ */
+
 
 /* ============================================================
-   HOMEPAGE COMPOSITIONS — LAYER 4
+   THE FOURTH SCENE
 
-   The fourteen sections, in the order they appear.
-
-   Every section declares its own scene through `data-scene`, so
-   the descent from daylight to focus is present with the whole
-   script layer deleted. M4 adds the fixed backdrop that
-   crossfades between them; this file is what makes the page
-   correct without it.
-
-   Geometry here is Phase 2's, and the figures it depends on are
-   derived rather than transcribed — `bin/measureDesignSystem.js`
-   is the authority for any number in this file.
+   tokens.css ships light, dusk and dark. The warm stone chapter
+   is a homepage composition, so it is declared here rather than
+   in the token layer that every page shares.
 ============================================================ */
+
+[data-scene="stone"]
+{
+
+    --surfaceBase: #E9E3D9;
+
+    --surfaceRaised: #F0EBE3;
+
+    /* Paper laid on stone. The review cards need to lift further
+       off the ground than `raised` does, and a named token keeps
+       that a scene decision rather than a `color-mix()` buried in
+       a component — which also computed to `color(srgb …)` and
+       quietly broke every contrast tool pointed at it. */
+    --surfaceCard: #F8F6F1;
+
+    --surfaceSunken: #E1DACE;
+
+    --textPrimary: #171512;
+
+    --textSecondary: #5C564C;
+
+    --textMuted: #5C564C;
+
+    --textLink: #7A5C28;
+
+    --textOnAccent: #0B0B0D;
+
+    --accentPrimary: #C19E61;
+
+    --accentStroke: #9A7B3F;
+
+    --borderSubtle: rgb(23 21 18 / 0.14);
+
+    --borderInteractive: rgb(23 21 18 / 0.5);
+
+    --focusRing: #7A5C28;
+
+}
+
+
+/* ── Scene constants, for the dissolve bands ── */
+
+:root
+{
+
+    --sceneLight: #FAF8F5;
+
+    --sceneDusk: #18181B;
+
+    --sceneStone: #E9E3D9;
+
+    --sceneDark: #0B0B0D;
+
+    /* A soft rise at the head of a dark chapter: light enough to
+       give the scene a ceiling, nowhere near enough to grey it. */
+    --sceneLift: radial-gradient(128% 62% at 50% 0%, rgb(255 255 255 / 0.045) 0%, rgb(255 255 255 / 0) 62%);
+
+    /* One value owns the mega panel's inset. The divider cancels
+       it with a negative margin, so the two must not drift. */
+    --megaPad: var(--space8);
+
+}
 
 
 /* ============================================================
-   SCENE BACKDROP · M4
+   TYPOGRAPHY — EDITORIAL WEIGHT
 
-   One fixed, full-viewport surface that the whole page sits on,
-   built from three stacked layers — one per scene — that change
-   only their opacity. Nothing moves: the environment changes
-   value, not position, which is what makes the descent
-   intrinsically vestibular-safe rather than accidentally so.
-
-   The layers accumulate rather than swap. Light is always
-   opaque at the bottom, dusk covers it, dark covers both, so
-   the backdrop is 100% opaque at every instant of a crossfade.
-   Two layers crossfading against each other would sit at 75%
-   coverage halfway through and let the canvas show, which is
-   the one moment the page would flash.
-
-   Sections keep painting their own scene until the observer
-   announces itself on the root element. That is the no-JS
-   floor: with this stylesheet's `[data-sceneMode]` rule never
-   matching, the descent is still correct, because each section
-   carries its own `data-scene`. See project_memory.md §9.10.
+   The display face carries the page at 500. base.css sets 600
+   for headings generally; at these sizes 600 reads as pressure
+   rather than authority, and the scale is doing the work.
 ============================================================ */
 
-.sceneBackdrop
+.heroHeadline,
+.statementBlock,
+.chapterHeading,
+.attorneyName,
+.finalCtaHeading
+{
+
+    margin: 0;
+
+    font-family: var(--fontFamilyDisplay);
+
+    font-weight: 500;
+
+    letter-spacing: -0.018em;
+
+    text-wrap: balance;
+
+}
+
+
+.chapterHeading
+{
+
+    max-width: 18ch;
+
+    font-size: var(--fontDisplayLg);
+
+    line-height: 1.04;
+
+}
+
+
+.iconSprite
+{
+
+    position: absolute;
+
+    width: 0;
+
+    height: 0;
+
+    overflow: hidden;
+
+}
+
+
+/* ============================================================
+   LOAD CURTAIN
+
+   The one authored moment on the page. The mark resolves out of
+   black, a hairline draws beneath it, the wordmark arrives, and
+   the whole plate lifts. Everything after that is stillness.
+
+   It is escapable by any input, hard-capped by a timer, and
+   first-visit only. The phone number sits on the plate and is
+   tappable from the first frame, because a person in a bad week
+   must never be made to watch an animation to reach a lawyer.
+============================================================ */
+
+.loadCurtain
 {
 
     position: fixed;
 
-    z-index: var(--zBackdrop);
+    z-index: 900;
 
     inset: 0;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: var(--space9);
+
+    background-color: #08080A;
+
+    transition:
+        opacity 900ms cubic-bezier(0.16, 1, 0.30, 1),
+        visibility 0s linear 900ms;
+
+}
+
+
+.loadCurtain[hidden]
+{
+
+    display: none;
+
+}
+
+
+.loadCurtain.isLifting
+{
+
+    opacity: 0;
+
+    visibility: hidden;
 
     pointer-events: none;
 
 }
 
 
-.sceneLayer
+.loadCurtainInner
+{
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    gap: var(--space5);
+
+    padding-inline: var(--space5);
+
+}
+
+
+.loadCurtainStage
+{
+
+    position: relative;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+}
+
+
+/* Gold light blooming out from behind the monogram, then
+   settling. This is the accent doing the work rather than a
+   spinner reporting progress. */
+
+.loadCurtainBloom
 {
 
     position: absolute;
 
-    inset: 0;
+    z-index: 0;
 
-    background-color: var(--surfaceBase);
+    width: clamp(210px, 32vw, 330px);
+
+    aspect-ratio: 1;
+
+    border-radius: 50%;
+
+    background: radial-gradient(circle, rgb(193 158 97 / 0.34) 0%, rgb(193 158 97 / 0.10) 42%, rgb(193 158 97 / 0) 68%);
 
     opacity: 0;
 
-    transition: opacity var(--durationDescend) var(--easeEnvironmental);
+    transform: scale(0.7);
+
+    animation: curtainBloom 1700ms cubic-bezier(0.16, 1, 0.30, 1) 120ms forwards;
 
 }
 
 
-/* The floor. Never fades, so the backdrop is never transparent. */
+/* A single pass of light across the mark. One sweep, once. */
 
-.sceneLayer[data-scene='light']
+.loadCurtainSweep
 {
 
-    opacity: 1;
+    position: absolute;
+
+    z-index: 2;
+
+    inset-block: -6%;
+
+    inset-inline-start: -30%;
+
+    width: 26%;
+
+    background: linear-gradient(100deg, rgb(255 255 255 / 0) 0%, rgb(255 246 226 / 0.5) 50%, rgb(255 255 255 / 0) 100%);
+
+    filter: blur(7px);
+
+    opacity: 0;
+
+    animation: curtainSweep 1250ms cubic-bezier(0.45, 0.05, 0.55, 0.95) 640ms forwards;
+
+    pointer-events: none;
 
 }
 
 
-body[data-scene='dusk'] .sceneLayer[data-scene='dusk'],
-body[data-scene='dark'] .sceneLayer[data-scene='dusk'],
-body[data-scene='dark'] .sceneLayer[data-scene='dark']
+.loadCurtainMark
 {
 
-    opacity: 1;
+    position: relative;
+
+    z-index: 1;
+
+    width: clamp(96px, 15vw, 150px);
+
+    height: auto;
+
+    opacity: 0;
+
+    transform: scale(0.94);
+
+    animation: curtainMark 1100ms cubic-bezier(0.16, 1, 0.30, 1) 80ms forwards;
 
 }
 
 
-/* Once the backdrop is doing the painting, the sections stop.
-   A section that declares its own surface — the sunken final
-   CTA — keeps it, because a sunken surface is a departure from
-   the base rather than a restatement of it. */
-
-[data-scene-mode='observed'] main > section[data-scene]:not([data-surface])
+.loadCurtainRule
 {
 
-    background-color: transparent;
+    width: 0;
+
+    height: 1px;
+
+    background-color: #C19E61;
+
+    opacity: 0.5;
+
+    animation: curtainRule 900ms cubic-bezier(0.16, 1, 0.30, 1) 520ms forwards;
+
+}
+
+
+.loadCurtainWord
+{
+
+    width: clamp(200px, 30vw, 320px);
+
+    height: auto;
+
+    opacity: 0;
+
+    animation: curtainWord 900ms cubic-bezier(0.16, 1, 0.30, 1) 700ms forwards;
+
+}
+
+
+.loadCurtainPhone
+{
+
+    position: absolute;
+
+    inset-block-end: var(--space8);
+
+    color: rgb(246 245 243 / 0.62);
+
+    font-family: var(--fontFamilyBody);
+
+    font-size: var(--fontBodySm);
+
+    letter-spacing: 0.08em;
+
+    text-decoration: none;
+
+}
+
+
+.loadCurtainPhone:hover,
+.loadCurtainPhone:focus-visible
+{
+
+    color: #C19E61;
+
+}
+
+
+@keyframes curtainMark
+{
+
+    to { opacity: 1; transform: scale(1); }
+
+}
+
+
+@keyframes curtainBloom
+{
+
+    45%  { opacity: 1; }
+
+    to   { opacity: 0.62; transform: scale(1); }
+
+}
+
+
+@keyframes curtainSweep
+{
+
+    12%  { opacity: 1; }
+
+    88%  { opacity: 1; }
+
+    to   { inset-inline-start: 106%; opacity: 0; }
+
+}
+
+
+@keyframes curtainRule
+{
+
+    to { width: clamp(120px, 20vw, 210px); }
+
+}
+
+
+@keyframes curtainWord
+{
+
+    to { opacity: 1; }
 
 }
 
 
 /* ============================================================
-   SITE HEADER · S01
+   SITE HEADER
+
+   Transparent, so the chapter behind it supplies the ground.
+   It takes the scene of whatever is passing beneath, which is
+   what lets one bar sit over six different colours.
 ============================================================ */
 
 .siteHeader
@@ -121,74 +441,37 @@ body[data-scene='dark'] .sceneLayer[data-scene='dark']
 
     inset-block-start: 0;
 
-    background-color: var(--surfaceBase);
+    background-color: transparent;
 
-    border-block-end: var(--borderHairline) solid var(--borderSubtle);
-
-}
-
-
-/* The header inherits the body's scene, so it crosses from light
-   to dark with the backdrop rather than staying behind as a lit
-   bar over a dark page. It has to be opaque — content scrolls
-   beneath it — so it cannot simply let the backdrop through, and
-   it therefore carries the only colour transition on the page
-   that is not an opacity.
-
-   The elements are enumerated rather than swept with a
-   descendant wildcard: the consultation button owns a 200ms
-   response transition, and a wildcard here would quietly
-   stretch it to the scene duration. Every selector below names
-   something whose colour is scene-dependent and nothing whose
-   colour is state-dependent.
-
-   Text and surface change together. Fading the surface while
-   the text snaps would leave near-white type on a near-white
-   bar for the length of the descent. */
-
-.siteHeader,
-.siteHeader .logoLockup,
-.siteHeader .logoMark,
-.siteHeader .primaryNavLink,
-.siteHeader .headerPhone,
-.siteHeader .menuToggleBar
-{
+    border-block-end: 1px solid transparent;
 
     transition:
-        color var(--durationDescend) var(--easeEnvironmental),
-        background-color var(--durationDescend) var(--easeEnvironmental),
-        border-color var(--durationDescend) var(--easeEnvironmental);
+        background-color 520ms ease,
+        border-color 520ms ease;
 
 }
 
 
-/* The scene floor, applied the way base.css applies it. Its
-   `[data-motion="scene"]` exemption reaches the element that
-   carries the attribute and its two pseudo-elements, not a
-   subtree, and tagging ten nodes in the markup to say one thing
-   about the header is worse than restating the floor once
-   here. ACC-007: reduced motion holds at 200ms, never zero. */
-
-@media (prefers-reduced-motion: reduce)
+.siteHeader.isStuck
 {
 
-    .siteHeader,
-    .siteHeader .logoLockup,
-    .siteHeader .logoMark,
-    .siteHeader .primaryNavLink,
-    .siteHeader .headerPhone,
-    .siteHeader .menuToggleBar
-    {
+    background-color: color-mix(in srgb, var(--surfaceBase) 84%, transparent);
 
-        transition-duration: var(--durationSceneReduced) !important;
+    border-block-end-color: var(--borderSubtle);
 
-    }
+    backdrop-filter: saturate(1.2) blur(14px);
 
 }
 
+
+/* The containing block for the mega panels. They align to this
+   element's content edges, which is what puts their left edge on
+   the lockup and their right edge on the consultation button. */
 
 .siteHeaderInner
 {
+
+    position: relative;
 
     display: flex;
 
@@ -203,45 +486,63 @@ body[data-scene='dark'] .sceneLayer[data-scene='dark']
 }
 
 
-.headerActions
+.logoLockup
 {
 
-    display: flex;
+    display: inline-flex;
 
     align-items: center;
 
-    gap: var(--space5);
-
-}
-
-
-.headerPhone
-{
+    flex: none;
 
     color: var(--textPrimary);
-
-    font-size: var(--fontBodySm);
-
-    font-weight: 500;
 
     text-decoration: none;
 
 }
 
 
-.headerPhone:hover
+/* The wordmark is gold artwork. Gold on a light ground measures
+   2.31:1 — fine for a logo under WCAG 1.4.3, and still hard to
+   read, which is the thing the bar is for. On light and stone
+   scenes it is graded down to the approved ink tone; on the dark
+   scenes it is left alone, where gold on black is at its best. */
+
+.logoWordmarkImage
 {
 
-    color: var(--textLink);
+    width: auto;
+
+    height: 28px;
+
+    transition: filter 520ms ease;
 
 }
 
 
-/* ── Navigation · S02 ──
+[data-scene='light'] .logoWordmarkImage,
+[data-scene='stone'] .logoWordmarkImage
+{
 
-   Collapsed below the firm's declared nav breakpoint. The width
-   at which it collapses is a measurement, not a preference:
-   RES-002 derives it from the lockup, the labels, and the CTA. */
+    filter: brightness(0.46) saturate(1.5) contrast(1.12);
+
+}
+
+
+@media (min-width: 700px)
+{
+
+    .logoWordmarkImage
+    {
+
+        height: 34px;
+
+    }
+
+}
+
+
+/* ── Navigation ── */
 
 .primaryNav
 {
@@ -272,6 +573,8 @@ body[data-scene='dark'] .sceneLayer[data-scene='dark']
 .primaryNavLink
 {
 
+    position: relative;
+
     color: var(--textPrimary);
 
     font-family: var(--fontFamilyBody);
@@ -287,7 +590,413 @@ body[data-scene='dark'] .sceneLayer[data-scene='dark']
 }
 
 
-.primaryNavLink:hover
+.primaryNavLink::after
+{
+
+    position: absolute;
+
+    inset-block-end: -6px;
+
+    inset-inline-start: 0;
+
+    width: 100%;
+
+    height: 1px;
+
+    background-color: var(--accentStroke);
+
+    content: "";
+
+    /* Scaled rather than widened: animating `width` relayouts
+       the line on every frame, and the visual result is
+       identical. */
+    transform: scaleX(0);
+
+    transform-origin: left center;
+
+    transition: transform 280ms cubic-bezier(0.33, 0, 0.33, 1);
+
+}
+
+
+.primaryNavLink:hover::after,
+.primaryNavLink:focus-visible::after
+{
+
+    transform: scaleX(1);
+
+}
+
+
+/* ============================================================
+   MEGA MENU
+
+   Opens on `:hover` and on `:focus-within`, so it is usable
+   with the script deleted and reachable by keyboard by simply
+   tabbing forward: the trigger and every row live inside the
+   same list item, and focus staying inside keeps it open.
+
+   The script adds `aria-expanded` and Escape-to-close on top.
+   Neither is load-bearing, which is why the attribute is set by
+   the script rather than written into the markup — an
+   `aria-expanded="false"` that nothing ever updates is worse
+   than no attribute at all.
+============================================================ */
+
+/* Deliberately NOT positioned. The panel spans the full header,
+   so its containing block must be the header — which `position:
+   sticky` already makes into one. A `position: relative` here
+   would anchor a 1180px panel to a 110px list item and push the
+   document sideways. */
+
+.navItem
+{
+
+    position: static;
+
+}
+
+
+.navChevron
+{
+
+    display: inline-block;
+
+    width: 6px;
+
+    height: 6px;
+
+    margin-inline-start: 7px;
+
+    border-inline-end: 1px solid currentColor;
+
+    border-block-end: 1px solid currentColor;
+
+    transform: translateY(-2px) rotate(45deg);
+
+    opacity: 0.55;
+
+    transition: transform 300ms cubic-bezier(0.16, 1, 0.30, 1), opacity 300ms ease;
+
+}
+
+
+.hasMega:hover .navChevron,
+.hasMega:focus-within .navChevron
+{
+
+    transform: translateY(0) rotate(225deg);
+
+    opacity: 1;
+
+}
+
+
+.megaPanel
+{
+
+    position: absolute;
+
+    z-index: 10;
+
+    inset-block-start: 100%;
+
+    /* Held to the container's CONTENT edges, not the viewport and
+       not the padding box: the panel's left edge lands on the
+       lockup's left edge and its right edge on the consultation
+       button's right edge, so it reads as part of the bar rather
+       than as a sheet floating behind it. */
+    inset-inline: var(--containerGutter);
+
+    padding: var(--megaPad) var(--megaPad);
+
+    background-color: var(--surfaceRaised);
+
+    border: 1px solid var(--borderSubtle);
+
+    border-block-start-color: var(--accentStroke);
+
+    box-shadow: 0 34px 70px -30px rgb(11 11 13 / 0.5);
+
+    opacity: 0;
+
+    visibility: hidden;
+
+    transform: translateY(-8px);
+
+    /* Exit is quicker than entrance — a panel that lingers on
+       the way out reads as lag rather than as grace. */
+    transition:
+        opacity 200ms ease,
+        transform 200ms ease,
+        visibility 0s linear 200ms;
+
+}
+
+
+.hasMega:hover .megaPanel,
+.hasMega:focus-within .megaPanel
+{
+
+    opacity: 1;
+
+    visibility: visible;
+
+    transform: translateY(0);
+
+    transition:
+        opacity 380ms cubic-bezier(0.16, 1, 0.30, 1),
+        transform 380ms cubic-bezier(0.16, 1, 0.30, 1),
+        visibility 0s;
+
+}
+
+
+.megaInner
+{
+
+    display: grid;
+
+    grid-template-columns: minmax(0, 0.78fr) 1px minmax(0, 1.68fr);
+
+    gap: 0 var(--space8);
+
+    /* Stretch, so the divider is as tall as the tallest column
+       before its own negative margins take it the rest of the
+       way. */
+    align-items: stretch;
+
+}
+
+
+/* The divider is structure, not decoration: it runs the full
+   height of the panel, through the padding, from the gold rule
+   at the top to the border at the bottom. A rule that stops
+   where the text stops looks like an underline that lost its
+   way. */
+
+.megaDivider
+{
+
+    background-color: var(--borderSubtle);
+
+    margin-block: calc(var(--megaPad) * -1);
+
+}
+
+
+.megaLead
+{
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: flex-start;
+
+    padding-inline-end: var(--space2);
+
+}
+
+
+.megaLeadTitle
+{
+
+    margin: 0;
+
+    color: var(--textPrimary);
+
+    font-family: var(--fontFamilyDisplay);
+
+    font-size: var(--fontDisplayMd);
+
+    font-weight: 500;
+
+    line-height: 1.12;
+
+}
+
+
+.megaLeadText
+{
+
+    max-width: 30ch;
+
+    margin: var(--space4) 0 0;
+
+    color: var(--textSecondary);
+
+    font-size: var(--fontBodySm);
+
+    line-height: 1.6;
+
+}
+
+
+/* The arrow used to sit inside the flex line and get clipped by
+   the link's own box as it translated. It now has reserved
+   track of its own and room to travel into. */
+
+.megaLeadLink
+{
+
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: var(--space3);
+
+    /* Anchored to the foot of the column, so the lead reads
+       header-at-top / action-at-bottom and the action lands on
+       the same line the list ends on. The height is used rather
+       than left dead beneath the paragraph. */
+    margin-block-start: auto;
+
+    padding-block-start: var(--space8);
+
+    padding-inline-end: var(--space2);
+
+    overflow: visible;
+
+    color: var(--textLink);
+
+    font-family: var(--fontFamilyBody);
+
+    font-size: var(--fontBodySm);
+
+    font-weight: 500;
+
+    letter-spacing: 0.01em;
+
+    text-decoration: none;
+
+    white-space: nowrap;
+
+}
+
+
+.megaLeadLink > span:first-child
+{
+
+    border-block-end: 1px solid transparent;
+
+    padding-block-end: 2px;
+
+    transition: border-color 260ms ease;
+
+}
+
+
+.megaLeadLink:hover > span:first-child,
+.megaLeadLink:focus-visible > span:first-child
+{
+
+    border-block-end-color: var(--accentStroke);
+
+}
+
+
+.megaList
+{
+
+    display: grid;
+
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    /* Tight within a row, generous between them. One repeated
+       interval would give the title and its description equal
+       standing, which is the hierarchy problem, not the fix. */
+    gap: var(--space6) var(--space7);
+
+    margin: 0;
+
+    padding: 0;
+
+    list-style: none;
+
+}
+
+
+.megaRow
+{
+
+    display: grid;
+
+    grid-template-columns: minmax(0, 1fr) auto;
+
+    align-items: baseline;
+
+    /* The gap between a title and its note is the thing that
+       makes them two tiers instead of one block. */
+    gap: var(--space4) var(--space4);
+
+    padding: var(--space4);
+
+    margin-inline-start: calc(var(--space4) * -1);
+
+    color: inherit;
+
+    text-decoration: none;
+
+    transition:
+        background-color 320ms cubic-bezier(0.16, 1, 0.30, 1),
+        transform 320ms cubic-bezier(0.16, 1, 0.30, 1);
+
+}
+
+
+.megaRow:hover,
+.megaRow:focus-visible
+{
+
+    background-color: color-mix(in srgb, var(--accentPrimary) 11%, transparent);
+
+    transform: translateX(5px);
+
+}
+
+
+/* ── Hierarchy ──
+
+   The title has to win on four axes at once, because it was
+   losing on all four at 1.42rem / 600:
+
+     weight   Cormorant is a high-contrast Garamond. At 600 its
+              stems are optically no heavier than Inter 400, so
+              the nominal weight gap was invisible. 700 is a
+              real step.
+     size     1.42 → 1.85rem, a 2.0x step over the description
+              rather than 1.58x.
+     mass     the descriptions were two lines against a one-line
+              title, so the supporting text carried more ink than
+              the thing it supports. They are one line now.
+     space    the two tiers are separated, not stacked, so they
+              read as heading-then-note rather than as a block. */
+
+.megaRowTitle
+{
+
+    grid-column: 1;
+
+    color: var(--textPrimary);
+
+    font-family: var(--fontFamilyDisplay);
+
+    font-size: 1.85rem;
+
+    font-weight: 700;
+
+    line-height: 1.04;
+
+    letter-spacing: -0.018em;
+
+    transition: color 260ms cubic-bezier(0.16, 1, 0.30, 1);
+
+}
+
+
+.megaRow:hover .megaRowTitle,
+.megaRow:focus-visible .megaRowTitle
 {
 
     color: var(--textLink);
@@ -295,10 +1004,461 @@ body[data-scene='dark'] .sceneLayer[data-scene='dark']
 }
 
 
+/* Supporting content, and coded as such: one line, a touch of
+   positive tracking so it reads as a note rather than as prose,
+   and the muted tone. It stays at the 14px caption floor and
+   4.5:1 — the recession is bought with size, mass and space,
+   never by dropping the text below what a person can read. */
+
+.megaRowText
+{
+
+    grid-column: 1;
+
+    max-width: 40ch;
+
+    color: var(--textMuted);
+
+    font-size: var(--fontCaption);
+
+    font-weight: 400;
+
+    line-height: 1.5;
+
+    letter-spacing: 0.014em;
+
+}
+
+
+/* The directional cue: a gold arrow that is not there until the
+   row is addressed, then arrives from behind and settles. */
+
+.megaArrow
+{
+
+    grid-column: 2;
+
+    grid-row: 1 / span 2;
+
+    align-self: center;
+
+    width: 24px;
+
+    height: 10px;
+
+    flex: none;
+
+    /* The head is part of the drawing, so nothing can crop it and
+       there is no rotated box to overflow its parent. */
+    overflow: visible;
+
+    color: var(--accentStroke);
+
+    opacity: 0;
+
+    transform: translateX(-6px);
+
+    transition:
+        opacity 300ms ease,
+        transform 300ms cubic-bezier(0.16, 1, 0.30, 1),
+        color 300ms ease;
+
+}
+
+
+.megaRow:hover .megaArrow,
+.megaRow:focus-visible .megaArrow,
+.megaLeadLink:hover .megaArrow,
+.megaLeadLink:focus-visible .megaArrow,
+.aboutCard:hover .megaArrow,
+.aboutCard:focus-visible .megaArrow
+{
+
+    opacity: 1;
+
+    transform: translateX(0);
+
+    color: var(--accentPrimary);
+
+}
+
+
+/* The lead link's arrow is always present — it is the column's
+   one action, not a hover discovery — and only brightens and
+   travels on approach. `grid-*` is cleared because the link is
+   a flex row, not a grid. */
+
+.megaLeadLink .megaArrow
+{
+
+    grid-column: auto;
+
+    grid-row: auto;
+
+    opacity: 0.8;
+
+    transform: translateX(0);
+
+}
+
+
+.megaLeadLink:hover .megaArrow,
+.megaLeadLink:focus-visible .megaArrow
+{
+
+    transform: translateX(4px);
+
+}
+
+
+/* Questions are sentences, not labels. They take a smaller step
+   than the practice titles so eight of them still sit two-up in
+   four rows without the panel growing a third line. */
+
+.megaList.isQuestions .megaRowTitle
+{
+
+    font-size: 1.5rem;
+
+    line-height: 1.14;
+
+}
+
+
+/* ============================================================
+   ABOUT CARDS
+
+   Not boxes. Each card is an open column with a hairline above
+   it and a hover ground that arrives from beneath — the same
+   language as the practice rows, so the two panels read as one
+   navigation system rather than two designs.
+============================================================ */
+
+/* Three cards need more of the panel than eight practice rows
+   do: at the shared ratio each description fell to about 20
+   characters a line. The lead column gives the width back. */
+
+.megaInner:has(.aboutCards)
+{
+
+    grid-template-columns: minmax(0, 0.58fr) 1px minmax(0, 1.92fr);
+
+}
+
+
+.aboutCards
+{
+
+    display: grid;
+
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+
+    grid-template-rows: auto auto auto auto;
+
+    /* The panel stretches this list to the tallest column, and a
+       grid's default `align-content` then inflates every
+       auto-sized row to absorb the slack — which reads as a
+       random gap between each title and its description. The
+       rows keep their intrinsic heights instead. */
+    align-content: start;
+
+    /* Column gap only. A row gap here is inherited by each card's
+       subgrid and lands between the icon, the title and the
+       description — doubling the hole that a single-line title
+       already leaves in a row sized for a two-line one. The
+       vertical rhythm is set by margins, where it can differ per
+       relationship. */
+    column-gap: var(--space6);
+
+    row-gap: 0;
+
+    margin: 0;
+
+    padding: 0;
+
+    list-style: none;
+
+}
+
+
+.aboutCards > li
+{
+
+    display: grid;
+
+    grid-row: span 4;
+
+    grid-template-rows: subgrid;
+
+}
+
+
+/* Subgrid, so the icon, title, description and arrow of all
+   three cards sit on shared lines. Without it a title that
+   wraps to two lines pushes its own description down and the
+   row loses its baseline. */
+
+.aboutCard
+{
+
+    position: relative;
+
+    display: grid;
+
+    grid-row: span 4;
+
+    grid-template-rows: subgrid;
+
+    height: 100%;
+
+    padding: var(--space5) var(--space4) var(--space5);
+
+    border-block-start: 1px solid var(--borderSubtle);
+
+    color: inherit;
+
+    text-decoration: none;
+
+    transition:
+        background-color 260ms ease,
+        border-color 260ms ease;
+
+}
+
+
+.aboutCard:hover,
+.aboutCard:focus-visible
+{
+
+    background-color: color-mix(in srgb, var(--accentPrimary) 8%, transparent);
+
+    border-block-start-color: var(--accentStroke);
+
+}
+
+
+/* Loose above the title, tight beneath it: the description
+   belongs to the title, the icon introduces the group. */
+
+.aboutCardIcon
+{
+
+    width: 28px;
+
+    height: 28px;
+
+    margin-block-end: var(--space5);
+
+    color: var(--accentStroke);
+
+    transition: color 260ms ease, transform 380ms cubic-bezier(0.16, 1, 0.30, 1);
+
+}
+
+
+.aboutCard:hover .aboutCardIcon,
+.aboutCard:focus-visible .aboutCardIcon
+{
+
+    color: var(--accentPrimary);
+
+    transform: translateY(-2px);
+
+}
+
+
+.aboutCardTitle
+{
+
+    color: var(--textPrimary);
+
+    font-family: var(--fontFamilyDisplay);
+
+    font-size: 1.5rem;
+
+    font-weight: 700;
+
+    line-height: 1.08;
+
+    letter-spacing: -0.016em;
+
+    transition: color 260ms cubic-bezier(0.16, 1, 0.30, 1);
+
+}
+
+
+.aboutCard:hover .aboutCardTitle,
+.aboutCard:focus-visible .aboutCardTitle
+{
+
+    color: var(--textLink);
+
+}
+
+
+.aboutCardText
+{
+
+    margin-block-start: var(--space4);
+
+    color: var(--textMuted);
+
+    font-size: var(--fontCaption);
+
+    line-height: 1.5;
+
+    letter-spacing: 0.014em;
+
+}
+
+
+.aboutCardArrow
+{
+
+    grid-column: auto;
+
+    grid-row: auto;
+
+    align-self: end;
+
+    margin-block-start: var(--space5);
+
+}
+
+
+.headerActions
+{
+
+    display: flex;
+
+    align-items: center;
+
+    gap: var(--space5);
+
+}
+
+
+.headerPhone
+{
+
+    display: none;
+
+    color: var(--textPrimary);
+
+    font-size: var(--fontBodySm);
+
+    font-weight: 500;
+
+    text-decoration: none;
+
+}
+
+
+.headerPhone:hover
+{
+
+    color: var(--textLink);
+
+}
+
+
+/* Order of surrender as the bar narrows, each step taken before
+   anything can collide rather than after:
+
+     < 1200   the navigation collapses to the menu control
+     <  760   the written phone number goes
+     <  560   the full call to action becomes the call button
+
+   The gold action and the menu control are the two things that
+   survive to 320px, because they are the two things the visitor
+   in a hurry actually needs. */
+
 .headerCta
 {
 
     display: none;
+
+}
+
+
+.headerCall
+{
+
+    display: inline-flex;
+
+    padding-inline: var(--space5);
+
+}
+
+
+/* The narrowest tier. At 320 the container is 280px and the
+   wordmark, the call button and the menu control do not fit at
+   their default sizes — measured, not assumed. The lockup gives
+   up height first, then the gaps close. */
+
+@media (max-width: 400px)
+{
+
+    .siteHeaderInner
+    {
+
+        gap: var(--space4);
+
+    }
+
+    .headerActions
+    {
+
+        gap: var(--space4);
+
+    }
+
+    .logoWordmarkImage
+    {
+
+        height: 22px;
+
+    }
+
+    .headerCall
+    {
+
+        padding-inline: var(--space4);
+
+    }
+
+}
+
+
+@media (min-width: 560px)
+{
+
+    .headerCta
+    {
+
+        display: inline-flex;
+
+    }
+
+    .headerCall
+    {
+
+        display: none;
+
+    }
+
+}
+
+
+@media (min-width: 760px)
+{
+
+    .headerPhone
+    {
+
+        display: inline-block;
+
+    }
 
 }
 
@@ -320,6 +1480,12 @@ body[data-scene='dark'] .sceneLayer[data-scene='dark']
 
     height: 48px;
 
+    background: none;
+
+    border: 0;
+
+    cursor: pointer;
+
 }
 
 
@@ -328,7 +1494,7 @@ body[data-scene='dark'] .sceneLayer[data-scene='dark']
 
     width: 22px;
 
-    height: var(--borderHairline);
+    height: 1px;
 
     background-color: var(--textPrimary);
 
@@ -342,14 +1508,6 @@ body[data-scene='dark'] .sceneLayer[data-scene='dark']
     {
 
         display: block;
-
-    }
-
-    /* inline-flex, not block — the button centres its own label. */
-    .headerCta
-    {
-
-        display: inline-flex;
 
     }
 
@@ -370,7 +1528,7 @@ body[data-scene='dark'] .sceneLayer[data-scene='dark']
 
     position: fixed;
 
-    z-index: var(--zOverlay);
+    z-index: 400;
 
     inset: 0;
 
@@ -390,7 +1548,7 @@ body[data-scene='dark'] .sceneLayer[data-scene='dark']
 
     gap: var(--space8);
 
-    padding-block: var(--space8);
+    padding-block: var(--space6) var(--space10);
 
 }
 
@@ -407,18 +1565,32 @@ body[data-scene='dark'] .sceneLayer[data-scene='dark']
 }
 
 
+.mobileMenuMark
+{
+
+    width: auto;
+
+    height: 40px;
+
+}
+
+
 .menuClose
 {
 
-    min-height: 48px;
+    background: none;
 
-    padding-inline: var(--space4);
+    border: 0;
 
-    color: var(--textPrimary);
+    color: var(--textSecondary);
+
+    font-family: var(--fontFamilyBody);
 
     font-size: var(--fontBodySm);
 
-    font-weight: 600;
+    letter-spacing: 0.06em;
+
+    text-transform: uppercase;
 
     cursor: pointer;
 
@@ -446,45 +1618,226 @@ body[data-scene='dark'] .sceneLayer[data-scene='dark']
 .mobileMenuLink
 {
 
-    display: block;
-
-    min-height: 48px;
-
     color: var(--textPrimary);
 
     font-family: var(--fontFamilyDisplay);
 
     font-size: var(--fontDisplayMd);
 
-    line-height: var(--lineHeightDisplayMd);
+    font-weight: 500;
 
     text-decoration: none;
 
 }
 
 
-/* ============================================================
-   HERO · S04
-============================================================ */
+/* ── Mobile accordion ── */
 
-.heroSection
+.mobileAccordionHead
 {
 
-    padding-block-start: var(--space12);
+    display: flex;
 
-    padding-block-end: var(--space12);
+    align-items: center;
 
-    background-color: var(--surfaceBase);
+    justify-content: space-between;
+
+    gap: var(--space5);
+
+    list-style: none;
+
+    cursor: pointer;
 
 }
 
 
-.heroGrid
+.mobileAccordionHead::-webkit-details-marker
 {
+
+    display: none;
+
+}
+
+
+.mobileAccordionGlyph
+{
+
+    width: 10px;
+
+    height: 10px;
+
+    flex: none;
+
+    border-inline-end: 1px solid var(--accentStroke);
+
+    border-block-end: 1px solid var(--accentStroke);
+
+    transform: translateY(-3px) rotate(45deg);
+
+    transition: transform 300ms cubic-bezier(0.16, 1, 0.30, 1);
+
+}
+
+
+.mobileAccordion[open] .mobileAccordionGlyph
+{
+
+    transform: translateY(0) rotate(225deg);
+
+}
+
+
+.mobileAccordionList
+{
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: var(--space4);
+
+    margin: var(--space5) 0 0;
+
+    padding: 0 0 var(--space2) var(--space5);
+
+    border-inline-start: 1px solid var(--borderSubtle);
+
+    list-style: none;
+
+}
+
+
+.mobileAccordionList a
+{
+
+    color: var(--textSecondary);
+
+    font-family: var(--fontFamilyBody);
+
+    font-size: var(--fontBodyLg);
+
+    text-decoration: none;
+
+}
+
+
+.mobileAccordionList a:hover,
+.mobileAccordionList a:focus-visible
+{
+
+    color: var(--accentPrimary);
+
+}
+
+
+/* ============================================================
+   CHAPTER ONE · NIGHTFALL OVER THE VALLEY
+
+   The hero is near-black, and the photograph is atmosphere
+   rather than subject: an aerial of the river and bridge that
+   this practice actually sits beside, graded down until it is
+   texture and place instead of a picture. Austin is the subject,
+   lifted out of that dark.
+
+   The cream hero of V1 is gone. It was legible and it was a
+   wireframe; a first viewport has one job, which is to be
+   unmistakably this attorney in this county.
+============================================================ */
+
+.chapterHero
+{
+
+    position: relative;
+
+    isolation: isolate;
+
+    margin-block-start: calc(var(--headerClearance) * -1);
+
+    /* Tightened from 9vh so the proof group reaches the fold on a
+       laptop. The hero was carrying more air above the eyebrow
+       than the composition needed. */
+    padding-block-start: calc(var(--headerClearance) + clamp(var(--space6), 4.5vh, var(--space9)));
+
+    /* Small and deliberately non-zero. The proof group's negative
+       bottom margin is what pushes it across the boundary; at
+       zero that margin would collapse through the section and the
+       next chapter would paint over the cards. */
+    padding-block-end: var(--space5);
+
+    background-color: #08080A;
+
+}
+
+
+/* ── The backdrop ──
+
+   Four things happen to the photograph: it is pushed dark, it
+   loses most of its saturation so the autumn does not fight the
+   gold, a warm wash puts it back in the brand's temperature, and
+   a vertical ramp takes the bottom edge to solid so the trust
+   panel has somewhere black to sit on. */
+
+.heroBackdrop
+{
+
+    position: absolute;
+
+    z-index: 0;
+
+    inset: 0;
+
+    pointer-events: none;
+
+}
+
+
+.heroBackdrop img
+{
+
+    width: 100%;
+
+    height: 100%;
+
+    object-fit: cover;
+
+    object-position: 50% 42%;
+
+    filter: brightness(0.46) saturate(0.5) contrast(1.1);
+
+}
+
+
+.heroBackdrop::after
+{
+
+    position: absolute;
+
+    inset: 0;
+
+    background:
+        linear-gradient(to bottom, rgb(8 8 10 / 0.5) 0%, rgb(8 8 10 / 0.22) 34%, rgb(8 8 10 / 0.88) 82%, #08080A 100%),
+        linear-gradient(104deg, rgb(8 8 10 / 0.92) 0%, rgb(8 8 10 / 0.55) 44%, rgb(8 8 10 / 0.1) 78%),
+        radial-gradient(70% 60% at 18% 34%, rgb(193 158 97 / 0.10) 0%, rgb(193 158 97 / 0) 70%);
+
+    content: "";
+
+}
+
+
+.heroInner
+{
+
+    position: relative;
+
+    z-index: 1;
+
+    display: grid;
+
+    grid-template-columns: 1fr;
 
     align-items: center;
 
-    row-gap: var(--space10);
+    gap: var(--space8);
 
 }
 
@@ -496,36 +1849,71 @@ body[data-scene='dark'] .sceneLayer[data-scene='dark']
 
     flex-direction: column;
 
-    gap: var(--space5);
+    align-items: flex-start;
 
 }
 
 
-/* The H1 caps at 104px, below `--fontDisplayXl`'s 116px maximum.
-   The cap belongs to this headline and not to the token, because
-   the token is correct for every other display heading: at 116px
-   the longest art-directed line overruns the seven-column type
-   column, and at 104px it fits at every viewport from 1200 up.
+/* The place line. A hairline runs out of the left margin into
+   it, so the first mark on the page is a rule rather than a
+   word. */
 
-   Frozen decision A8. Do not raise it — the ceiling is what
-   keeps the three lines in §A9 at three lines. */
+.heroPlace
+{
+
+    display: flex;
+
+    align-items: center;
+
+    gap: var(--space4);
+
+    margin: 0 0 var(--space6);
+
+    color: var(--accentPrimary);
+
+    font-family: var(--fontFamilyBody);
+
+    font-size: var(--fontCaption);
+
+    font-weight: 500;
+
+    letter-spacing: 0.2em;
+
+    text-transform: uppercase;
+
+}
+
+
+.heroPlaceRule
+{
+
+    width: clamp(28px, 6vw, 64px);
+
+    height: 1px;
+
+    background-color: var(--accentStroke);
+
+}
+
 
 .heroHeadline
 {
 
     margin: 0;
 
-    max-width: var(--measureDisplay);
+    color: #F7F5F1;
 
     font-size: min(var(--fontDisplayXl), 104px);
+
+    font-weight: 500;
+
+    line-height: 0.95;
+
+    letter-spacing: -0.026em;
 
 }
 
 
-/* The headline breaks on exactly three lines at every width.
-   The shape of this headline is a brand constant, which is why
-   the breaks are explicit spans and never automatic wrapping
-   (TYP-009). */
 .headlineLine
 {
 
@@ -534,77 +1922,404 @@ body[data-scene='dark'] .sceneLayer[data-scene='dark']
 }
 
 
+/* The last line carries the accent, so the sentence lands on
+   gold rather than merely stopping. */
+
+.heroHeadlineTail
+{
+
+    color: var(--accentPrimary);
+
+    font-style: italic;
+
+}
+
+
 .heroLede
 {
 
-    margin: 0;
+    max-width: 38ch;
 
-    max-width: 42ch;
+    margin: var(--space6) 0 0;
 
-    color: var(--textSecondary);
+    color: rgb(247 245 241 / 0.72);
 
     font-size: var(--fontBodyLg);
 
-    line-height: var(--lineHeightBodyLg);
+    line-height: 1.6;
 
 }
 
 
-.heroType .ctaGroup
+.heroActions
 {
 
-    margin-block-start: var(--space6);
+    display: flex;
+
+    flex-wrap: wrap;
+
+    align-items: center;
+
+    gap: var(--space5);
+
+    margin-block-start: var(--space8);
 
 }
 
 
-@media (min-width: 1200px)
+.heroCall
 {
 
-    .heroSection
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: var(--space3);
+
+    padding-block-end: 4px;
+
+    border-block-end: 1px solid rgb(247 245 241 / 0.34);
+
+    color: #F7F5F1;
+
+    font-family: var(--fontFamilyBody);
+
+    font-size: var(--fontBodySm);
+
+    font-weight: 500;
+
+    text-decoration: none;
+
+    transition: border-color 260ms ease, color 260ms ease;
+
+}
+
+
+.heroCall:hover
+{
+
+    color: var(--accentPrimary);
+
+    border-block-end-color: var(--accentPrimary);
+
+}
+
+
+.heroCallIcon
+{
+
+    width: 17px;
+
+    height: 17px;
+
+    color: var(--accentPrimary);
+
+}
+
+
+/* ── The portrait ──
+
+   Austin was photographed on a near-white ground, which on a
+   dark scene reads as a lit box behind him. A CSS mask cannot
+   fix that — it feathers the edge and leaves the white inside —
+   so the ground was keyed out of the asset itself by flood fill
+   from the border. His shirt is enclosed by him rather than
+   connected to the frame edge, so it survived.
+
+   What remains here is grading: he is cooled and dimmed very
+   slightly so he belongs to the same night as the valley, and a
+   soft warm pool sits behind him so he is lit rather than
+   pasted. */
+
+.heroPortrait
+{
+
+    position: relative;
+
+    justify-self: center;
+
+    width: min(100%, 560px);
+
+    margin: 0;
+
+}
+
+
+.heroPortrait::before
+{
+
+    position: absolute;
+
+    z-index: 0;
+
+    inset: 6% 2% 14%;
+
+    border-radius: 50%;
+
+    background: radial-gradient(58% 54% at 50% 42%, rgb(193 158 97 / 0.20) 0%, rgb(193 158 97 / 0.06) 46%, rgb(193 158 97 / 0) 72%);
+
+    filter: blur(14px);
+
+    content: "";
+
+}
+
+
+.heroPortraitImage
+{
+
+    position: relative;
+
+    z-index: 1;
+
+    display: block;
+
+    width: 100%;
+
+    height: auto;
+
+    /* The supplied matte is properly anti-aliased and carries no
+       light contamination, so this is grading rather than repair:
+       he is cooled and dimmed a little to sit under the same
+       night as the valley, and his lower edge is dissolved so he
+       stands in the scene rather than on top of it. */
+    -webkit-mask-image: linear-gradient(to bottom, #000 82%, rgb(0 0 0 / 0) 100%);
+
+    mask-image: linear-gradient(to bottom, #000 82%, rgb(0 0 0 / 0) 100%);
+
+    filter: brightness(0.92) saturate(0.8) contrast(1.04);
+
+}
+
+
+.heroPortraitCaption
+{
+
+    position: relative;
+
+    z-index: 1;
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 3px;
+
+    margin-block-start: var(--space3);
+
+    text-align: center;
+
+}
+
+
+.heroPortraitName
+{
+
+    color: #F7F5F1;
+
+    font-family: var(--fontFamilyDisplay);
+
+    font-size: var(--fontHeadingSm);
+
+    font-weight: 500;
+
+    letter-spacing: 0.02em;
+
+}
+
+
+.heroPortraitRole
+{
+
+    color: var(--accentPrimary);
+
+    font-size: var(--fontCaption);
+
+    letter-spacing: 0.16em;
+
+    text-transform: uppercase;
+
+}
+
+
+@media (min-width: 900px)
+{
+
+    .heroInner
     {
 
-        padding-block-start: var(--space13);
+        /* 0.58 rather than 0.66: the portrait is the tallest thing
+           in the hero, so its width sets where the proof cards can
+           begin. Eight per cent off the column buys the cards
+           their place above the fold and costs Austin nothing
+           anyone can see. */
+        grid-template-columns: minmax(0, 1fr) minmax(0, 0.58fr);
 
-    }
-
-    .heroType
-    {
-
-        grid-column: span 7;
+        gap: var(--space7);
 
     }
 
     .heroPortrait
     {
 
-        grid-column: span 5;
+        justify-self: end;
+
+        width: min(100%, 620px);
 
     }
 
 }
 
 
-/* ============================================================
-   TRUST STRIP · S05
-============================================================ */
+/* ── The social proof ──
 
-.trustStrip
+   Three cards, not a panel. The hero ends on them and the next
+   chapter begins behind them: the group is pushed down across
+   the boundary so its lower half stands on the scene beneath.
+   That overlap is the composition — it is what stops three
+   testimonies from reading as the start of a separate, generic
+   section.
+
+   The aggregate is not one of the three. It is a quiet line of
+   attribution on the dark just above them, because 4.8 belongs
+   to the business and the words belong to people. Giving it a
+   fourth column would have cost a testimony, and the testimony
+   is the thing that persuades. */
+
+/* How far the group reaches past the hero and stands on the
+   chapter beneath. Declared once: the hero spends it, and the
+   next chapter adds the same distance back to its own top
+   padding — so the overlap costs the page depth, never air. */
+
+:root
 {
 
-    padding-block: var(--space8);
-
-    background-color: var(--surfaceBase);
-
-    border-block-start: var(--borderHairline) solid var(--borderSubtle);
-
-    border-block-end: var(--borderHairline) solid var(--borderSubtle);
+    --proofOverhang: clamp(5rem, 9vh, 7rem);
 
 }
 
 
-.trustList
+.heroProof
 {
+
+    position: relative;
+
+    z-index: 2;
+
+    margin-block-start: var(--space5);
+
+    margin-block-end: calc((var(--space5) + var(--proofOverhang)) * -1);
+
+}
+
+
+.chapterHero + [data-chapter]
+{
+
+    padding-block-start: calc(clamp(var(--space10), 14vh, var(--space12)) + var(--proofOverhang));
+
+}
+
+
+/* ── Provenance, per card ──
+
+   The mark and the stars head the card rather than sitting on a
+   shared line above the row, so each testimony states where it
+   came from on its own. The aggregate is not repeated here: 4.8
+   is the business's figure and it belongs to the Reviews
+   section, where it is introduced properly.
+
+   Left, with the text: the badge, the first word of the quote
+   and the reviewer's name all start on the same margin, so the
+   card reads down one edge. */
+
+.heroProofBadge
+{
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: flex-start;
+
+    gap: var(--space3);
+
+    margin: 0;
+
+}
+
+
+/* Only as far as the record says. A record with no rating emits
+   no stars at all, and the mark alone carries the attribution. */
+
+.heroProofStars
+{
+
+    display: inline-flex;
+
+    gap: 2px;
+
+    line-height: 0;
+
+}
+
+
+.heroProofStars svg
+{
+
+    width: 14px;
+
+    height: 13px;
+
+    flex: none;
+
+}
+
+
+.heroProofStars .isLit
+{
+
+    color: var(--accentPrimary);
+
+}
+
+
+.heroProofStars .isUnlit
+{
+
+    color: var(--borderInteractive);
+
+}
+
+
+/* The badge holds the top edge; the testimony and its name
+   centre in whatever is left. Without this the badge would be
+   centred along with everything else and drift down the card. */
+
+.heroProofBody
+{
+
+    display: flex;
+
+    flex: 1;
+
+    flex-direction: column;
+
+    justify-content: center;
+
+    gap: var(--space5);
+
+}
+
+
+.heroProofCards
+{
+
+    display: grid;
+
+    grid-template-columns: 1fr;
+
+    gap: var(--space5);
 
     margin: 0;
 
@@ -612,30 +2327,220 @@ body[data-scene='dark'] .sceneLayer[data-scene='dark']
 
     list-style: none;
 
-    row-gap: var(--space6);
-
 }
 
 
-.trustItem
+/* Each card is its own object: its own paper, its own gold edge,
+   its own shadow cast on whichever scene it happens to be over. */
+
+.heroProofCard
 {
 
     display: flex;
 
     flex-direction: column;
 
-    gap: var(--space1);
+    /* The badge takes the top edge and `.heroProofBody` centres
+       what is left. Centred, not pushed apart: the three
+       testimonies are different lengths and every card is the
+       height of the longest, so pinning the quote to the top and
+       the name to the foot put a hole in the middle of the two
+       shorter ones. Spent as air above and below instead, the
+       same spare height reads as a generous card rather than an
+       unfinished one. */
+    gap: var(--space5);
+
+    margin: 0;
+
+    padding: var(--space6);
+
+    background-color: var(--surfaceCard, #F8F6F1);
+
+    border-block-start: 2px solid var(--accentPrimary);
+
+    box-shadow: 0 30px 60px -26px rgb(0 0 0 / 0.85);
 
 }
 
 
-@media (min-width: 768px)
+.heroProofQuote
 {
 
-    .trustList > .trustItem
+    margin: 0;
+
+    color: var(--textPrimary);
+
+    font-family: var(--fontFamilyBody);
+
+    font-size: var(--fontBodySm);
+
+    line-height: 1.62;
+
+}
+
+
+.heroProofQuote p
+{
+
+    margin: 0;
+
+}
+
+
+/* Clamped only once the script is running, because the script is
+   what supplies the control that undoes it. Five lines is the
+   length of the two shorter testimonies, so clamping the longest
+   to five is what puts the row on one rhythm.
+
+   Height and a fade rather than `-webkit-line-clamp`: the clamp
+   puts its ellipsis wherever the line happens to break, and on
+   this card that landed inside a word — "Our leg…" — which reads
+   as a bug rather than as an excerpt. The fade cuts nothing in
+   half, and "Read full review" underneath says plainly that
+   there is more. */
+
+/* The cap itself is measured by the script and handed over as
+   --heroQuoteCap: it is the median natural height of the three
+   testimonies at whatever width they are currently sitting at,
+   so only a review genuinely longer than its neighbours is ever
+   cut, and only while the three form a row. Stacked, nothing is
+   clamped at all. */
+
+.heroProofQuote.isClamped p
+{
+
+    max-height: var(--heroQuoteCap);
+
+    overflow: hidden;
+
+    -webkit-mask-image: linear-gradient(to bottom, #000 79%, transparent 100%);
+
+    mask-image: linear-gradient(to bottom, #000 79%, transparent 100%);
+
+}
+
+
+.heroProofQuote.isClamped.isExpanded p
+{
+
+    max-height: none;
+
+    overflow: visible;
+
+    -webkit-mask-image: none;
+
+    mask-image: none;
+
+}
+
+
+.heroProofMeta
+{
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 4px;
+
+    padding-block-start: var(--space5);
+
+    border-block-start: 1px solid var(--borderSubtle);
+
+}
+
+
+.heroProofName
+{
+
+    color: var(--textPrimary);
+
+    font-family: var(--fontFamilyDisplay);
+
+    font-size: 1.16rem;
+
+    font-weight: 600;
+
+    line-height: 1.2;
+
+}
+
+
+.heroProofSource
+{
+
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: var(--space2);
+
+    color: var(--textMuted);
+
+    font-size: var(--fontCaption);
+
+    letter-spacing: 0.08em;
+
+    text-transform: uppercase;
+
+}
+
+
+/* The hero mark heads a card on its own and carries a little
+   more weight than the marquee's, which sits inside a line of
+   caption text. */
+
+.heroProofMark
+{
+
+    width: 15px;
+
+    height: 15px;
+
+    flex: none;
+
+}
+
+
+.reviewMark
+{
+
+    width: 13px;
+
+    height: 13px;
+
+    flex: none;
+
+}
+
+
+/* Tablet: two cards, then one across the full measure. Three
+   columns at this width would leave each testimony about five
+   words wide. */
+
+@media (min-width: 680px)
+{
+
+    .heroProofCards
     {
 
-        grid-column: span 2;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    }
+
+    .heroProofCard:last-child
+    {
+
+        grid-column: 1 / -1;
+
+    }
+
+    /* The full-width card would otherwise set a ninety-character
+       line, which is past the width anyone reads comfortably. */
+    .heroProofCard:last-child .heroProofQuote
+    {
+
+        max-width: 62ch;
 
     }
 
@@ -645,69 +2550,38 @@ body[data-scene='dark'] .sceneLayer[data-scene='dark']
 @media (min-width: 1024px)
 {
 
-    .trustList > .trustItem
+    .heroProofCards
     {
 
-        grid-column: span 3;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+
+        gap: var(--space6);
+
+    }
+
+    .heroProofCard:last-child
+    {
+
+        grid-column: auto;
 
     }
 
 }
 
 
-.trustItemValue
-{
-
-    color: var(--textPrimary);
-
-    font-family: var(--fontFamilyBody);
-
-    font-size: var(--fontBodySm);
-
-    font-weight: 600;
-
-}
-
-
-/* Informational captions use the secondary token, never the
-   muted one. TYP-004 — a caption that carries a fact must not be
-   the lightest thing on the page. */
-.trustItemLabel
-{
-
-    color: var(--textSecondary);
-
-    font-size: var(--fontCaption);
-
-    line-height: var(--lineHeightCaption);
-
-}
-
-
 /* ============================================================
-   POSITIONING STATEMENT · S06
+   CHAPTER TWO · THE HARDEST WEEK
 
-   Owns the light → dusk transition. One of only two sections
-   permitted to carry a scene trigger, chosen because it is
-   type-sparse: the least reading interrupted by the change.
 ============================================================ */
 
-.positioningSection
+.chapterStatement
 {
 
-    padding-block: var(--sectionPaddingBlock);
+    padding-block: clamp(var(--space10), 14vh, var(--space12));
 
-    background-color: var(--surfaceBase);
+    background-color: var(--sceneDusk);
 
-    text-align: center;
-
-}
-
-
-.positioningSection .eyebrow
-{
-
-    margin-block-end: var(--space6);
+    background-image: var(--sceneLift);
 
 }
 
@@ -715,11 +2589,11 @@ body[data-scene='dark'] .sceneLayer[data-scene='dark']
 .statementBlock
 {
 
-    max-width: 14ch;
+    max-width: 20ch;
 
-    margin-inline: auto;
+    font-size: clamp(2.25rem, 1.1rem + 4.6vw, 4.75rem);
 
-    margin-block: 0;
+    line-height: 1.1;
 
 }
 
@@ -732,14 +2606,12 @@ body[data-scene='dark'] .sceneLayer[data-scene='dark']
 }
 
 
-.positioningParagraph
+.statementBody
 {
 
-    max-width: 52ch;
+    max-width: 46ch;
 
-    margin-inline: auto;
-
-    margin-block-start: var(--space8);
+    margin: var(--space8) 0 0 auto;
 
     color: var(--textSecondary);
 
@@ -747,18 +2619,20 @@ body[data-scene='dark'] .sceneLayer[data-scene='dark']
 
     line-height: var(--lineHeightBodyLg);
 
-    text-align: start;
-
 }
 
 
-@media (min-width: 768px)
+@media (min-width: 900px)
 {
 
-    .positioningParagraph
+    .statementBody
     {
 
-        text-align: center;
+        margin-block-start: var(--space9);
+
+        padding-inline-start: var(--space9);
+
+        border-inline-start: 1px solid var(--borderSubtle);
 
     }
 
@@ -766,37 +2640,31 @@ body[data-scene='dark'] .sceneLayer[data-scene='dark']
 
 
 /* ============================================================
-   ATTORNEY · S07
+   CHAPTER THREE · THE ATTORNEY
 ============================================================ */
 
-.attorneySection
+.chapterAttorney
 {
 
-    padding-block: var(--sectionPaddingBlock);
+    padding-block: clamp(var(--space10), 16vh, var(--space13));
 
-    background-color: var(--surfaceBase);
+    background-color: var(--sceneStone);
+
+    background-image: radial-gradient(120% 70% at 22% 0%, rgb(255 255 255 / 0.55) 0%, rgb(255 255 255 / 0) 64%);
 
 }
 
 
-.attorneyGrid
+.attorneyInner
 {
 
-    row-gap: var(--space9);
+    display: grid;
 
-}
+    grid-template-columns: 1fr;
 
+    align-items: center;
 
-.attorneyBody
-{
-
-    display: flex;
-
-    flex-direction: column;
-
-    align-items: flex-start;
-
-    gap: var(--space5);
+    gap: var(--space8);
 
 }
 
@@ -804,7 +2672,9 @@ body[data-scene='dark'] .sceneLayer[data-scene='dark']
 .attorneyName
 {
 
-    margin: 0;
+    font-size: var(--fontDisplayLg);
+
+    line-height: 1.04;
 
 }
 
@@ -812,9 +2682,11 @@ body[data-scene='dark'] .sceneLayer[data-scene='dark']
 .attorneyLede
 {
 
-    margin: 0;
+    max-width: 52ch;
 
-    color: var(--textPrimary);
+    margin: var(--space6) 0 0;
+
+    color: var(--textSecondary);
 
     font-size: var(--fontBodyLg);
 
@@ -823,28 +2695,12 @@ body[data-scene='dark'] .sceneLayer[data-scene='dark']
 }
 
 
-.attorneyProse
-{
-
-    margin: 0;
-
-    color: var(--textSecondary);
-
-}
-
-
 .credentialList
 {
 
-    display: flex;
+    margin: var(--space8) 0 0;
 
-    flex-direction: column;
-
-    gap: var(--space3);
-
-    width: 100%;
-
-    margin: 0;
+    border-block-start: 1px solid var(--borderSubtle);
 
 }
 
@@ -854,13 +2710,15 @@ body[data-scene='dark'] .sceneLayer[data-scene='dark']
 
     display: flex;
 
-    flex-wrap: wrap;
+    align-items: baseline;
 
-    gap: var(--space4);
+    justify-content: space-between;
 
-    padding-block: var(--space3);
+    gap: var(--space5);
 
-    border-block-end: var(--borderHairline) solid var(--borderSubtle);
+    padding-block: var(--space4);
+
+    border-block-end: 1px solid var(--borderSubtle);
 
 }
 
@@ -868,15 +2726,13 @@ body[data-scene='dark'] .sceneLayer[data-scene='dark']
 .credentialLabel
 {
 
-    flex: 0 0 12rem;
+    color: var(--textPrimary);
 
-    color: var(--textSecondary);
+    font-family: var(--fontFamilyDisplay);
 
-    font-size: var(--fontCaption);
+    font-size: var(--fontHeadingSm);
 
-    letter-spacing: var(--trackingCaption);
-
-    text-transform: uppercase;
+    font-weight: 500;
 
 }
 
@@ -886,27 +2742,772 @@ body[data-scene='dark'] .sceneLayer[data-scene='dark']
 
     margin: 0;
 
-    color: var(--textPrimary);
+    color: var(--textMuted);
 
     font-size: var(--fontBodySm);
+
+    letter-spacing: 0.04em;
+
+    text-align: end;
 
 }
 
 
-@media (min-width: 1024px)
+@media (min-width: 900px)
 {
 
-    .attorneyPortrait
+    .attorneyInner
     {
 
-        grid-column: span 5;
+        grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+
+        gap: var(--space10);
 
     }
 
-    .attorneyBody
+}
+
+
+
+
+/* ── The attorney, overlapping ──
+
+   Two planes rather than two columns: a wide media frame, and
+   Austin inset over its lower corner so the composition
+   interlocks. The frame is 16:9 and holds a photograph today;
+   swapping the <img> for a <video> later changes nothing else. */
+
+.attorneyStage
+{
+
+    position: relative;
+
+    padding-block-end: clamp(var(--space9), 12vw, var(--space12));
+
+}
+
+
+.attorneyMedia
+{
+
+    margin: 0;
+
+    overflow: hidden;
+
+}
+
+
+.attorneyMediaImage
+{
+
+    display: block;
+
+    width: 100%;
+
+    height: auto;
+
+    aspect-ratio: 16 / 10;
+
+    object-fit: cover;
+
+    object-position: 50% 40%;
+
+    filter: grayscale(0.28) contrast(1.06) brightness(0.94);
+
+}
+
+
+.attorneyInset
+{
+
+    position: absolute;
+
+    inset-block-end: 0;
+
+    inset-inline-start: clamp(var(--space5), 5vw, var(--space8));
+
+    width: clamp(150px, 34%, 260px);
+
+    margin: 0;
+
+    padding: var(--space4) var(--space4) var(--space5);
+
+    background-color: var(--surfaceCard, #F8F6F1);
+
+    box-shadow: 0 30px 60px -28px rgb(23 21 18 / 0.55);
+
+}
+
+
+.attorneyInsetImage
+{
+
+    display: block;
+
+    width: 100%;
+
+    height: auto;
+
+    aspect-ratio: 1;
+
+    object-fit: cover;
+
+    object-position: 52% 16%;
+
+}
+
+
+.attorneyInsetCaption
+{
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 2px;
+
+    margin-block-start: var(--space4);
+
+    padding-block-start: var(--space3);
+
+    border-block-start: 1px solid var(--borderSubtle);
+
+}
+
+
+.attorneyInsetName
+{
+
+    color: var(--textPrimary);
+
+    font-family: var(--fontFamilyDisplay);
+
+    font-size: 1.16rem;
+
+    font-weight: 600;
+
+    line-height: 1.15;
+
+}
+
+
+.attorneyInsetRole
+{
+
+    color: var(--textMuted);
+
+    font-size: var(--fontCaption);
+
+    letter-spacing: 0.06em;
+
+    white-space: nowrap;
+
+    text-transform: uppercase;
+
+}
+
+
+.attorneyAction
+{
+
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: var(--space3);
+
+    margin-block-start: var(--space7);
+
+    color: var(--textLink);
+
+    font-family: var(--fontFamilyBody);
+
+    font-size: var(--fontBodySm);
+
+    font-weight: 500;
+
+    text-decoration: none;
+
+}
+
+
+.attorneyAction > span
+{
+
+    padding-block-end: 2px;
+
+    border-block-end: 1px solid transparent;
+
+    transition: border-color 260ms ease;
+
+}
+
+
+.attorneyAction:hover > span
+{
+
+    border-block-end-color: var(--accentStroke);
+
+}
+
+
+.attorneyAction .megaArrow
+{
+
+    grid-column: auto;
+
+    grid-row: auto;
+
+    opacity: 0.8;
+
+    transform: none;
+
+}
+
+
+.attorneyAction:hover .megaArrow
+{
+
+    opacity: 1;
+
+    transform: translateX(4px);
+
+}
+
+
+/* ============================================================
+   CHAPTER FOUR · THE CASE FILES
+
+   Three files — Criminal, Family, Estate — and the visitor opens
+   the one that looks like theirs. Radio inputs drive it, so the
+   tabs work with the script deleted and every panel's content
+   stays in the document for search engines regardless of which
+   file is open.
+
+   The metaphor is legitimate rather than decorative: this is
+   what the practice actually keeps. It is kept as archival
+   stationery — a tab, a rule, a stamped file number — and never
+   as a cartoon folder.
+============================================================ */
+
+.chapterPractice
+{
+
+    position: relative;
+
+    isolation: isolate;
+
+    overflow: hidden;
+
+    padding-block: clamp(var(--space10), 16vh, var(--space13));
+
+    background-color: var(--sceneDark);
+
+}
+
+
+.practiceBackdrop
+{
+
+    position: absolute;
+
+    z-index: 0;
+
+    inset: 0;
+
+    pointer-events: none;
+
+}
+
+
+.practiceBackdrop img
+{
+
+    width: 100%;
+
+    height: 100%;
+
+    object-fit: cover;
+
+    object-position: 50% 26%;
+
+    opacity: 0.5;
+
+    filter: brightness(0.72) saturate(0.6) contrast(1.05);
+
+}
+
+
+.practiceBackdrop::after
+{
+
+    position: absolute;
+
+    inset: 0;
+
+    background: linear-gradient(to bottom, rgb(11 11 13 / 0.18) 0%, rgb(11 11 13 / 0.72) 54%, #0B0B0D 96%);
+
+    content: "";
+
+}
+
+
+.practiceInner
+{
+
+    position: relative;
+
+    z-index: 1;
+
+}
+
+
+.practiceLead
+{
+
+    max-width: 46ch;
+
+}
+
+
+.practiceLedeText
+{
+
+    margin: var(--space5) 0 0;
+
+    color: var(--textMuted);
+
+    font-size: var(--fontBodyLg);
+
+    line-height: 1.6;
+
+}
+
+
+/* ── The files ── */
+
+.caseFiles
+{
+
+    margin-block-start: clamp(var(--space8), 9vh, var(--space10));
+
+}
+
+
+.caseInput
+{
+
+    position: absolute;
+
+    width: 1px;
+
+    height: 1px;
+
+    opacity: 0;
+
+    pointer-events: none;
+
+}
+
+
+.caseTabs
+{
+
+    display: flex;
+
+    flex-wrap: wrap;
+
+    gap: var(--space2);
+
+    border-block-end: 1px solid var(--borderSubtle);
+
+}
+
+
+/* A tab, not a button. It sits on the rule and the open one
+   joins the panel beneath it by covering that rule. */
+
+.caseTab
+{
+
+    position: relative;
+
+    display: flex;
+
+    align-items: baseline;
+
+    gap: var(--space3);
+
+    padding: var(--space4) var(--space6);
+
+    border: 1px solid transparent;
+
+    border-block-end: 0;
+
+    color: var(--textMuted);
+
+    cursor: pointer;
+
+    transition: color 260ms ease, background-color 260ms ease, border-color 260ms ease;
+
+}
+
+
+.caseTabIndex
+{
+
+    font-family: var(--fontFamilyBody);
+
+    font-size: var(--fontCaption);
+
+    letter-spacing: 0.14em;
+
+}
+
+
+.caseTabName
+{
+
+    font-family: var(--fontFamilyDisplay);
+
+    font-size: clamp(1.4rem, 1.1rem + 1vw, 1.95rem);
+
+    font-weight: 600;
+
+    letter-spacing: -0.012em;
+
+}
+
+
+.caseTab:hover
+{
+
+    color: var(--textPrimary);
+
+}
+
+
+#caseCriminal:checked ~ .caseTabs [for='caseCriminal'],
+#caseFamily:checked ~ .caseTabs [for='caseFamily'],
+#caseEstate:checked ~ .caseTabs [for='caseEstate']
+{
+
+    background-color: rgb(247 245 241 / 0.05);
+
+    border-color: var(--borderSubtle);
+
+    color: var(--textPrimary);
+
+}
+
+
+#caseCriminal:checked ~ .caseTabs [for='caseCriminal']::after,
+#caseFamily:checked ~ .caseTabs [for='caseFamily']::after,
+#caseEstate:checked ~ .caseTabs [for='caseEstate']::after
+{
+
+    position: absolute;
+
+    inset-block-end: -1px;
+
+    inset-inline: 0;
+
+    height: 1px;
+
+    background-color: rgb(247 245 241 / 0.05);
+
+    content: "";
+
+}
+
+
+#caseCriminal:focus-visible ~ .caseTabs [for='caseCriminal'],
+#caseFamily:focus-visible ~ .caseTabs [for='caseFamily'],
+#caseEstate:focus-visible ~ .caseTabs [for='caseEstate']
+{
+
+    outline: 2px solid var(--focusRing);
+
+    outline-offset: 2px;
+
+}
+
+
+/* ── The panels ──
+
+   All three are in the document at all times. The closed ones
+   are taken out of the visual flow, not out of the DOM. */
+
+.casePanels
+{
+
+    padding-block-start: clamp(var(--space7), 6vh, var(--space9));
+
+}
+
+
+.casePanel
+{
+
+    display: none;
+
+}
+
+
+#caseCriminal:checked ~ .casePanels [data-file='criminal'],
+#caseFamily:checked   ~ .casePanels [data-file='family'],
+#caseEstate:checked   ~ .casePanels [data-file='estate']
+{
+
+    display: block;
+
+    animation: caseOpen 520ms cubic-bezier(0.16, 1, 0.30, 1);
+
+}
+
+
+@keyframes caseOpen
+{
+
+    from { opacity: 0; transform: translateY(10px); }
+
+    to   { opacity: 1; transform: none; }
+
+}
+
+
+.casePanelNote
+{
+
+    display: flex;
+
+    align-items: baseline;
+
+    flex-wrap: wrap;
+
+    gap: var(--space4);
+
+    margin: 0 0 var(--space7);
+
+    color: var(--textMuted);
+
+    font-size: var(--fontBodySm);
+
+    line-height: 1.6;
+
+}
+
+
+/* The stamp. Archival, not novelty: a ruled box and tracked
+   caps, the way a file number is actually written on a folder. */
+
+.casePanelStamp
+{
+
+    padding: 4px var(--space3);
+
+    border: 1px solid var(--accentStroke);
+
+    color: var(--accentPrimary);
+
+    font-size: var(--fontCaption);
+
+    font-weight: 500;
+
+    letter-spacing: 0.18em;
+
+    text-transform: uppercase;
+
+}
+
+
+.caseList
+{
+
+    display: grid;
+
+    grid-template-columns: 1fr;
+
+    gap: 0;
+
+    margin: 0;
+
+    padding: 0;
+
+    list-style: none;
+
+    border-block-start: 1px solid var(--borderSubtle);
+
+}
+
+
+.caseItem
+{
+
+    border-block-end: 1px solid var(--borderSubtle);
+
+}
+
+
+.caseLink
+{
+
+    display: grid;
+
+    grid-template-columns: minmax(0, 1fr) auto;
+
+    align-items: center;
+
+    gap: var(--space3) var(--space6);
+
+    padding: var(--space6) var(--space5);
+
+    margin-inline: calc(var(--space5) * -1);
+
+    color: inherit;
+
+    text-decoration: none;
+
+    transition: background-color 320ms cubic-bezier(0.16, 1, 0.30, 1);
+
+}
+
+
+.caseLink:hover,
+.caseLink:focus-visible
+{
+
+    background-color: rgb(193 158 97 / 0.09);
+
+}
+
+
+.caseName
+{
+
+    grid-column: 1;
+
+    color: var(--textPrimary);
+
+    font-family: var(--fontFamilyDisplay);
+
+    font-size: clamp(1.6rem, 1.15rem + 1.6vw, 2.4rem);
+
+    font-weight: 700;
+
+    line-height: 1.05;
+
+    letter-spacing: -0.018em;
+
+    transition: color 260ms ease;
+
+}
+
+
+.caseLink:hover .caseName,
+.caseLink:focus-visible .caseName
+{
+
+    color: var(--accentPrimary);
+
+}
+
+
+.caseDesc
+{
+
+    grid-column: 1;
+
+    max-width: 46ch;
+
+    color: var(--textMuted);
+
+    font-size: var(--fontCaption);
+
+    line-height: 1.5;
+
+    letter-spacing: 0.014em;
+
+}
+
+
+.caseArrow
+{
+
+    grid-column: 2;
+
+    grid-row: 1 / span 2;
+
+    width: 24px;
+
+    height: 10px;
+
+    overflow: visible;
+
+    color: var(--accentStroke);
+
+    opacity: 0;
+
+    transform: translateX(-8px);
+
+    transition: opacity 300ms ease, transform 300ms cubic-bezier(0.16, 1, 0.30, 1), color 300ms ease;
+
+}
+
+
+.caseLink:hover .caseArrow,
+.caseLink:focus-visible .caseArrow
+{
+
+    opacity: 1;
+
+    transform: translateX(0);
+
+    color: var(--accentPrimary);
+
+}
+
+
+@media (min-width: 900px)
+{
+
+    .caseLink
     {
 
-        grid-column: span 7;
+        grid-template-columns: minmax(0, 0.85fr) minmax(0, 1fr) auto;
+
+        gap: var(--space6);
+
+    }
+
+    .caseDesc
+    {
+
+        grid-column: 2;
+
+    }
+
+    .caseArrow
+    {
+
+        grid-column: 3;
+
+        grid-row: auto;
+
+    }
+
+}
+
+
+@media (prefers-reduced-motion: reduce)
+{
+
+    #caseCriminal:checked ~ .casePanels [data-file='criminal'],
+    #caseFamily:checked   ~ .casePanels [data-file='family'],
+    #caseEstate:checked   ~ .casePanels [data-file='estate']
+    {
+
+        animation: none;
 
     }
 
@@ -914,19 +3515,18 @@ body[data-scene='dark'] .sceneLayer[data-scene='dark']
 
 
 /* ============================================================
-   PROCESS · S08
+   CHAPTER FIVE · WHAT HAPPENS NEXT
 
-   Non-optional. This is the section that turns the firm's
-   documented reputational weakness into an on-site promise, and
-   no competitor identified in the research does it.
 ============================================================ */
 
-.processSection
+.chapterProcess
 {
 
-    padding-block: var(--sectionPaddingBlock);
+    padding-block: clamp(var(--space10), 16vh, var(--space13));
 
-    background-color: var(--surfaceBase);
+    background-color: var(--sceneLight);
+
+    background-image: radial-gradient(110% 68% at 78% 0%, rgb(227 222 212 / 0.75) 0%, rgb(227 222 212 / 0) 60%);
 
 }
 
@@ -934,13 +3534,13 @@ body[data-scene='dark'] .sceneLayer[data-scene='dark']
 .processList
 {
 
-    display: flex;
+    display: grid;
 
-    flex-direction: column;
+    grid-template-columns: 1fr;
 
     gap: var(--space8);
 
-    margin-block: var(--space9) 0;
+    margin: var(--space9) 0 0;
 
     padding: 0;
 
@@ -952,70 +3552,50 @@ body[data-scene='dark'] .sceneLayer[data-scene='dark']
 .processStep
 {
 
-    display: flex;
+    padding-block-start: var(--space5);
 
-    gap: var(--space5);
-
-    padding-block-end: var(--space8);
-
-    border-block-end: var(--borderHairline) solid var(--borderSubtle);
+    border-block-start: 1px solid var(--borderSubtle);
 
 }
 
 
-/* Weight 500, not 600. The numerals share a size with the
-   section heading at desktop; dropping them a weight keeps the
-   heading dominant and stops the numbers competing with the
-   content they label. */
+/* The ink-toned gold, not the stroke gold. `--accentStroke`
+   measures 3.26:1 on the light scene, and these numerals are
+   set below the size that would let 3:1 stand — they are text,
+   not decoration, because they carry the sequence. */
+
 .processNumeral
 {
 
-    flex: 0 0 auto;
+    display: block;
 
-    min-width: 2.5rem;
-
-    color: var(--accentPrimary);
+    color: var(--textLink);
 
     font-family: var(--fontFamilyDisplay);
 
-    font-size: var(--fontProcessNumeral);
+    font-size: var(--fontHeadingSm);
 
     font-weight: 500;
 
-    line-height: var(--lineHeightProcessNumeral);
+    letter-spacing: 0.14em;
 
 }
 
 
-.processStepBody
-{
-
-    display: flex;
-
-    flex-direction: column;
-
-    gap: var(--space3);
-
-}
-
-
-/* Inter, not the display face. A step heading is scanned by
-   someone deciding whether to call, and a grotesque scans
-   faster than a high-contrast serif. */
 .processStepHeading
 {
 
-    margin: 0;
+    margin: var(--space4) 0 0;
 
-    font-family: var(--fontFamilyBody);
+    color: var(--textPrimary);
 
-    font-size: var(--fontHeadingSm);
+    font-family: var(--fontFamilyDisplay);
 
-    font-weight: 600;
+    font-size: var(--fontDisplayMd);
 
-    letter-spacing: 0;
+    font-weight: 500;
 
-    line-height: var(--lineHeightHeadingSm);
+    line-height: 1.16;
 
 }
 
@@ -1023,338 +3603,62 @@ body[data-scene='dark'] .sceneLayer[data-scene='dark']
 .processStepText
 {
 
-    margin: 0;
-
-    max-width: 54ch;
+    margin: var(--space3) 0 0;
 
     color: var(--textSecondary);
+
+    font-size: var(--fontBodySm);
+
+    line-height: 1.62;
 
 }
 
 
-@media (min-width: 1024px)
+@media (min-width: 900px)
 {
 
     .processList
     {
 
-        display: grid;
-
         grid-template-columns: repeat(3, minmax(0, 1fr));
 
-        gap: var(--space8);
-
-    }
-
-    .processStep
-    {
-
-        flex-direction: column;
+        gap: var(--space7);
 
     }
 
 }
 
 
-/* ============================================================
-   REVIEWS · S09
+/* ── Where this office appears ── */
 
-   Owns the dusk → dark transition.
-============================================================ */
-
-.reviewsSection
+.serviceArea
 {
 
-    padding-block: var(--sectionPaddingBlock);
+    margin-block-start: clamp(var(--space10), 12vh, var(--space12));
 
-    background-color: var(--surfaceBase);
+    padding-block-start: var(--space8);
+
+    border-block-start: 1px solid var(--borderSubtle);
 
 }
 
 
-.reviewList
-{
-
-    margin-block: var(--space9) 0;
-
-    padding: 0;
-
-    list-style: none;
-
-}
-
-
-.reviewCard
-{
-
-    padding: var(--space6);
-
-    border: var(--borderHairline) solid var(--borderSubtle);
-
-    border-radius: var(--radiusCard);
-
-}
-
-
-@media (min-width: 1024px)
-{
-
-    .reviewList > .reviewCard
-    {
-
-        grid-column: span 4;
-
-    }
-
-}
-
-
-.reviewsSection .verificationBlock
-{
-
-    margin-block-start: var(--space9);
-
-}
-
-
-/* ============================================================
-   PRACTICE AREAS · S10
-============================================================ */
-
-.practiceSection
-{
-
-    padding-block: var(--sectionPaddingBlock);
-
-    background-color: var(--surfaceBase);
-
-}
-
-
-.sectionHeading
-{
-
-    margin-block: var(--space5) 0;
-
-}
-
-
-.sectionLede
-{
-
-    margin-block: var(--space5) 0;
-
-    max-width: 58ch;
-
-    color: var(--textSecondary);
-
-    font-size: var(--fontBodyLg);
-
-    line-height: var(--lineHeightBodyLg);
-
-}
-
-
-.practiceGrid
-{
-
-    margin-block: var(--space9) 0;
-
-    padding: 0;
-
-    list-style: none;
-
-    row-gap: var(--gridGap);
-
-}
-
-
-/* A card is a 76px list row on mobile, not a shrunken card.
-   A list row scans measurably faster under stress, which is the
-   condition most of this audience arrives in (frozen A11). */
-.practiceCard
-{
-
-    position: relative;
-
-    display: flex;
-
-    flex-direction: column;
-
-    justify-content: center;
-
-    gap: var(--space2);
-
-    min-height: 76px;
-
-    padding-block: var(--space4);
-
-    border-block-end: var(--borderHairline) solid var(--borderSubtle);
-
-}
-
-
-.practiceCardTitle
+.serviceAreaHeading
 {
 
     margin: 0;
+
+    color: var(--textMuted);
 
     font-family: var(--fontFamilyBody);
 
-    font-size: var(--fontHeadingSm);
+    font-size: var(--fontCaption);
 
-    font-weight: 600;
+    font-weight: 500;
 
-    letter-spacing: 0;
+    letter-spacing: 0.14em;
 
-}
-
-
-/* A stretched link, not a wrapping anchor: one link, one
-   accessible name, no nested-link trap. The card carries
-   position: relative for exactly this. */
-.practiceCardLink
-{
-
-    color: var(--textPrimary);
-
-    text-decoration: none;
-
-}
-
-
-.practiceCardLink::after
-{
-
-    content: '';
-
-    position: absolute;
-
-    inset: 0;
-
-}
-
-
-.practiceCardBlurb
-{
-
-    display: none;
-
-    margin: 0;
-
-    color: var(--textSecondary);
-
-    font-size: var(--fontBodySm);
-
-    line-height: var(--lineHeightBodySm);
-
-}
-
-
-@media (min-width: 768px)
-{
-
-    .practiceGrid > .practiceCard
-    {
-
-        grid-column: span 4;
-
-        min-height: 0;
-
-        padding: var(--space6);
-
-        border: var(--borderHairline) solid var(--borderSubtle);
-
-        border-radius: var(--radiusCard);
-
-        transition: border-color var(--durationRespond) var(--easeRespond);
-
-    }
-
-    .practiceCard:hover
-    {
-
-        border-color: var(--borderInteractive);
-
-    }
-
-    .practiceCardBlurb
-    {
-
-        display: block;
-
-    }
-
-}
-
-
-@media (min-width: 1024px)
-{
-
-    .practiceGrid > .practiceCard
-    {
-
-        grid-column: span 3;
-
-    }
-
-}
-
-
-/* ============================================================
-   SERVICE AREAS · S11
-============================================================ */
-
-.serviceAreaSection
-{
-
-    padding-block: var(--sectionPaddingBlock);
-
-    background-color: var(--surfaceBase);
-
-}
-
-
-.serviceAreaGrid
-{
-
-    row-gap: var(--space9);
-
-}
-
-
-.sectionNote
-{
-
-    margin-block: var(--space5) 0;
-
-    max-width: 52ch;
-
-    color: var(--textSecondary);
-
-    font-size: var(--fontBodySm);
-
-    line-height: var(--lineHeightBodySm);
-
-}
-
-
-.serviceAreaLists
-{
-
-    display: flex;
-
-    flex-wrap: wrap;
-
-    gap: var(--space9);
-
-}
-
-
-.serviceAreaGroup
-{
-
-    flex: 1 1 12rem;
+    text-transform: uppercase;
 
 }
 
@@ -1362,7 +3666,13 @@ body[data-scene='dark'] .sceneLayer[data-scene='dark']
 .countyList
 {
 
-    margin-block: var(--space5) 0;
+    display: grid;
+
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+
+    gap: var(--space5) var(--space6);
+
+    margin: var(--space6) 0 0;
 
     padding: 0;
 
@@ -1376,19 +3686,23 @@ body[data-scene='dark'] .sceneLayer[data-scene='dark']
 
     display: flex;
 
-    flex-wrap: wrap;
+    flex-direction: column;
 
-    justify-content: space-between;
+    gap: 2px;
 
-    gap: var(--space3);
+}
 
-    padding-block: var(--space3);
 
-    border-block-end: var(--borderHairline) solid var(--borderSubtle);
+.countyName
+{
 
     color: var(--textPrimary);
 
-    font-size: var(--fontBodySm);
+    font-family: var(--fontFamilyDisplay);
+
+    font-size: var(--fontHeadingSm);
+
+    font-weight: 500;
 
 }
 
@@ -1396,27 +3710,626 @@ body[data-scene='dark'] .sceneLayer[data-scene='dark']
 .countySeat
 {
 
-    color: var(--textSecondary);
+    color: var(--textMuted);
 
     font-size: var(--fontCaption);
+
+    letter-spacing: 0.05em;
 
 }
 
 
-@media (min-width: 1024px)
+/* ============================================================
+   CHAPTER SIX · WHAT CLIENTS SAY
+
+   Two tracks running opposite ways. The motion is pure CSS:
+   each track carries its cards twice and translates exactly
+   -50%, so the second copy lands where the first started and
+   the loop has no seam to hide. Nothing measures anything at
+   runtime, so there is no layout shift and nothing to
+   recalculate on resize.
+
+   The pace is deliberately slow. These are testimonials, not a
+   logo wall — if a visitor cannot finish a sentence before the
+   card leaves, the section has failed at the only job it has.
+============================================================ */
+
+.chapterReviews
 {
 
-    .serviceAreaIntro
+    /* Tighter than a full chapter, because this one currently
+       carries a heading and a verified rating rather than the
+       marquee. Restore the full chapter clamp when the Google
+       export lands and the tracks return. */
+    padding-block: clamp(var(--space9), 11vh, var(--space11));
+
+    background-color: var(--sceneStone);
+
+    background-image: radial-gradient(120% 70% at 78% 0%, rgb(255 255 255 / 0.5) 0%, rgb(255 255 255 / 0) 62%);
+
+    /* The tracks are wider than the viewport by design. This is
+       what keeps that an internal overflow rather than a page
+       one. */
+    overflow: hidden;
+
+}
+
+
+.reviewsIntro
+{
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: flex-start;
+
+    gap: var(--space6);
+
+}
+
+
+/* ── The trust signal ──
+
+   The mark, the figure and the source, on one baseline behind a
+   hairline. It reports a number from somewhere else; it does
+   not sell one. */
+
+.ratingBadge
+{
+
+    align-self: stretch;
+
+    display: flex;
+
+    align-items: center;
+
+    /* Wraps at the narrowest widths: mark, figure and stars stay
+       on one line and the source label drops beneath rather than
+       pushing the badge past a 280px container. */
+    flex-wrap: wrap;
+
+    gap: var(--space4) var(--space5);
+
+    padding-block-start: var(--space5);
+
+    border-block-start: 1px solid var(--borderSubtle);
+
+}
+
+
+.ratingMark
+{
+
+    width: 30px;
+
+    height: 30px;
+
+    flex: none;
+
+}
+
+
+.ratingFigure
+{
+
+    display: flex;
+
+    align-items: center;
+
+    gap: var(--space4);
+
+    margin: 0;
+
+}
+
+
+.ratingValue
+{
+
+    color: var(--textPrimary);
+
+    font-family: var(--fontFamilyDisplay);
+
+    font-size: 2.4rem;
+
+    font-weight: 700;
+
+    line-height: 1;
+
+    letter-spacing: -0.02em;
+
+}
+
+
+/* The lit row sits exactly on top of the unlit row and is
+   clipped to 96%. Overlaying two complete rows is the only
+   version of this that is reliable — clipping a single `use`
+   does not reach the path inside the symbol, so the partial
+   star silently rendered as a whole one. */
+
+.ratingStars
+{
+
+    position: relative;
+
+    display: inline-block;
+
+    line-height: 0;
+
+}
+
+
+.ratingStarsRow
+{
+
+    display: flex;
+
+    gap: 3px;
+
+}
+
+
+.ratingStarsRow svg
+{
+
+    width: 17px;
+
+    height: 16px;
+
+    flex: none;
+
+}
+
+
+.ratingStarsRow.isUnlit
+{
+
+    color: var(--borderInteractive);
+
+}
+
+
+.ratingStarsRow.isLit
+{
+
+    position: absolute;
+
+    inset-block-start: 0;
+
+    inset-inline-start: 0;
+
+    width: 96%;
+
+    overflow: hidden;
+
+    color: var(--accentPrimary);
+
+}
+
+
+.ratingSource
+{
+
+    margin: 0;
+
+    color: var(--textMuted);
+
+    font-size: var(--fontCaption);
+
+    font-weight: 500;
+
+    letter-spacing: 0.14em;
+
+    text-transform: uppercase;
+
+}
+
+
+/* ── The tracks ── */
+
+.reviewMarquee
+{
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: var(--space5);
+
+    margin-block-start: clamp(var(--space8), 8vh, var(--space10));
+
+}
+
+
+.reviewTrackViewport
+{
+
+    overflow: hidden;
+
+    /* Feathered at both ends so cards enter and leave the scene
+       instead of being cut by an edge.
+
+       The feather is a percentage of the viewport, so on a phone
+       — where a card is most of the screen — a 7% fade sat on
+       both edges of the card being read. It is held to a fixed
+       28px there instead, which stays a soft edge without
+       reaching into the text. */
+    -webkit-mask-image: linear-gradient(to right, transparent 0, #000 28px, #000 calc(100% - 28px), transparent 100%);
+
+    mask-image: linear-gradient(to right, transparent 0, #000 28px, #000 calc(100% - 28px), transparent 100%);
+
+}
+
+
+@media (min-width: 900px)
+{
+
+    .reviewTrackViewport
     {
 
-        grid-column: span 5;
+        -webkit-mask-image: linear-gradient(to right, transparent 0, #000 7%, #000 93%, transparent 100%);
+
+        mask-image: linear-gradient(to right, transparent 0, #000 7%, #000 93%, transparent 100%);
 
     }
 
-    .serviceAreaLists
+}
+
+
+.reviewTrack
+{
+
+    display: flex;
+
+    /* The spacing is a trailing margin on each card, not `gap` on
+       the track — and the difference is the seam.
+
+       `gap` puts space BETWEEN cards, so a track of twelve cards
+       is twelve widths plus eleven gaps. Half of that is one gap
+       short of a lap, and the animation translates -50%: every
+       lap the loop landed twelve pixels adrift and the seam
+       showed. Giving every card its own trailing margin makes the
+       track exactly two identical halves, so -50% lands on the
+       repeat precisely. The final margin falls outside the mask
+       and is never seen. */
+    width: max-content;
+
+    margin: 0;
+
+    padding: 0;
+
+    list-style: none;
+
+}
+
+
+/* The duplicated half is written by the script, so the markup
+   stays one clean list and screen readers are never handed the
+   same testimonial twice. Until it runs, the track simply sits
+   still and readable. */
+
+/* Longhands, deliberately, and not the `animation` shorthand.
+   The shorthand resets `animation-play-state` to `running`, and
+   it sits at higher specificity than the pause rule below — so
+   hovering set the state and the shorthand immediately took it
+   back. Writing the four properties that are actually wanted
+   leaves play-state untouched and the pause rule works without
+   a specificity fight. */
+
+[data-marquee][data-ready] .reviewTrack.isLeadingLeft
+{
+
+    animation-name: marqueeLeft;
+
+    animation-duration: var(--marqueeDuration, 96s);
+
+    animation-timing-function: linear;
+
+    animation-iteration-count: infinite;
+
+}
+
+
+[data-marquee][data-ready] .reviewTrack.isLeadingRight
+{
+
+    animation-name: marqueeRight;
+
+    animation-duration: var(--marqueeDuration, 96s);
+
+    animation-timing-function: linear;
+
+    animation-iteration-count: infinite;
+
+}
+
+
+@keyframes marqueeLeft
+{
+
+    from { transform: translate3d(0, 0, 0); }
+
+    to   { transform: translate3d(-50%, 0, 0); }
+
+}
+
+
+@keyframes marqueeRight
+{
+
+    from { transform: translate3d(-50%, 0, 0); }
+
+    to   { transform: translate3d(0, 0, 0); }
+
+}
+
+
+/* Both tracks stop together, so a visitor reading the bottom
+   row is not chased by the top one. Focus counts as intent to
+   read, and so does a finger held on the section. */
+
+.reviewMarquee:hover .reviewTrack,
+.reviewMarquee:focus-within .reviewTrack,
+[data-reviews][data-paused] .reviewTrack
+{
+
+    animation-play-state: paused;
+
+}
+
+
+/* ── The card ── */
+
+.reviewCard
+{
+
+    display: flex;
+
+    flex-direction: column;
+
+    /* Same reasoning as the hero cards: every card in a row is
+       the height of the longest review in it, and pushing the
+       quote and the name to opposite ends left a hole in the
+       middle of the short ones. Centred, the spare height reads
+       as air. */
+    justify-content: center;
+
+    gap: var(--space5);
+
+    flex: none;
+
+    width: clamp(268px, 74vw, 384px);
+
+    /* See `.reviewTrack` — this is the marquee's spacing, and it
+       is a margin so that the track divides exactly in two. */
+    margin-inline-end: var(--space5);
+
+    padding: var(--space5);
+
+    background-color: var(--surfaceCard, var(--surfaceRaised));
+
+    border: 1px solid var(--borderSubtle);
+
+    /* Cream cards on a warm ground need a little lift or they
+       dissolve into it. Low and wide, so they read as paper set
+       down rather than as boxes. */
+    box-shadow: 0 18px 38px -26px rgb(23 21 18 / 0.42);
+
+}
+
+
+.reviewText
+{
+
+    margin: 0;
+
+    color: var(--textPrimary);
+
+    font-family: var(--fontFamilyBody);
+
+    font-size: var(--fontBodySm);
+
+    font-weight: 400;
+
+    line-height: 1.62;
+
+}
+
+
+.reviewText p
+{
+
+    margin: 0;
+
+}
+
+
+/* Clamped only once the script is running, because the script
+   is what supplies the control that undoes it. With no script
+   the full review is simply there, at whatever height it
+   needs. */
+
+/* Height and a fade rather than a line clamp, for the reason the
+   hero cards use one: the clamp's ellipsis lands wherever the
+   line breaks, and here that was mid-word — "because he di…".
+   An excerpt should look like an excerpt, not like a truncation
+   bug. The fade ends the visible text and "Read full review"
+   states outright that there is more. */
+
+.reviewText.isClamped p
+{
+
+    max-height: calc(1.62em * 6);
+
+    overflow: hidden;
+
+    -webkit-mask-image: linear-gradient(to bottom, #000 82%, transparent 100%);
+
+    mask-image: linear-gradient(to bottom, #000 82%, transparent 100%);
+
+}
+
+
+.reviewText.isClamped.isExpanded p
+{
+
+    max-height: none;
+
+    overflow: visible;
+
+    -webkit-mask-image: none;
+
+    mask-image: none;
+
+}
+
+
+.reviewExpand
+{
+
+    align-self: flex-start;
+
+    margin-block-start: var(--space3);
+
+    padding: 0;
+
+    background: none;
+
+    border: 0;
+
+    border-block-end: 1px solid var(--borderInteractive);
+
+    color: var(--textLink);
+
+    font-family: var(--fontFamilyBody);
+
+    font-size: var(--fontCaption);
+
+    font-weight: 500;
+
+    cursor: pointer;
+
+    transition: border-color 220ms ease;
+
+}
+
+
+.reviewExpand:hover
+{
+
+    border-block-end-color: var(--accentStroke);
+
+}
+
+
+.reviewMeta
+{
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 3px;
+
+    margin: 0;
+
+    padding-block-start: var(--space5);
+
+    border-block-start: 1px solid var(--borderSubtle);
+
+}
+
+
+.reviewAuthor
+{
+
+    color: var(--textPrimary);
+
+    font-family: var(--fontFamilyDisplay);
+
+    font-size: 1.24rem;
+
+    font-weight: 600;
+
+    line-height: 1.2;
+
+}
+
+
+.reviewSource
+{
+
+    color: var(--textMuted);
+
+    font-size: var(--fontCaption);
+
+    letter-spacing: 0.08em;
+
+    text-transform: uppercase;
+
+}
+
+
+@media (min-width: 900px)
+{
+
+    .reviewCard
     {
 
-        grid-column: span 7;
+        padding: var(--space6);
+
+    }
+
+}
+
+
+.reviewsNote
+{
+
+    margin: var(--space8) 0 0;
+
+    color: var(--textMuted);
+
+    font-size: var(--fontCaption);
+
+    line-height: 1.6;
+
+}
+
+
+/* Reduced motion: the animation goes entirely, and each track
+   becomes something a person can push with a finger or a
+   scrollbar. The content was never behind the motion. */
+
+@media (prefers-reduced-motion: reduce)
+{
+
+    [data-marquee][data-ready] .reviewTrack.isLeadingLeft,
+    [data-marquee][data-ready] .reviewTrack.isLeadingRight
+    {
+
+        animation: none !important;
+
+        transform: none !important;
+
+    }
+
+    .reviewTrackViewport
+    {
+
+        overflow-x: auto;
+
+        -webkit-mask-image: none;
+
+        mask-image: none;
+
+    }
+
+    .reviewTrack > [data-clone]
+    {
+
+        display: none;
 
     }
 
@@ -1424,19 +4337,17 @@ body[data-scene='dark'] .sceneLayer[data-scene='dark']
 
 
 /* ============================================================
-   FAQ · S12
-
-   Native <details>. Correct keyboard and screen-reader
-   behaviour at zero cost, and it survives the entire script
-   layer being deleted.
+   CHAPTER SEVEN · QUESTIONS, AND THE CLOSE
 ============================================================ */
 
-.faqSection
+.chapterClose
 {
 
-    padding-block: var(--sectionPaddingBlock);
+    padding-block-start: clamp(var(--space10), 16vh, var(--space13));
 
-    background-color: var(--surfaceBase);
+    background-color: var(--sceneDark);
+
+    background-image: var(--sceneLift);
 
 }
 
@@ -1444,7 +4355,9 @@ body[data-scene='dark'] .sceneLayer[data-scene='dark']
 .faqList
 {
 
-    margin-block: var(--space9) var(--space8);
+    margin-block-start: var(--space9);
+
+    border-block-start: 1px solid var(--borderSubtle);
 
 }
 
@@ -1452,7 +4365,7 @@ body[data-scene='dark'] .sceneLayer[data-scene='dark']
 .faqItem
 {
 
-    border-block-end: var(--borderHairline) solid var(--borderSubtle);
+    border-block-end: 1px solid var(--borderSubtle);
 
 }
 
@@ -1460,21 +4373,31 @@ body[data-scene='dark'] .sceneLayer[data-scene='dark']
 .faqQuestion
 {
 
+    display: flex;
+
+    align-items: baseline;
+
+    justify-content: space-between;
+
+    gap: var(--space5);
+
     padding-block: var(--space5);
 
     color: var(--textPrimary);
 
     font-family: var(--fontFamilyBody);
 
-    font-size: var(--fontHeadingSm);
+    font-size: var(--fontBodyLg);
 
-    font-weight: 600;
+    font-weight: 500;
 
-    line-height: var(--lineHeightHeadingSm);
+    line-height: 1.4;
+
+    list-style: none;
 
     cursor: pointer;
 
-    list-style: none;
+    transition: color 260ms ease;
 
 }
 
@@ -1490,13 +4413,21 @@ body[data-scene='dark'] .sceneLayer[data-scene='dark']
 .faqQuestion::after
 {
 
-    content: '+';
+    flex: none;
 
-    float: inline-end;
+    width: 11px;
 
-    margin-inline-start: var(--space4);
+    height: 11px;
 
-    color: var(--accentPrimary);
+    border-inline-end: 1px solid var(--accentStroke);
+
+    border-block-end: 1px solid var(--accentStroke);
+
+    transform: rotate(45deg);
+
+    content: "";
+
+    transition: transform 320ms cubic-bezier(0.16, 1, 0.30, 1);
 
 }
 
@@ -1504,7 +4435,15 @@ body[data-scene='dark'] .sceneLayer[data-scene='dark']
 .faqItem[open] .faqQuestion::after
 {
 
-    content: '–';
+    transform: rotate(225deg);
+
+}
+
+
+.faqQuestion:hover
+{
+
+    color: var(--accentPrimary);
 
 }
 
@@ -1516,27 +4455,68 @@ body[data-scene='dark'] .sceneLayer[data-scene='dark']
 
     color: var(--textSecondary);
 
+    font-size: var(--fontBodySm);
+
+    line-height: 1.62;
+
 }
 
 
 .faqAnswer p
 {
 
+    max-width: 62ch;
+
     margin: 0;
 
 }
 
 
-/* ============================================================
-   FINAL CTA · S13
-============================================================ */
+/* ── The close ── */
 
-.finalCtaSection
+.finalCta
 {
 
-    padding-block: var(--sectionPaddingBlock);
+    position: relative;
+
+    isolation: isolate;
+
+    overflow: hidden;
+
+    margin-block-start: clamp(var(--space11), 18vh, var(--space13));
+
+    padding-block: clamp(var(--space10), 16vh, var(--space13));
+
+    background-color: var(--surfaceSunken);
+
+    background-image:
+        radial-gradient(72% 60% at 50% 0%, rgb(193 158 97 / 0.13) 0%, rgb(193 158 97 / 0) 68%),
+        radial-gradient(100% 80% at 50% 120%, rgb(193 158 97 / 0.07) 0%, rgb(193 158 97 / 0) 60%);
 
     text-align: center;
+
+}
+
+
+/* A gold hairline dropping into the close, so the last scene is
+   entered rather than merely reached. */
+
+.finalCta::before
+{
+
+    position: absolute;
+
+    inset-block-start: 0;
+
+    inset-inline-start: 50%;
+
+    width: 1px;
+
+    height: clamp(48px, 7vh, 96px);
+
+    background: linear-gradient(to bottom, rgb(193 158 97 / 0) 0%, var(--accentPrimary) 100%);
+
+    content: "";
 
 }
 
@@ -1544,11 +4524,9 @@ body[data-scene='dark'] .sceneLayer[data-scene='dark']
 .finalCtaHeading
 {
 
-    max-width: 16ch;
+    font-size: clamp(2.75rem, 1.3rem + 6vw, 6.5rem);
 
-    margin-inline: auto;
-
-    margin-block: 0;
+    line-height: 0.98;
 
 }
 
@@ -1556,11 +4534,9 @@ body[data-scene='dark'] .sceneLayer[data-scene='dark']
 .finalCtaLede
 {
 
-    max-width: 46ch;
+    max-width: 44ch;
 
-    margin-inline: auto;
-
-    margin-block-start: var(--space6);
+    margin: var(--space6) auto 0;
 
     color: var(--textSecondary);
 
@@ -1571,8 +4547,18 @@ body[data-scene='dark'] .sceneLayer[data-scene='dark']
 }
 
 
-.finalCtaSection .ctaGroup
+.finalCtaActions
 {
+
+    display: flex;
+
+    flex-wrap: wrap;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: var(--space5);
 
     margin-block-start: var(--space8);
 
@@ -1582,71 +4568,53 @@ body[data-scene='dark'] .sceneLayer[data-scene='dark']
 .finalCtaNote
 {
 
-    max-width: 54ch;
+    max-width: 58ch;
 
-    margin-inline: auto;
+    margin: var(--space9) auto 0;
 
-    margin-block-start: var(--space8);
-
-    color: var(--textSecondary);
+    color: var(--textMuted);
 
     font-size: var(--fontCaption);
 
-    line-height: var(--lineHeightCaption);
-
-    text-align: start;
+    line-height: 1.6;
 
 }
 
 
 /* ============================================================
-   SITE FOOTER · S14
+   FOOTER
 ============================================================ */
 
 .siteFooter
 {
 
-    padding-block: var(--space10) var(--space8);
+    padding-block: clamp(var(--space9), 12vh, var(--space11)) var(--space8);
 
-    background-color: var(--surfaceBase);
+    background-color: var(--sceneDark);
 
-    border-block-start: var(--borderHairline) solid var(--borderSubtle);
-
-}
-
-
-.siteFooterGrid
-{
-
-    row-gap: var(--space9);
+    border-block-start: 1px solid var(--borderSubtle);
 
 }
 
 
-.siteFooterIdentity
+.siteFooterInner
 {
 
-    display: flex;
+    display: grid;
 
-    flex-direction: column;
+    grid-template-columns: 1fr;
 
-    align-items: flex-start;
-
-    gap: var(--space4);
+    gap: var(--space8);
 
 }
 
 
-.siteFooterName
+.siteFooterWordmark
 {
 
-    margin: 0;
+    width: min(100%, 250px);
 
-    color: var(--textPrimary);
-
-    font-family: var(--fontFamilyDisplay);
-
-    font-size: var(--fontHeadingSm);
+    height: auto;
 
 }
 
@@ -1654,13 +4622,15 @@ body[data-scene='dark'] .sceneLayer[data-scene='dark']
 .siteFooterAddress
 {
 
-    color: var(--textSecondary);
+    margin-block-start: var(--space5);
+
+    color: var(--textMuted);
 
     font-size: var(--fontBodySm);
 
     font-style: normal;
 
-    line-height: var(--lineHeightBodySm);
+    line-height: 1.7;
 
 }
 
@@ -1668,13 +4638,23 @@ body[data-scene='dark'] .sceneLayer[data-scene='dark']
 .siteFooterPhone
 {
 
+    display: inline-block;
+
+    margin-block-start: var(--space4);
+
     color: var(--textPrimary);
 
-    font-size: var(--fontBodySm);
-
-    font-weight: 600;
+    font-size: var(--fontBodyLg);
 
     text-decoration: none;
+
+}
+
+
+.siteFooterPhone:hover
+{
+
+    color: var(--accentPrimary);
 
 }
 
@@ -1686,9 +4666,9 @@ body[data-scene='dark'] .sceneLayer[data-scene='dark']
 
     flex-direction: column;
 
-    gap: var(--space3);
+    gap: var(--space4);
 
-    margin-block: var(--space5) 0;
+    margin: 0;
 
     padding: 0;
 
@@ -1700,7 +4680,7 @@ body[data-scene='dark'] .sceneLayer[data-scene='dark']
 .siteFooterList a
 {
 
-    color: var(--textSecondary);
+    color: var(--textMuted);
 
     font-size: var(--fontBodySm);
 
@@ -1712,7 +4692,7 @@ body[data-scene='dark'] .sceneLayer[data-scene='dark']
 .siteFooterList a:hover
 {
 
-    color: var(--textLink);
+    color: var(--accentPrimary);
 
 }
 
@@ -1720,11 +4700,11 @@ body[data-scene='dark'] .sceneLayer[data-scene='dark']
 .siteFooterLegal
 {
 
-    margin-block-start: var(--space9);
+    margin-block-start: var(--space10);
 
     padding-block-start: var(--space6);
 
-    border-block-start: var(--borderHairline) solid var(--borderSubtle);
+    border-block-start: 1px solid var(--borderSubtle);
 
 }
 
@@ -1732,15 +4712,15 @@ body[data-scene='dark'] .sceneLayer[data-scene='dark']
 .disclaimerText
 {
 
+    max-width: 70ch;
+
     margin: 0;
 
-    max-width: 72ch;
-
-    color: var(--textSecondary);
+    color: var(--textMuted);
 
     font-size: var(--fontCaption);
 
-    line-height: var(--lineHeightCaption);
+    line-height: 1.6;
 
 }
 
@@ -1748,7 +4728,7 @@ body[data-scene='dark'] .sceneLayer[data-scene='dark']
 .siteFooterCopyright
 {
 
-    margin-block-start: var(--space5);
+    margin: var(--space4) 0 0;
 
     color: var(--textMuted);
 
@@ -1757,41 +4737,205 @@ body[data-scene='dark'] .sceneLayer[data-scene='dark']
 }
 
 
-@media (min-width: 768px)
+@media (min-width: 900px)
 {
 
-    .siteFooterGrid > .siteFooterIdentity
+    .siteFooterInner
     {
 
-        grid-column: span 8;
+        grid-template-columns: minmax(0, 1fr) auto;
 
-    }
+        align-items: start;
 
-    .siteFooterGrid > .siteFooterColumn
-    {
-
-        grid-column: span 4;
+        gap: var(--space10);
 
     }
 
 }
 
 
-@media (min-width: 1024px)
+/* ============================================================
+   REVEAL
+
+   Default is visible. The script opts the page into the hidden
+   state by putting `jsReady` on <html>, so with the script
+   deleted nothing is ever concealed — the reveal cannot become
+   a way of losing content.
+============================================================ */
+
+.jsReady [data-reveal] > *
 {
 
-    .siteFooterGrid > .siteFooterIdentity
+    opacity: 0;
+
+    transform: translateY(20px);
+
+    transition:
+        opacity 900ms cubic-bezier(0.16, 1, 0.30, 1),
+        transform 900ms cubic-bezier(0.16, 1, 0.30, 1);
+
+}
+
+
+.jsReady [data-reveal].isRevealed > *
+{
+
+    opacity: 1;
+
+    transform: none;
+
+}
+
+
+.jsReady [data-reveal].isRevealed > *:nth-child(2)
+{
+
+    transition-delay: 110ms;
+
+}
+
+
+.jsReady [data-reveal].isRevealed > *:nth-child(3)
+{
+
+    transition-delay: 220ms;
+
+}
+
+
+@media (prefers-reduced-motion: reduce)
+{
+
+    .loadCurtainMark,
+    .loadCurtainWord,
+    .loadCurtainBloom
     {
 
-        grid-column: span 3;
+        animation: none !important;
+
+        opacity: 1;
+
+        transform: none;
 
     }
 
-    .siteFooterGrid > .siteFooterColumn
+    .loadCurtainBloom
     {
 
-        grid-column: span 3;
+        opacity: 0.55;
 
     }
+
+    .loadCurtainSweep
+    {
+
+        animation: none !important;
+
+        opacity: 0;
+
+    }
+
+    .loadCurtainRule
+    {
+
+        animation: none !important;
+
+        width: clamp(120px, 20vw, 210px);
+
+    }
+
+    .loadCurtain
+    {
+
+        transition-duration: 200ms;
+
+    }
+
+    .jsReady [data-reveal] > *,
+    .jsReady [data-reveal].isRevealed > *
+    {
+
+        opacity: 1;
+
+        transform: none;
+
+        transition: none;
+
+    }
+
+}
+
+
+/* ── Where this office appears ──
+
+   A real map of the two states, held behind the county list as
+   ground rather than illustration. Place, stated literally. */
+
+.serviceArea[data-hasMap]
+{
+
+    position: relative;
+
+    isolation: isolate;
+
+}
+
+
+.serviceMap
+{
+
+    position: absolute;
+
+    z-index: 0;
+
+    inset-block-start: calc(var(--space8) * -1);
+
+    inset-inline-end: 0;
+
+    width: clamp(180px, 34%, 400px);
+
+    pointer-events: none;
+
+}
+
+
+.serviceMap img
+{
+
+    width: 100%;
+
+    height: auto;
+
+    opacity: 0.16;
+
+    filter: grayscale(0.5) contrast(1.05);
+
+    -webkit-mask-image: radial-gradient(68% 62% at 60% 40%, #000 34%, rgb(0 0 0 / 0) 82%);
+
+    mask-image: radial-gradient(68% 62% at 60% 40%, #000 34%, rgb(0 0 0 / 0) 82%);
+
+}
+
+
+.serviceArea[data-hasMap] > *:not(.serviceMap)
+{
+
+    position: relative;
+
+    z-index: 1;
+
+}
+
+
+/* The marquee card carries the same attribution treatment. */
+
+.reviewSource
+{
+
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: var(--space2);
 
 }
