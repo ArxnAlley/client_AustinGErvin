@@ -897,6 +897,65 @@
 
 
     /* ============================================================
+       PRACTICE INDEX — ANSWER EVERY PRESS
+
+       The eight chips under the case files are second labels on
+       the three radios, so the markup works with this file
+       deleted. But three of the eight belong to the file that is
+       already open, and pressing one of those re-selects a radio
+       that is already selected — the platform's answer to which
+       is to do nothing at all.
+
+       On a phone that is worse than dull. The panel the chip
+       controls is roughly a thousand pixels up the page, so even
+       a press that DOES switch files changes nothing the visitor
+       can see, and the honest conclusion is that the site is
+       broken.
+
+       So every press moves the panel into view. The one that
+       switches files now shows its own result, and the one that
+       cannot switch anything still answers by bringing the matter
+       list to the visitor. `scrollIntoView` is the whole
+       mechanism; the CSS keeps working on its own if this never
+       runs.
+    ============================================================ */
+
+    const caseIndex = document.querySelector('.caseIndex');
+
+    const casePanels = document.querySelector('.casePanels');
+
+
+    if (caseIndex && casePanels)
+    {
+
+        caseIndex.addEventListener('click', function (event)
+        {
+
+            if (!event.target.closest('.caseChip'))
+            {
+
+                return;
+
+            }
+
+            /* Let the label select its radio first, so the panel
+               being scrolled to is the one about to be shown. */
+            window.setTimeout(function ()
+            {
+
+                casePanels.scrollIntoView({
+                    block: 'center',
+                    behavior: reduceMotion ? 'auto' : 'smooth'
+                });
+
+            }, 0);
+
+        });
+
+    }
+
+
+    /* ============================================================
        FAQ ACCORDION
 
        Still native <details>. `name="faqGroup"` already makes the

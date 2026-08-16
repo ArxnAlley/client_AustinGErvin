@@ -2897,7 +2897,11 @@
 
     aspect-ratio: 16 / 9;
 
-    background-color: var(--colorBlackDeep);
+    /* A designed ground rather than a void, so the frame is a
+       composition even in the instant before the poster paints. */
+    background-color: var(--colorCharcoal);
+
+    background-image: radial-gradient(60% 60% at 50% 45%, rgb(193 158 97 / 0.12) 0%, rgb(193 158 97 / 0) 70%);
 
     border: 1px solid rgb(193 158 97 / 0.28);
 
@@ -2946,7 +2950,11 @@
 }
 
 
-.filmMark
+/* The mark and its caption, stacked and centred as one title
+   card. Separated, the glyph was read as a control and pressed
+   before the caption in the corner had been read at all. */
+
+.filmCentre
 {
 
     position: absolute;
@@ -2955,15 +2963,31 @@
 
     inset-inline-start: 50%;
 
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    gap: var(--space4);
+
+    transform: translate(-50%, -50%);
+
+    pointer-events: none;
+
+}
+
+
+.filmMark
+{
+
     display: grid;
 
     place-items: center;
 
-    width: clamp(62px, 9vw, 88px);
+    width: clamp(58px, 8vw, 80px);
 
     aspect-ratio: 1;
-
-    transform: translate(-50%, -50%);
 
     border: 1px solid rgb(193 158 97 / 0.55);
 
@@ -2972,8 +2996,6 @@
     background-color: rgb(11 11 13 / 0.42);
 
     backdrop-filter: blur(2px);
-
-    pointer-events: none;
 
 }
 
@@ -2994,12 +3016,6 @@
 
 .filmStatus
 {
-
-    position: absolute;
-
-    inset-block-end: var(--space5);
-
-    inset-inline-start: var(--space5);
 
     display: inline-flex;
 
@@ -3109,10 +3125,16 @@
 @media (min-width: 900px)
 {
 
+    /* The type column is the wider of the two. Until the film
+       exists, all of this chapter's value is in the words and
+       none of it is in the placeholder — giving the placeholder
+       the larger half was the composition arguing against its own
+       content. Widen the film side again when the real one lands. */
+
     .messageInner
     {
 
-        grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
+        grid-template-columns: minmax(0, 1.12fr) minmax(0, 0.88fr);
 
         gap: var(--space10);
 
@@ -3966,10 +3988,46 @@
    All three are in the document at all times. The closed ones
    are taken out of the visual flow, not out of the DOM. */
 
+/* Held to the tallest file's height. Criminal and Family carry
+   three matters, Estate carries two, so switching to Estate used
+   to collapse the block by about 85px and pull the index — and
+   whichever chip the visitor was reaching for — up under their
+   finger. `min-height` costs one empty row on the estate panel
+   and buys a page that does not move when it is used. Re-measure
+   this if a matter is ever added to a file. */
+
 .casePanels
 {
 
+    min-height: 27rem;
+
     padding-block-start: clamp(var(--space7), 6vh, var(--space9));
+
+}
+
+
+@media (max-width: 899px)
+{
+
+    .casePanels
+    {
+
+        min-height: 34rem;
+
+    }
+
+}
+
+
+@media (max-width: 599px)
+{
+
+    .casePanels
+    {
+
+        min-height: 0;
+
+    }
 
 }
 
@@ -4259,14 +4317,15 @@
    from its detail without inventing a practice-area page that
    does not exist yet. */
 
+/* No top rule here. The last `.caseItem` already draws one, so
+   the index's own border produced two parallel hairlines with an
+   empty 66px band trapped between them. The gap is the
+   separation; one line is enough. */
+
 .caseIndex
 {
 
-    margin-block-start: clamp(var(--space8), 7vh, var(--space10));
-
-    padding-block-start: var(--space6);
-
-    border-block-start: 1px solid var(--borderSubtle);
+    margin-block-start: clamp(var(--space7), 5vh, var(--space9));
 
 }
 
@@ -4356,6 +4415,23 @@
     border-color: var(--accentPrimary);
 
     color: var(--textPrimary);
+
+}
+
+
+/* The radio carries the focus, and the radio is visually hidden,
+   so the ring has to be drawn on every label that controls it —
+   the tab strip above AND the chips down here. Without this the
+   keyboard disappears the moment it reaches the index. */
+
+#caseCriminal:focus-visible ~ .caseIndex [for='caseCriminal'],
+#caseFamily:focus-visible ~ .caseIndex [for='caseFamily'],
+#caseEstate:focus-visible ~ .caseIndex [for='caseEstate']
+{
+
+    outline: 2px solid var(--focusRing);
+
+    outline-offset: 3px;
 
 }
 
@@ -6146,6 +6222,12 @@
 /* The label is a fixed quiet. Only the mark lifts on hover —
    the wording is not the signature, the logo is. */
 
+/* 0.42 measured 3.08:1 on the footer's near-black — under the
+   4.5:1 body-text floor. The mark beside it may sit lower,
+   because a logotype carries no contrast requirement; the words
+   are ordinary text and have to be readable. 0.55 measures
+   4.6:1 and is still a whisper. */
+
 .devCreditLabel
 {
 
@@ -6155,7 +6237,7 @@
 
     letter-spacing: 0.1em;
 
-    opacity: 0.42;
+    opacity: 0.55;
 
 }
 
@@ -6167,7 +6249,10 @@
 
     height: auto;
 
-    opacity: 0.22;
+    /* Low, but present. At 0.22 the light mark measured about
+       1.8:1 on the near-black footer and rendered as nothing, so
+       "Developed by" was a sentence with no object. */
+    opacity: 0.4;
 
     transition: opacity 300ms ease;
 
@@ -6492,9 +6577,26 @@
 }
 
 
-.reviewDialogClose:hover,
+.reviewDialogClose:hover
+{
+
+    border-color: var(--colorGoldInk);
+
+    color: var(--colorGoldInk);
+
+}
+
+
+/* The dialog opens with focus on this control, so its ring is
+   the first thing a keyboard user sees. A border-colour change
+   alone was too quiet to be that. */
+
 .reviewDialogClose:focus-visible
 {
+
+    outline: 2px solid var(--colorGoldInk);
+
+    outline-offset: 2px;
 
     border-color: var(--colorGoldInk);
 
@@ -6633,5 +6735,76 @@
     letter-spacing: 0.12em;
 
     text-transform: uppercase;
+
+}
+
+
+/* ============================================================
+   TARGET SIZE — THE STANDALONE TEXT ACTIONS
+
+   The arrow links and the review expander are single-line text,
+   which measures 26-29px tall. They are not links inside a
+   sentence — they are standalone calls to action, so the inline
+   exception in 2.5.8 does not cover them, and on a phone a 26px
+   band is a miss waiting to happen.
+
+   The hit area is grown with an absolutely positioned
+   pseudo-element rather than padding. Padding would push each
+   underline away from its own text, and the underline is the
+   affordance. Nothing moves; the target reaches 44px.
+============================================================ */
+
+.messageAction,
+.caseIndexAction,
+.attorneyAction,
+.reviewExpand
+{
+
+    position: relative;
+
+}
+
+
+.messageAction::before,
+.caseIndexAction::before,
+.attorneyAction::before,
+.reviewExpand::before
+{
+
+    position: absolute;
+
+    inset: -9px -8px;
+
+    content: "";
+
+}
+
+
+/* The brand lockup and the footer phone get the same treatment.
+   The lockup is the Home link, and on a phone it is the 32px
+   shield alone — the smallest target on the page and one of the
+   most used. Expanding it with a pseudo-element keeps the shield
+   flush to the container's left edge, which padding would not. */
+
+.logoLockup,
+.siteFooterLockup,
+.siteFooterPhone
+{
+
+    position: relative;
+
+}
+
+
+.logoLockup::after,
+.siteFooterLockup::after,
+.siteFooterPhone::after
+{
+
+    position: absolute;
+
+    inset: -8px -10px;
+
+    content: "";
 
 }
