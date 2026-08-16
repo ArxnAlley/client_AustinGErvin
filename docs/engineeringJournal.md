@@ -10,6 +10,233 @@ accident.
 
 ---
 
+## 2026-08-16 · Homepage V2.1, the critique, and consultation intake
+
+**Commits:** `38c9b01`, `044151a`, `5361427`, `6e3c9f7`
+**Sections touched:** header, chapter two, practice, attorney, process,
+reviews, FAQ, footer, and a new `legal/` directory
+
+---
+
+### The brand lockup, and the muddy gold
+
+Aron supplied two approved files mid-session: `potentialFavicon.png`
+(the AE shield) and `secondLogo.png` (the metallic wordmark). The
+navigation now carries shield left, wordmark right, as one lockup.
+
+**The "muddy, brown, bronze" logo was a CSS grade, not the token.**
+`.logoWordmarkImage` carried
+`brightness(0.46) saturate(1.5) contrast(1.12)` on the light and stone
+scenes. The supplied artwork is metallic — measured, it runs `#F1D589`
+down to `#CCA65C` — and the grade flattened all of it into one brown.
+The grade existed to buy contrast against cream; the shield's black
+body does that now. **Do not put it back.**
+
+Measured while we were there: shield dominant `#CCA65C`, wordmark
+mid-tone `#C8A642`. The existing `--accentPrimary: #C19E61` already
+sits inside that range, so the flat UI gold was left alone. It is
+derived, not supplied — see VIS-022.
+
+Assets were cut to the artwork's alpha bounding box so nothing is
+padded or stretched: `aeShield_web.webp` 272×320, `aeWordmark_web.webp`
+1100×170. Favicons recut from the shield; the previous pair were 32×37
+and 180×210 — non-square, declared as 32×32, and from a different
+shield rendering.
+
+**The scales logo survives on the loading curtain only.** It is the
+ceremonial mark and the curtain is frozen. It is no longer the
+navigation identity anywhere.
+
+Below 600px the wordmark leaves and the shield stands alone. That is a
+gear change, not a shrunken wordmark: at 320px the full lockup would
+put ATTORNEY AT LAW, LLC at about four pixels of cap height.
+
+### Mega menus had to be pinned to a scene
+
+The header takes the scene of whatever chapter passes beneath it, and
+the mega panels inherited it — so over the dark hero all three rendered
+charcoal. Aron asked for white and gold. `data-scene="light"` on each
+`.megaPanel` fixes it through the existing token system rather than
+with hand-written colours.
+
+The practice panel also outgrew the viewport when it went from eight
+rows to twelve: 895px tall, hanging 91px below the fold at 1440×900 and
+212px at 1280×800. **A mega panel cannot be scrolled while it is
+hovered**, so those rows were unreachable. Three columns, a narrower
+lead column, one-line row notes, and a `max-height` that lets the panel
+scroll itself.
+
+### The order changed, and chapter two was rewritten
+
+Practice Areas moved ahead of the attorney chapter. A visitor on an
+attorney's site answers "does he handle what I need?" before anything
+else, and the old order made them read a biography first.
+
+The statement chapter — "Most people who call me are having the hardest
+week of their life" — opened the page on the visitor's worst moment and
+stayed there. It is now **A message from Austin**: a short human
+introduction plus a film frame awaiting his video. The movement wanted
+is uncertainty into clarity, not crisis into more crisis.
+
+**The film frame has no play button on purpose.** A control that does
+nothing when pressed is a defect. The gold mark is decorative and sits
+in one stacked title card with a "Film in production" chip, because
+when they were at opposite corners the eye reached the glyph first,
+read it as a control, pressed it, and got nothing. The poster is
+`eager`: lazy-loaded on a slow connection it painted as a black
+rectangle holding a gold play button, which is the exact broken-embed
+impression the component exists to avoid.
+
+### Two things Aron reversed, and why the reversals were right
+
+**The chip grid.** V2.1 added an always-visible index of all eight
+practice areas under the tabs, to stop a three-way tab hiding two
+thirds of the office. With twelve matters it repeated the section back
+to itself, and Aron cut it. He was right: the critique independently
+found that three of the eight chips were inert at any moment, that the
+gold highlight marked the three already on screen rather than the five
+it existed to reveal, and that two labels on one radio concatenate into
+the radio's accessible name.
+
+**The process panel.** V2.1 put the whole chapter in a cream panel.
+Aron asked for only the three steps, in a smaller black rectangle, with
+the heading outside. Also right — a panel that swallows the chapter is
+a tinted band, not an inset object.
+
+A scripted block move also dropped the practice index into the middle
+of the hero. Caught from Aron's report, not from a test. **Line-number
+splices into `index.html` need the result re-read, not just the exit
+code.**
+
+### The attorney portrait: the fix was to stop shrinking it
+
+The inset plate was a square crop of the hero portrait with
+`object-position: 52% 16%`, shown under 260px on a cream card. Three
+faults compounding: the crop cut the top of his head off, the card gave
+him no ground so he read as a sticker, and the courtroom behind him was
+doing the job he was supposed to do.
+
+**There is no better source.** `austinTransparent.png` is 1374×1145
+with the subject at 943×1136, and `austinPortrait_web.webp` is already
+that crop at 900×1085. So the answer was not a sharper file. He is the
+section's principal image now, uncropped, on a lit ground, with the
+hero's bottom dissolve.
+
+The courtroom moved to the film frame, where it earns its place.
+
+### The Impeccable critique, partly degraded
+
+Assessment A ran as a sub-agent and reported in full. **Assessment B
+terminated on a session limit before reporting**, so its measurements —
+contrast, touch targets, image scaling, clipped text — were re-run
+inline against the same harness. The run is therefore partly degraded
+and is recorded that way rather than presented as a clean dual-agent
+critique.
+
+Ten findings applied. Four declined, with reasons: the attorney chapter
+reuses the hero photograph (fair, but there is one photograph and the
+section was approved as it stands); the process panel is centred while
+its heading is left-aligned (approved that way this session); the FAQ
+should collapse to a plain list until answers exist (contradicts the
+accordion Aron specified); and a non-telephone contact channel (correct
+and important — it became the consultation form).
+
+Defects worth not reintroducing:
+
+- The review dialog rendered the Google mark **monochrome black**,
+  because it referenced `#googleGlyph` — a symbol drawn in
+  `currentColor` for the footer's social row. One page carried two
+  versions of somebody else's brand mark. The dialog now inlines the
+  full-colour paths.
+- The dialog's five stars stacked **vertically**: the row was
+  `inline-flex` but the marks sat inside a nested span that was not,
+  and `base.css` sets `svg { display: block }`.
+- `.casePanels` had no `min-height`, so switching to a shorter file
+  collapsed the block and pulled everything under it up under the
+  finger reaching for it.
+- `.devCreditLabel` measured **3.08:1** on the near-black footer. The
+  mark beside it may sit lower — a logotype carries no contrast
+  requirement — but the words are ordinary text.
+
+### Consultation intake
+
+Every "Request a consultation" control pointed at `#contact`, whose own
+buttons were both `tel:` links. The journey was: press the button,
+scroll, press the button again, phone dialer. It also left the site with
+**no channel at all** for anyone who cannot safely make a call.
+
+**The form lives at `#contact` rather than behind a modal**, because
+every CTA already routes there. No link changed, no routing code was
+added, and it works with the script deleted.
+
+Backend is a Google Apps Script web app in `appsScript/` — the same
+architecture as BlueGrid, without BlueGrid's spreadsheet and Drive
+machinery. **Nothing is stored; the email is the record.** Putting
+unvetted descriptions of people's legal matters into a Google Sheet was
+not asked for and is not a default worth taking quietly.
+
+Two transport realities encoded rather than fought, both inherited from
+BlueGrid and both still true:
+
+1. An Apps Script web app **cannot answer a CORS preflight**, so the
+   post is `text/plain` carrying JSON, which keeps the request simple
+   and stops the browser sending one.
+2. Apps Script **always returns HTTP 200**. The envelope carries the
+   real status, so the frontend branches on `success` and treats a
+   non-2xx as transport failure only.
+
+**No API key.** A key in frontend JavaScript is not a secret. The
+endpoint URL is public, so the server revalidates every field, caps
+lengths, strips control characters and bidirectional overrides so the
+mail body cannot be forged, and escapes HTML.
+
+Spam handling fails **silently** everywhere except the hourly ceiling —
+a bot told it failed adapts, one told it succeeded goes away. The
+ceiling is loud because if it trips, a real person may have been turned
+away.
+
+One bug found in testing: `isSubmitting` survived into the sent state,
+so the form carried `isSubmitting` and `isSent` at once. Verified after
+the fix that three submit attempts produce exactly one request.
+
+**The endpoint constant is deliberately empty and the form is not
+live.** With it empty the form refuses, points at the telephone, and
+logs a console error. It never shows success for a submission that went
+nowhere.
+
+### The framework schema is closed
+
+`displayOrder`, `_source`, `_compliance`, `_note` and `trialPractice`
+were all rejected as unrecognised fields, and a provenance object at the
+head of the practice-areas array was read as a practice area missing
+every required field. Fifty-one errors from metadata.
+
+`formEndpoint` also wants a URI and `consultationModel` an enum
+(`free` / `flat` / `paid` / `varies`). Neither is known, so both were
+reverted rather than guessed — publishing a fee model nobody has stated
+onto a regulated page is not a validation fix.
+
+**Validation held at 37 errors / 0 warnings all session** — identical to
+the pre-session baseline. Every one is pre-existing.
+
+### Verification
+
+`practiceCheck.mjs`, `evidence.mjs`, `formTest.mjs`, `formSuccess.mjs`,
+`formA11y.mjs`, `sweep.mjs` in the scratchpad. Findings worth keeping:
+
+- **`requestSubmit()`, not a synthetic click.** A dispatched mouse
+  event at the button's coordinates silently does nothing when the
+  button is below the fold, which read as "the submit handler is
+  broken" for a full test cycle.
+- **Do not build probe regexes with backslash-s through
+  `Runtime.evaluate`.** The escape did not survive, the class became a
+  literal `s`, and a parity check reported every practice area as
+  missing because the letter *s* had been stripped out of all of them.
+- Hit areas grown with a pseudo-element are invisible to
+  `getBoundingClientRect`. Verify them with `elementFromPoint`.
+
+---
+
 ## 2026-08-16 · Practice areas corrected against Austin's own list
 
 **Sections touched:** practice, attorney, header, mobile menu, footer

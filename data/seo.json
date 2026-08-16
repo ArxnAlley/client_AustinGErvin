@@ -7,7 +7,7 @@
         "page": "{title} | {firm.shortName}"
     },
     "descriptionPatterns": {
-        "home": "Austin G. Ervin is an attorney in Portsmouth, Ohio, serving southern Ohio and northeastern Kentucky in criminal defense, family law, and estate planning matters.",
+        "home": "Austin G. Ervin is an attorney in Portsmouth, Ohio, serving southern Ohio and northeastern Kentucky in criminal defense, family law, personal injury, and probate matters.",
         "practiceArea": "{blurb} Serving Scioto, Adams, Pike, and Lawrence counties from Portsmouth, Ohio.",
         "serviceArea": "Legal representation in {name}, handled from the Portsmouth office of Austin G. Ervin, Attorney at Law.",
         "attorney": "{biographyShort}",

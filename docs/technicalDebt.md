@@ -4,7 +4,7 @@ Open work only. **Completed work does not belong here** — when an item
 is done, delete it and record the decision in
 `docs/engineeringJournal.md`.
 
-**Reviewed:** 2026-08-15 · **Open:** 16
+**Reviewed:** 2026-08-16 · **Open:** 18
 
 **ID prefixes** — `TD` process/tooling · `VIS` visual · `RES` responsive ·
 `A11Y` accessibility · `SEO` · `PERF` · `DATA` · `LEGAL` · `ASK` awaiting
@@ -49,64 +49,25 @@ plus committing early.
 
 ## P1 — visible on the page
 
-### VIS-002 · Austin's inset plate in the About section is blurry and badly cropped
-**Status:** open · **Area:** `section.chapterAttorney`
+### VIS-022 · The flat UI gold is derived, not supplied
+**Status:** open · **Area:** `css/tokens.css`, `data/theme.json`
 
-`austinPortrait_web.webp` is reused as a small inset plate. It is a
-900×1085 asset produced for the hero, being displayed far smaller and
-cropped in a way that reads as poor quality next to the rest of the page.
+`--accentPrimary: #C19E61` drives every gold element on the page.
 
-**Evidence:** raised directly by Aron; visible at 1440 px in the
-attorney chapter.
-**Next action:** part of the V2.1 About redesign — either source a
-proper crop at the display size, or remove the plate. Needs a
-higher-resolution portrait from Austin if it is kept (see ASK-013).
+**This is no longer a placeholder, and it is no longer the muddy-logo
+problem.** That problem was a CSS grade —
+`brightness(0.46) saturate(1.5) contrast(1.12)` on the wordmark in the
+light and stone scenes — and it is gone. Measured against the artwork
+Austin supplied, the shield's dominant gold is `#CCA65C` and the
+wordmark's mid-tone `#C8A642`, so `#C19E61` already sits inside the
+brand's own range.
 
-### VIS-003 · Practice Area tabs do not read as interactive
-**Status:** open · **Area:** `section.chapterPractice`
-
-CSS-only radio tabs work correctly but give no affordance that they can
-be clicked, and the `01 / 02 / 03` numbering reads as a list index
-rather than as controls.
-
-**Next action:** V2.1 items 9–11 — add a real interactive affordance,
-drop the numbering, keep every practice area discoverable. Do not break
-the no-JS behaviour: the inputs must stay siblings of both the tab strip
-and the panels or `~` stops reaching (see journal).
-
-### VIS-004 · FAQ accordion behaviour is incomplete
-**Status:** open · **Area:** `section.chapterClose`
-
-Eight `.faqItem` entries. No `+` / `−` control, nothing open on load,
-and multiple items can be open at once.
-
-**Next action:** V2.1 items 14–16. Keep whatever native semantics exist
-— the mobile nav uses `<details>` deliberately for keyboard and
-screen-reader behaviour.
-
-### VIS-005 · Footer is incomplete
-**Status:** open · **Area:** `footer.siteFooter`
-
-Present: wordmark, address, phone, four in-page links, attorney
-advertising disclaimer, copyright.
-Missing: legal / privacy / terms links, verified social links, Nulo
-Studio developer credit, and a proper quick-links structure.
-
-**Next action:** V2.1 item 17. Blocked in part on ASK-011 (social URLs)
-and ASK-012 (privacy/terms copy) — build the structure, leave verified
-content as marked TODOs rather than inventing links.
-
-### VIS-006 · Accent gold is a placeholder, not Austin's brand gold
-**Status:** open · **Area:** `css/tokens.css`
-
-`--accentPrimary: #C19E61` is used in all three scenes and drives every
-gold element on the page — CTA, stars, rules, card top edges.
-
-**Evidence:** Aron flagged that the logo gold does not match Austin's
-actual brand gold.
-**Next action:** one-token change once the real hex arrives (ASK-007).
-Check `--accentStroke` at the same time (`#A98445` light, `#C19E61`
-dusk/dark). Re-check contrast after the change.
+**What is still open:** nobody has stated a brand gold. The token is
+*derived from artwork*, not *supplied*, and `theme.json` still calls it
+a raw brand value. If Austin ever produces a brand sheet, reconcile the
+two and re-check contrast; do not change it on taste alone.
+**Evidence:** measured with ImageMagick histograms, recorded in the
+journal entry for 2026-08-16.
 
 ### DATA-007 · Per-review star ratings are assumed, not supplied
 **Status:** open · **Area:** `data/reviews.json`
@@ -119,8 +80,6 @@ individuals' reviews on a regulated attorney page.
 **Next action:** confirm against the live Google profile (ASK-009). The
 generator emits no stars when `rating` is `null`, so reverting any
 record is a one-value change plus `node scripts/buildReviews.mjs`.
-
----
 
 ### TD-020 · "View all practice areas" has no page to point at
 **Status:** open · **Area:** `section.chapterPractice`
@@ -152,6 +111,54 @@ sibling generator, to render all four from
 `data/practiceAreas.json`. Verify with the parity probe recorded
 in the journal until then.
 
+### TD-024 · The consultation form is built but not connected
+**Status:** open · **Area:** `js/consultationJS.js`, `appsScript/`
+
+`CONSULTATION_ENDPOINT` is an empty string. Until the Apps Script web
+app is deployed and its `/exec` URL pasted into that constant, **the
+form cannot send anything** — it shows an honest failure and points the
+visitor at the telephone.
+
+**This is the single thing standing between the site and a working
+contact channel.** Everything else is built and tested.
+
+**Next action:** follow `appsScript/README.md`. Steps 1–6 deploy it,
+step 7 is the one-line site change, step 8 is the real end-to-end test.
+Do not describe the form as live until an email actually arrives.
+
+### CONTENT-025 · Every FAQ answer is the same placeholder
+**Status:** open · **Area:** `index.html` §`.chapterClose`, `data/faqs.json`
+
+All eight `.faqAnswer` blocks contain the identical string: *"This
+answer is under review before publication. To ask it directly, call
+(740) 529-1420."* The first item is open by default, so a visitor
+learns the whole section in one glance and then faces seven more
+controls leading to the same eighteen words.
+
+**Why it matters:** "Questions" is one of three top-level nav
+destinations and the FAQ is the last content chapter before the close —
+the peak-end position. A large, well-built apparatus that answers
+nothing reads as neglect rather than caution. Raised independently by
+the Impeccable critique.
+
+**Next action:** the procedural questions ("What should I bring to a
+first meeting?", "What happens at an arraignment in Ohio?") state no
+outcome and should clear review quickly. Blocked on ASK-018 — who signs
+off FAQ content.
+
+### CONTENT-026 · Twelve practice areas name body files that do not exist
+**Status:** open · **Area:** `content/practiceAreas/`, `data/practiceAreas.json`
+
+The directory is empty and always has been. Every record in
+`practiceAreas.json` names a `body` path because the schema requires
+text there, not because the file exists — the pre-existing records did
+the same, so this is inherited, not introduced.
+
+**Consequence:** there is no practice-area detail copy to build interior
+pages from, which is also what blocks TD-020.
+
+---
+
 ## P2 — quality
 
 ### DATA-008 · Review corpus is six of roughly forty-six
@@ -176,7 +183,7 @@ these sources". Nothing enforces the record shape, so a malformed entry
 would only surface as a broken render.
 
 **Next action:** write `reviews.schema.json` in the framework, or
-decide explicitly that reviews stay unvalidated (ASK-014).
+decide explicitly that reviews stay unvalidated (ASK-017).
 
 ### SEO-010 · No SEO implementation
 **Status:** open · **Area:** `index.html`, `data/seo.json`
@@ -237,16 +244,22 @@ needs a reviewer name and a date. The rest need facts from Austin
 **Next action:** clear `faqs.json` once Aron confirms who signs off FAQ
 content and on what date.
 
-### LEGAL-014 · No privacy policy or terms
-**Status:** open · **Area:** site
+### LEGAL-023 · The legal pages exist but are not finished copy
+**Status:** open · **Area:** `legal/`
 
-The attorney advertising disclaimer is present and correct. There is no
-privacy policy and no terms page, and the footer is due to link to both.
+Three pages were added so no footer link is dead:
 
-**Next action:** Austin's call whether to supply or approve drafted
-copy (ASK-012). Do not publish links to pages that do not exist.
+| Page | State |
+|---|---|
+| `legal/privacyPolicy.html` | **Placeholder.** Says plainly that the policy is being prepared, and states only what the site factually does today. No invented policy language. |
+| `legal/termsOfUse.html` | **Placeholder**, same treatment. |
+| `legal/accessibility.html` | **Real.** Describes what was built and explicitly makes no conformance claim. |
 
----
+All three carry `<meta name="robots" content="noindex">` while the copy
+is unfinished.
+
+**Next action:** Austin supplies or approves the privacy and terms copy
+(ASK-012), then remove the status panel and the noindex from those two.
 
 ## P3
 
@@ -257,8 +270,10 @@ copy (ASK-012). Do not publish links to pages that do not exist.
 superseded by `austinPortrait_web.webp`. It is referenced nowhere and is
 kept only as evidence for the matte comparison recorded in the journal.
 
-**Next action:** delete once V2.1 ships. It must never be wired back in
-— see the journal's portrait-matte entry for the measurements.
+**Next action:** deletable now — V2.1 has shipped. Left in place only
+because closeout is not the session to change code in. It must never be
+wired back in; see the journal's portrait-matte entry for the
+measurements.
 
 ### RES-016 · Responsive verified by measurement, not by device
 **Status:** open · **Area:** whole page
@@ -282,13 +297,13 @@ finger).
 
 | ID | Item | Blocks |
 |---|---|---|
-| ASK-007 | Real brand gold hex | VIS-006 |
+| ASK-007 | A stated brand gold, if one exists. The current token is derived from the supplied artwork and measured compatible with it — this is a reconciliation, not a blocker | VIS-022 |
 | ASK-008 | Review text for the five known names, and the Carlous Hutchison negative | DATA-008 |
 | ASK-009 | Confirmation of per-review star ratings | DATA-007 |
 | ASK-010 | Domain | SEO-010 |
-| ASK-011 | Verified social URLs, office hours, after-hours policy, Maps URL, form endpoint | VIS-005, TD-013 |
-| ASK-012 | Privacy policy and terms copy, or approval to draft | LEGAL-014 |
-| ASK-013 | Higher-resolution portrait crop; video for the V2.1 placeholder | VIS-002 |
+| ASK-011 | Verified social URLs, office hours, after-hours policy, Maps URL | footer social row, TD-013 |
+| ASK-012 | Privacy policy and terms copy, or approval to draft | LEGAL-023 |
+| ASK-013 | The introduction video for the film frame in chapter two. A higher-resolution portrait is no longer needed — the inset that required one was removed | chapter two |
 | ASK-019 | **Does Austin handle protection orders?** They were published on the homepage and in all three menus until 2026-08-16 and were withdrawn because they are absent from his confirmed list. A criminal and family practice in southern Ohio almost certainly does handle them, so this reads as an omission rather than a decision. Three FAQ entries still ask about them and were left alone pending his answer. | practice areas, FAQ |
 | ASK-020 | **Has the 2026 Dayton Criminal Defense College Trial School been completed?** The site says "Attended", with the year, and deliberately does not say completed, graduated or certified. Upgrade the wording only on written confirmation. | attorney chapter |
 | ASK-021 | **A figure for jury trial experience he can substantiate.** His word was "extensive"; it is not published, because an unsubstantiated quantity claim is what Ohio Prof. Cond. R. 7.1 prohibits. | attorney chapter |
@@ -297,7 +312,7 @@ finger).
 
 | ID | Item | Blocks |
 |---|---|---|
-| ASK-014 | Approve the V2.1 direction before implementation | all of V2.1 |
+| ASK-022 | Deploy the consultation Apps Script and paste the URL into the site | TD-024 |
 | ASK-015 | Permanent fix for the build-overwrite hazard | TD-001 |
 | ASK-016 | Whether marquee cards should also carry the star badge (hero cards do; the two systems are deliberately distinct) | — |
 | ASK-017 | Whether to write a schema for `data/reviews.json` | DATA-009 |
