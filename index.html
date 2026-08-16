@@ -13,6 +13,10 @@
 
     <meta name="theme-color" content="#0B0B0D">
 
+    <!-- The AE shield is the compact brand mark. Both icons are cut
+         from the supplied shield artwork, so the tab, the home
+         screen and the navigation all carry the same emblem. -->
+
     <link rel="icon" href="graphics/logos/favicon_32.png" sizes="32x32">
 
     <link rel="apple-touch-icon" href="graphics/logos/favicon_180.png">
@@ -22,6 +26,10 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
     <link rel="preload" as="image" href="graphics/logos/theOne_Logo_web.webp">
+
+    <link rel="preload" as="image" href="graphics/logos/aeShield_web.webp">
+
+    <link rel="preload" as="image" href="graphics/logos/aeWordmark_web.webp">
 
     <!-- Cormorant 700 exists for the mega menu titles. The face is
          a high-contrast Garamond: at 600 its stems are optically
@@ -106,6 +114,37 @@
             </g>
         </symbol>
 
+        <symbol id="closeGlyph" viewBox="0 0 24 24">
+            <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+                <path d="M6 6l12 12"/>
+                <path d="M18 6L6 18"/>
+            </g>
+        </symbol>
+
+        <symbol id="externalGlyph" viewBox="0 0 24 24">
+            <g fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M13.4 4.6h6v6"/>
+                <path d="M19.4 4.6 11 13"/>
+                <path d="M18 14.2v4.2a1.4 1.4 0 0 1-1.4 1.4H5.6a1.4 1.4 0 0 1-1.4-1.4V7.4A1.4 1.4 0 0 1 5.6 6h4.2"/>
+            </g>
+        </symbol>
+
+        <!-- Social marks, drawn so the footer row can be turned on
+             the moment verified profile URLs arrive. Nothing
+             references them yet — see the footer. -->
+
+        <symbol id="facebookGlyph" viewBox="0 0 24 24">
+            <path fill="currentColor" d="M13.5 21v-8h2.7l.4-3.1h-3.1V7.9c0-.9.25-1.5 1.55-1.5H16.7V3.6A21 21 0 0 0 14.3 3.5c-2.4 0-4 1.45-4 4.12V9.9H7.6V13h2.7v8z"/>
+        </symbol>
+
+        <symbol id="linkedinGlyph" viewBox="0 0 24 24">
+            <path fill="currentColor" d="M6.9 20.5H3.6V9.7h3.3zM5.25 8.25a1.9 1.9 0 1 1 0-3.8 1.9 1.9 0 0 1 0 3.8M20.5 20.5h-3.3v-5.25c0-1.25-.02-2.86-1.75-2.86-1.75 0-2.02 1.36-2.02 2.77v5.34H10.1V9.7h3.17v1.48h.05a3.47 3.47 0 0 1 3.13-1.72c3.34 0 3.96 2.2 3.96 5.06z"/>
+        </symbol>
+
+        <symbol id="googleGlyph" viewBox="0 0 48 48">
+            <path fill="currentColor" d="M45.12 24.5c0-1.56-.14-3.06-.4-4.5H24v8.51h11.84c-.51 2.75-2.06 5.08-4.39 6.64v5.52h7.11c4.16-3.83 6.56-9.47 6.56-16.17zM24 46c5.94 0 10.92-1.97 14.56-5.33l-7.11-5.52c-1.97 1.32-4.49 2.1-7.45 2.1-5.73 0-10.58-3.87-12.31-9.07H4.34v5.7C7.96 41.07 15.4 46 24 46zM11.69 28.18C11.25 26.86 11 25.45 11 24s.25-2.86.69-4.18v-5.7H4.34C2.85 17.09 2 20.45 2 24s.85 6.91 2.34 9.88l7.35-5.7zM24 10.75c3.23 0 6.13 1.11 8.41 3.29l6.31-6.31C34.91 4.18 29.93 2 24 2 15.4 2 7.96 6.93 4.34 14.12l7.35 5.7c1.73-5.2 6.58-9.07 12.31-9.07z"/>
+        </symbol>
+
     </svg>
 
 
@@ -139,12 +178,17 @@
 
             <span class="loadCurtainRule" aria-hidden="true"></span>
 
+            <!-- The curtain keeps the scales mark above — it is the
+                 ceremonial lockup and it is approved. Only the
+                 wordmark artwork changed, to the supplied metallic
+                 file, so the curtain and the bar behind it are not
+                 two different golds. -->
             <img
                 class="loadCurtainWord"
-                src="graphics/logos/theTwo_Logo_web.webp"
+                src="graphics/logos/aeWordmark_web.webp"
                 alt="Austin G. Ervin, Attorney at Law, LLC"
-                width="900"
-                height="181"
+                width="1100"
+                height="170"
             >
 
         </div>
@@ -173,19 +217,39 @@
 
         <div class="container siteHeaderInner">
 
-            <!-- The wordmark, not the mark. The scales lose their
-                 detail below about 40px and read as a smudge; the
-                 lockup stays legible at any size the bar allows.
-                 The mark still carries the curtain, the mobile
-                 menu and the hero. -->
+            <!-- THE BRAND LOCKUP — one identity, two pieces of
+                 supplied artwork.
+
+                 The AE shield leads and the wordmark follows, so
+                 the bar opens on an emblem rather than on a line
+                 of type. Both are the approved files, displayed
+                 at their own aspect ratio and untouched by any
+                 filter: the gold in them is metallic, and a CSS
+                 grade flattens it to a single muddy brown.
+
+                 Below 600px the wordmark leaves and the shield
+                 stands alone. That is not the wordmark shrinking
+                 until it is unreadable — it is the identity
+                 changing gear, which is what the shield is for.
+                 The whole lockup is one link to the top. -->
             <a class="logoLockup" href="#mainContent" aria-label="Austin G. Ervin, Attorney at Law — home">
 
                 <img
+                    class="logoShield"
+                    src="graphics/logos/aeShield_web.webp"
+                    alt=""
+                    width="272"
+                    height="320"
+                    fetchpriority="high"
+                >
+
+                <img
                     class="logoWordmarkImage"
-                    src="graphics/logos/theTwo_Logo_web.webp"
+                    src="graphics/logos/aeWordmark_web.webp"
                     alt="Austin G. Ervin, Attorney at Law, LLC"
-                    width="900"
-                    height="181"
+                    width="1100"
+                    height="170"
+                    fetchpriority="high"
                 >
 
             </a>
@@ -205,7 +269,7 @@
                             <span class="navChevron" aria-hidden="true"></span>
                         </a>
 
-                        <div class="megaPanel" data-megaPanel>
+                        <div class="megaPanel" data-scene="light" data-megaPanel>
 
                             <div class="megaInner">
 
@@ -308,7 +372,7 @@
                             <span class="navChevron" aria-hidden="true"></span>
                         </a>
 
-                        <div class="megaPanel" data-megaPanel>
+                        <div class="megaPanel" data-scene="light" data-megaPanel>
 
                             <div class="megaInner">
 
@@ -395,7 +459,7 @@
                             <span class="navChevron" aria-hidden="true"></span>
                         </a>
 
-                        <div class="megaPanel" data-megaPanel>
+                        <div class="megaPanel" data-scene="light" data-megaPanel>
 
                             <div class="megaInner">
 
@@ -551,10 +615,10 @@
 
                 <img
                     class="mobileMenuMark"
-                    src="graphics/logos/theOne_Logo_web.webp"
+                    src="graphics/logos/aeShield_web.webp"
                     alt=""
-                    width="560"
-                    height="407"
+                    width="272"
+                    height="320"
                 >
 
                 <button class="menuClose" type="button" aria-label="Close menu" data-menuClose>
@@ -705,7 +769,6 @@
                 <div class="heroType">
 
                     <p class="heroPlace">
-                        <span class="heroPlaceRule" aria-hidden="true"></span>
                         Portsmouth, Ohio
                     </p>
 
@@ -847,137 +910,131 @@
 
 
         <!-- ============================================================
-             CHAPTER TWO · THE HARDEST WEEK
+             CHAPTER TWO · A MESSAGE FROM AUSTIN
 
-             The emotional centre of the page, and the only chapter
-             that is nothing but a sentence. It descends into
-             charcoal because the sentence is heavy.
+             The handshake. It replaces the statement chapter, whose
+             sentence — "the hardest week of their life" — opened the
+             page on the visitor's worst moment and then stayed
+             there. The movement wanted here is uncertainty into
+             clarity, so this chapter's whole job is to make Austin
+             a person and then hand the visitor straight to the
+             practice areas. It does not try to be a second About
+             page; the biography is two chapters down, after the
+             visitor has been given a way to find their own matter.
+
+             The film frame holds a poster and a status chip today.
+             When Austin's introduction arrives, the <img> becomes a
+             <video poster=…> inside the same frame and nothing
+             around it moves.
         ============================================================ -->
 
-        <section class="chapterStatement" data-scene="dusk" data-chapter aria-labelledby="statementHeading">
+        <section class="chapterMessage" id="message" data-scene="dusk" data-chapter aria-labelledby="messageHeading">
 
-            <div class="container">
+            <div class="container messageInner">
 
-                <h2 class="statementBlock" id="statementHeading" data-reveal>
-                    <span class="statementLine">Most people who call me</span>
-                    <span class="statementLine">are having the hardest</span>
-                    <span class="statementLine">week of their life.</span>
-                </h2>
+                <div class="messageType" data-reveal>
 
-                <p class="statementBody">
-                    A criminal charge, a custody dispute, or a death in the family arrives
-                    without warning and without instructions. The work of this office is to
-                    make the next step clear, and then to take it with you.
-                </p>
-
-            </div>
-
-        </section>
-
-
-        <!-- ============================================================
-             CHAPTER THREE · THE ATTORNEY
-
-             Warm stone. The one chapter that is a person rather
-             than a service, so it returns to daylight.
-        ============================================================ -->
-
-        <section class="chapterAttorney" id="attorney" data-scene="stone" data-chapter aria-labelledby="attorneyName">
-
-            <div class="container attorneyInner">
-
-                <!-- The media frame. It carries the office photograph
-                     today and is built at 16:9 so a film of Austin
-                     can replace the <img> with a <video> and change
-                     nothing else about the composition. No play
-                     control is drawn, because there is nothing yet
-                     to play. -->
-                <div class="attorneyStage">
-
-                    <figure class="attorneyMedia">
-
-                        <img
-                            class="attorneyMediaImage"
-                            src="graphics/images/courtroom_web.webp"
-                            alt="A courtroom of the kind where these matters are heard"
-                            width="1500"
-                            height="1000"
-                            loading="lazy"
-                        >
-
-                    </figure>
-
-                    <!-- Austin, inset over the frame: the two planes
-                         overlap rather than sit side by side. -->
-                    <figure class="attorneyInset">
-
-                        <img
-                            class="attorneyInsetImage"
-                            src="graphics/images/austinPortrait_web.webp"
-                            alt="Austin G. Ervin"
-                            width="900"
-                            height="1085"
-                            loading="lazy"
-                        >
-
-                        <figcaption class="attorneyInsetCaption">
-                            <span class="attorneyInsetName">Austin G. Ervin</span>
-                            <span class="attorneyInsetRole">Portsmouth</span>
-                        </figcaption>
-
-                    </figure>
-
-                </div>
-
-                <div class="attorneyBody">
-
-                    <h2 class="attorneyName" id="attorneyName">Austin&nbsp;G. Ervin</h2>
-
-                    <p class="attorneyLede">
-                        Austin G. Ervin is an attorney in Portsmouth, Ohio, licensed in both
-                        Ohio and Kentucky. He earned his J.D. from the University of Dayton
-                        School of Law in 2022 and represents clients across southern Ohio and
-                        northeastern Kentucky.
+                    <p class="sectionEyebrow">
+                        A message from Austin
                     </p>
 
-                    <dl class="credentialList">
+                    <h2 class="messageHeading" id="messageHeading">
+                        <span class="statementLine">You should know</span>
+                        <span class="statementLine">who you&rsquo;re calling.</span>
+                    </h2>
 
-                        <div class="credentialRow">
-                            <dt class="credentialLabel">Ohio</dt>
-                            <dd class="credentialValue">Admitted 2022</dd>
-                        </div>
+                    <p class="messageBody">
+                        Most people who call this office have never needed an attorney
+                        before. What helps first is not a strategy &mdash; it is a plain
+                        account of where things stand, what the next step is, and when it
+                        happens. That is what a first conversation is for.
+                    </p>
 
-                        <div class="credentialRow">
-                            <dt class="credentialLabel">Kentucky</dt>
-                            <dd class="credentialValue">Admitted 2023</dd>
-                        </div>
+                    <ul class="messagePoints" role="list">
 
-                        <div class="credentialRow">
-                            <dt class="credentialLabel">Juris Doctor</dt>
-                            <dd class="credentialValue">University of Dayton, 2022</dd>
-                        </div>
+                        <li class="messagePoint">
+                            <svg class="messagePointIcon" aria-hidden="true" focusable="false"><use href="#tickGlyph"/></svg>
+                            <span>Criminal, family, and estate matters across southern Ohio and northeastern Kentucky.</span>
+                        </li>
 
-                        <div class="credentialRow">
-                            <dt class="credentialLabel">Office</dt>
-                            <dd class="credentialValue">602 Chillicothe St, Suite 206</dd>
-                        </div>
+                        <li class="messagePoint">
+                            <svg class="messagePointIcon" aria-hidden="true" focusable="false"><use href="#tickGlyph"/></svg>
+                            <span>Most inquiries receive a response within 24&nbsp;hours.</span>
+                        </li>
 
-                    </dl>
+                        <li class="messagePoint">
+                            <svg class="messagePointIcon" aria-hidden="true" focusable="false"><use href="#tickGlyph"/></svg>
+                            <span>A first conversation costs nothing but the time it takes to describe the matter.</span>
+                        </li>
 
-                    <a class="attorneyAction" href="#contact">
-                        <span>Request a consultation</span>
+                    </ul>
+
+                    <a class="messageAction" href="#practice">
+                        <span>See what this office handles</span>
                         <svg class="megaArrow" aria-hidden="true" focusable="false"><use href="#arrowGlyph"/></svg>
                     </a>
 
                 </div>
 
+                <!-- THE FILM FRAME — a designed placeholder, not a
+                     grey box. There is deliberately no play button:
+                     a control that does nothing when pressed is
+                     worse than no control. The mark is decorative
+                     and the chip says plainly that the film is
+                     still being made. -->
+                <figure class="messageFilm">
+
+                    <div class="filmFrame">
+
+                        <img
+                            class="filmPoster"
+                            src="graphics/images/courtroom_web.webp"
+                            alt=""
+                            width="1500"
+                            height="1000"
+                            loading="lazy"
+                        >
+
+                        <span class="filmVeil" aria-hidden="true"></span>
+
+                        <span class="filmMark" aria-hidden="true">
+                            <svg class="filmMarkGlyph" viewBox="0 0 24 24" focusable="false">
+                                <path fill="currentColor" d="M9 5.8 18.6 12 9 18.2Z"/>
+                            </svg>
+                        </span>
+
+                        <p class="filmStatus">
+                            <span class="filmStatusDot" aria-hidden="true"></span>
+                            Film in production
+                        </p>
+
+                        <span class="filmCorner filmCornerTl" aria-hidden="true"></span>
+                        <span class="filmCorner filmCornerBr" aria-hidden="true"></span>
+
+                    </div>
+
+                    <figcaption class="filmCaption">
+                        A short introduction from Austin will play here &mdash; who he is,
+                        why he practises, the matters he takes, and what happens after you
+                        call.
+                    </figcaption>
+
+                </figure>
+
             </div>
 
         </section>
 
 
         <!-- ============================================================
-             CHAPTER FOUR · WHAT THIS OFFICE HANDLES
+             CHAPTER THREE · WHAT THIS OFFICE HANDLES
+
+             Moved ahead of the attorney chapter in V2.1. A visitor
+             arriving on an attorney's website is answering one
+             question before any other — "does he handle what I
+             need?" — and the old order made them read a biography
+             first. Austin's story is stronger once they already
+             know he takes their kind of matter.
 
              An editorial index, not a grid of cards. Each area is a
              full-width row with a rule beneath it, so the eye runs
@@ -1000,8 +1057,8 @@
                     <h2 class="chapterHeading" id="practiceHeading">What this office handles.</h2>
 
                     <p class="practiceLedeText">
-                        Three kinds of matter come through this office. Open the one that
-                        looks like yours.
+                        Three kinds of matter come through this office. Select a file to
+                        see what it covers &mdash; every matter is listed underneath.
                     </p>
 
                 </div>
@@ -1021,21 +1078,29 @@
                     <input class="caseInput" type="radio" name="caseFile" id="caseFamily">
                     <input class="caseInput" type="radio" name="caseFile" id="caseEstate">
 
+                    <!-- The controls are contained surfaces now, not
+                         headings. `01 / 02 / 03` was removed in
+                         V2.1: a numeral in front of a word reads as
+                         a list index, so three tabs read as three
+                         items in a contents page and nobody
+                         discovered they were clickable. Each one
+                         carries its own count instead, which says
+                         there is something behind it. -->
                     <div class="caseTabs">
 
                         <label class="caseTab" for="caseCriminal">
-                            <span class="caseTabIndex">01</span>
                             <span class="caseTabName">Criminal</span>
+                            <span class="caseTabMeta">3 matters</span>
                         </label>
 
                         <label class="caseTab" for="caseFamily">
-                            <span class="caseTabIndex">02</span>
                             <span class="caseTabName">Family</span>
+                            <span class="caseTabMeta">3 matters</span>
                         </label>
 
                         <label class="caseTab" for="caseEstate">
-                            <span class="caseTabIndex">03</span>
                             <span class="caseTabName">Estate</span>
+                            <span class="caseTabMeta">2 matters</span>
                         </label>
 
                     </div>
@@ -1147,6 +1212,163 @@
 
                     </div>
 
+                    <!-- THE INDEX — every matter, always on screen.
+
+                         A tab hides two thirds of what the office does,
+                         and the mega menu is not an answer: a visitor
+                         who never opens it never learns that probate or
+                         protection orders are handled here. So the
+                         complete list stays visible under the file, and
+                         each entry is a second label on the radio that
+                         owns it — selecting "Probate" opens the estate
+                         file rather than routing to a page that does not
+                         exist yet. -->
+                    <div class="caseIndex">
+
+                        <p class="caseIndexLabel">All practice areas</p>
+
+                        <ul class="caseIndexList" role="list">
+
+                            <li><label class="caseChip" for="caseCriminal">Criminal Defense</label></li>
+
+                            <li><label class="caseChip" for="caseCriminal">OVI and DUI Defense</label></li>
+
+                            <li><label class="caseChip" for="caseCriminal">Protection Orders</label></li>
+
+                            <li><label class="caseChip" for="caseFamily">Family Law</label></li>
+
+                            <li><label class="caseChip" for="caseFamily">Divorce and Separation</label></li>
+
+                            <li><label class="caseChip" for="caseFamily">Child Custody and Support</label></li>
+
+                            <li><label class="caseChip" for="caseEstate">Estate Planning</label></li>
+
+                            <li><label class="caseChip" for="caseEstate">Probate</label></li>
+
+                        </ul>
+
+                        <a class="caseIndexAction" href="#contact">
+                            <span>Ask about a matter that is not listed</span>
+                            <svg class="megaArrow" aria-hidden="true" focusable="false"><use href="#arrowGlyph"/></svg>
+                        </a>
+
+                    </div>
+
+                </div>
+
+
+
+            </div>
+
+        </section>
+
+
+        <!-- ============================================================
+             CHAPTER FOUR · THE ATTORNEY
+
+             Warm stone, and now placed after the practice areas.
+             The visitor has already found their matter; this is
+             where they find out who would handle it.
+
+             The small inset plate is gone. It was a square crop of
+             the hero portrait, positioned so the top of Austin's
+             head was cut off, sitting on a cream card with no
+             ground behind it — it read as a passport photograph
+             stuck onto the scene. The supplied master is 1374×1145
+             and the derived portrait 900×1085, so there is no
+             higher-resolution crop to reach for: the fix is to
+             stop shrinking it. It is now the section's principal
+             image, at a size the source actually supports, with
+             the same bottom dissolve the hero uses so he stands in
+             the scene rather than on it.
+        ============================================================ -->
+
+        <section class="chapterAttorney" id="attorney" data-scene="stone" data-chapter aria-labelledby="attorneyName">
+
+            <div class="container attorneyInner">
+
+                <figure class="attorneyPlate">
+
+                    <span class="attorneyPlateGround" aria-hidden="true"></span>
+
+                    <img
+                        class="attorneyPlateImage"
+                        src="graphics/images/austinPortrait_web.webp"
+                        alt="Austin G. Ervin, attorney at law"
+                        width="900"
+                        height="1085"
+                        loading="lazy"
+                    >
+
+                    <figcaption class="attorneyPlateCaption">
+                        <span class="attorneyPlateName">Austin G. Ervin</span>
+                        <span class="attorneyPlateRole">Attorney at Law &middot; Portsmouth, Ohio</span>
+                    </figcaption>
+
+                </figure>
+
+                <div class="attorneyBody">
+
+                    <p class="sectionEyebrow">
+                        The attorney
+                    </p>
+
+                    <h2 class="attorneyName" id="attorneyName">Austin&nbsp;G. Ervin</h2>
+
+                    <p class="attorneyLede">
+                        Austin G. Ervin is an attorney in Portsmouth, Ohio, licensed in both
+                        Ohio and Kentucky. He earned his J.D. from the University of Dayton
+                        School of Law in 2022 and represents clients across southern Ohio and
+                        northeastern Kentucky &mdash; the same courthouses, week after week.
+                    </p>
+
+                    <!-- CREDENTIALS — a bar, not a spreadsheet.
+
+                         Four verified facts, set as an architectural
+                         strip: the jurisdictions first, because
+                         "can he even appear in my county" is the
+                         question underneath them. Everything here
+                         is verified in data/attorneys.json and
+                         data/locations.json. The unverified
+                         Shawnee State baccalaureate is deliberately
+                         absent (LEG-001). -->
+                    <dl class="credentialBar">
+
+                        <div class="credentialCell">
+                            <dt class="credentialLabel">Ohio</dt>
+                            <dd class="credentialValue">Admitted <span class="tabularFigures">2022</span></dd>
+                        </div>
+
+                        <div class="credentialCell">
+                            <dt class="credentialLabel">Kentucky</dt>
+                            <dd class="credentialValue">Admitted <span class="tabularFigures">2023</span></dd>
+                        </div>
+
+                        <div class="credentialCell">
+                            <dt class="credentialLabel">Juris Doctor</dt>
+                            <dd class="credentialValue">University of Dayton, <span class="tabularFigures">2022</span></dd>
+                        </div>
+
+                        <div class="credentialCell">
+                            <dt class="credentialLabel">Office</dt>
+                            <dd class="credentialValue">602 Chillicothe St, Suite 206</dd>
+                        </div>
+
+                    </dl>
+
+                    <div class="attorneyActions">
+
+                        <a class="buttonGhost" href="#contact">
+                            Request a consultation
+                        </a>
+
+                        <a class="attorneyAction" href="#practice">
+                            <span>What this office handles</span>
+                            <svg class="megaArrow" aria-hidden="true" focusable="false"><use href="#arrowGlyph"/></svg>
+                        </a>
+
+                    </div>
+
                 </div>
 
             </div>
@@ -1166,51 +1388,100 @@
 
             <div class="container">
 
-                <h2 class="chapterHeading" id="processHeading">You will know where you stand.</h2>
+                <div class="processPanelHead">
 
-                <ol class="processList" role="list">
+                    <p class="sectionEyebrow">
+                        What happens next
+                    </p>
 
-                    <li class="processStep">
+                    <h2 class="processHeading" id="processHeading">You will know where you stand.</h2>
 
-                        <span class="processNumeral" aria-hidden="true">01</span>
+                </div>
 
-                        <h3 class="processStepHeading">You call the office</h3>
+                <!-- THE PANEL — the three steps and nothing else.
 
-                        <p class="processStepText">
-                            You reach a person or leave a message describing the matter.
-                            Say what happened and when, and leave a number you can be
-                            reached on.
-                        </p>
+                     They used to run the full width of the container
+                     with nothing holding them, which left the most
+                     practical chapter on the page reading as the
+                     loosest. They are inset into one black rectangle
+                     now, sized well inside the container so the light
+                     scene stays visible on all four sides: the object
+                     floats over the environment rather than replacing
+                     it.
 
-                    </li>
+                     The heading and the response note deliberately sit
+                     OUTSIDE it. A panel that swallows the whole
+                     chapter is a tinted band, not an inset object.
 
-                    <li class="processStep">
+                     `data-scene="dark"` rather than hand-written
+                     colours — the steps inside are the same components
+                     as everywhere else, and the scene supplies their
+                     ink. -->
+                <div class="processPanel" data-scene="dark">
 
-                        <span class="processNumeral" aria-hidden="true">02</span>
+                    <ol class="processList" role="list">
 
-                        <h3 class="processStepHeading">We talk about what happened</h3>
+                        <li class="processStep">
 
-                        <p class="processStepText">
-                            A first conversation covers the facts, the charge or the filing,
-                            the dates that already exist, and what can still be changed.
-                        </p>
+                            <p class="processStepIndex">
+                                <span class="processStepWord">Step</span>
+                                <span class="processNumeral tabularFigures">01</span>
+                            </p>
 
-                    </li>
+                            <h3 class="processStepHeading">Reach out</h3>
 
-                    <li class="processStep">
+                            <p class="processStepText">
+                                Call the office or send a message describing the matter. Say
+                                what happened and when, and leave a number you can be reached
+                                on.
+                            </p>
 
-                        <span class="processNumeral" aria-hidden="true">03</span>
+                        </li>
 
-                        <h3 class="processStepHeading">You get the next step in writing</h3>
+                        <li class="processStep">
 
-                        <p class="processStepText">
-                            You will leave the first conversation knowing what happens next
-                            and when.
-                        </p>
+                            <p class="processStepIndex">
+                                <span class="processStepWord">Step</span>
+                                <span class="processNumeral tabularFigures">02</span>
+                            </p>
 
-                    </li>
+                            <h3 class="processStepHeading">Austin reviews your situation</h3>
 
-                </ol>
+                            <p class="processStepText">
+                                The facts, the charge or the filing, the dates that already
+                                exist, and what can still be changed.
+                            </p>
+
+                        </li>
+
+                        <li class="processStep">
+
+                            <p class="processStepIndex">
+                                <span class="processStepWord">Step</span>
+                                <span class="processNumeral tabularFigures">03</span>
+                            </p>
+
+                            <h3 class="processStepHeading">You understand the next step</h3>
+
+                            <p class="processStepText">
+                                Before the first conversation ends you will know what happens
+                                next, when it happens, and what it takes to get there.
+                            </p>
+
+                        </li>
+
+                    </ol>
+
+                </div>
+
+                <!-- Typical, not promised. "Guarantee" is a prohibited
+                     term in data/compliance.json, and an absolute
+                     response-time claim would be one in substance even
+                     without the word. -->
+                <p class="processNote">
+                    <svg class="processNoteIcon" aria-hidden="true" focusable="false"><use href="#tickGlyph"/></svg>
+                    Most inquiries receive a response within 24&nbsp;hours.
+                </p>
 
                 <div class="serviceArea" data-hasMap>
 
@@ -1316,7 +1587,7 @@
 
                 <div class="reviewTrackViewport">
                     <ul class="reviewTrack isLeadingLeft" role="list" data-track>
-                        <li class="reviewCard">
+                        <li class="reviewCard" data-reviewId="g-logan-gullett" data-rating="5">
 
                             <blockquote class="reviewText">
                                 <p>Austin really helped me out when things weren’t looking good, goes above and beyond when it comes to your case, great communication and very knowledgeable. Couldn’t recommend a better lawyer!</p>
@@ -1332,7 +1603,7 @@
 
                         </li>
 
-                        <li class="reviewCard">
+                        <li class="reviewCard" data-reviewId="g-brandon-hinson" data-rating="5">
 
                             <blockquote class="reviewText">
                                 <p>Austin is a great attorney to have he we above and beyond to get me the best plea deal he was capable of getting me I would recommend him to anybody who is fighting in the court system. Also I appreciate him very much because he did his job like he was supposed to.</p>
@@ -1348,7 +1619,7 @@
 
                         </li>
 
-                        <li class="reviewCard">
+                        <li class="reviewCard" data-reviewId="g-d-g" data-rating="5">
 
                             <blockquote class="reviewText">
                                 <p>Highly recommended! Hired Austin for my parentage case and he fought for me and ensured I was happy with the outcome. He has great communication, is very assertive, and truly cares about his clients. 10/10!</p>
@@ -1364,7 +1635,7 @@
 
                         </li>
 
-                        <li class="reviewCard">
+                        <li class="reviewCard" data-reviewId="g-nic-mayo" data-rating="5">
 
                             <blockquote class="reviewText">
                                 <p>Me Irvine is very professional and was a wonderful lawyer. He worked with me instead of against me and got my daughter back in my life. I’m forever thankful for him and recommend him to anyone in need of a custody lawyer.</p>
@@ -1380,7 +1651,7 @@
 
                         </li>
 
-                        <li class="reviewCard">
+                        <li class="reviewCard" data-reviewId="g-christan-shiveley" data-rating="5">
 
                             <blockquote class="reviewText">
                                 <p>Austin represented me in my divorce case, making sure that everything was done in a timely manner. Very satisfied with the outcome of everything! Definitely would recommend.</p>
@@ -1396,7 +1667,7 @@
 
                         </li>
 
-                        <li class="reviewCard">
+                        <li class="reviewCard" data-reviewId="g-cynthia-book" data-rating="5">
 
                             <blockquote class="reviewText">
                                 <p>Austin Ervin is very professional. He responds either immediately or as soon as possible when contacted. I found him to be very knowledgeable and gives very informed advice for the situation. Our legal situation was resolved quickly and responsibly. I would definitely hire him again.</p>
@@ -1416,7 +1687,7 @@
 
                 <div class="reviewTrackViewport">
                     <ul class="reviewTrack isLeadingRight" role="list" data-track>
-                        <li class="reviewCard">
+                        <li class="reviewCard" data-reviewId="g-cynthia-book" data-rating="5">
 
                             <blockquote class="reviewText">
                                 <p>Austin Ervin is very professional. He responds either immediately or as soon as possible when contacted. I found him to be very knowledgeable and gives very informed advice for the situation. Our legal situation was resolved quickly and responsibly. I would definitely hire him again.</p>
@@ -1432,7 +1703,7 @@
 
                         </li>
 
-                        <li class="reviewCard">
+                        <li class="reviewCard" data-reviewId="g-nic-mayo" data-rating="5">
 
                             <blockquote class="reviewText">
                                 <p>Me Irvine is very professional and was a wonderful lawyer. He worked with me instead of against me and got my daughter back in my life. I’m forever thankful for him and recommend him to anyone in need of a custody lawyer.</p>
@@ -1448,7 +1719,7 @@
 
                         </li>
 
-                        <li class="reviewCard">
+                        <li class="reviewCard" data-reviewId="g-christan-shiveley" data-rating="5">
 
                             <blockquote class="reviewText">
                                 <p>Austin represented me in my divorce case, making sure that everything was done in a timely manner. Very satisfied with the outcome of everything! Definitely would recommend.</p>
@@ -1464,7 +1735,7 @@
 
                         </li>
 
-                        <li class="reviewCard">
+                        <li class="reviewCard" data-reviewId="g-logan-gullett" data-rating="5">
 
                             <blockquote class="reviewText">
                                 <p>Austin really helped me out when things weren’t looking good, goes above and beyond when it comes to your case, great communication and very knowledgeable. Couldn’t recommend a better lawyer!</p>
@@ -1480,7 +1751,7 @@
 
                         </li>
 
-                        <li class="reviewCard">
+                        <li class="reviewCard" data-reviewId="g-d-g" data-rating="5">
 
                             <blockquote class="reviewText">
                                 <p>Highly recommended! Hired Austin for my parentage case and he fought for me and ensured I was happy with the outcome. He has great communication, is very assertive, and truly cares about his clients. 10/10!</p>
@@ -1496,7 +1767,7 @@
 
                         </li>
 
-                        <li class="reviewCard">
+                        <li class="reviewCard" data-reviewId="g-brandon-hinson" data-rating="5">
 
                             <blockquote class="reviewText">
                                 <p>Austin is a great attorney to have he we above and beyond to get me the best plea deal he was capable of getting me I would recommend him to anybody who is fighting in the court system. Also I appreciate him very much because he did his job like he was supposed to.</p>
@@ -1535,60 +1806,140 @@
 
                 <div class="faqList">
 
-                    <details class="faqItem">
-                        <summary class="faqQuestion">Do I need a lawyer before my first court date?</summary>
+                    <details class="faqItem" name="faqGroup" open>
+
+                        <summary class="faqQuestion">
+                            <span class="faqQuestionText">Do I need a lawyer before my first court date?</span>
+                            <span class="faqGlyph" aria-hidden="true"></span>
+                        </summary>
+
                         <div class="faqAnswer">
-                            <p>This answer is under review before publication. To ask it directly, call <a class="noWrap tabularFigures" href="tel:+17405291420">(740) 529-1420</a>.</p>
+
+                            <div class="faqAnswerInner">
+                                <p>This answer is under review before publication. To ask it directly, call <a class="noWrap tabularFigures" href="tel:+17405291420">(740) 529-1420</a>.</p>
+                            </div>
+
                         </div>
+
                     </details>
 
-                    <details class="faqItem">
-                        <summary class="faqQuestion">What happens at an arraignment in Ohio?</summary>
+                    <details class="faqItem" name="faqGroup">
+
+                        <summary class="faqQuestion">
+                            <span class="faqQuestionText">What happens at an arraignment in Ohio?</span>
+                            <span class="faqGlyph" aria-hidden="true"></span>
+                        </summary>
+
                         <div class="faqAnswer">
-                            <p>This answer is under review before publication. To ask it directly, call <a class="noWrap tabularFigures" href="tel:+17405291420">(740) 529-1420</a>.</p>
+
+                            <div class="faqAnswerInner">
+                                <p>This answer is under review before publication. To ask it directly, call <a class="noWrap tabularFigures" href="tel:+17405291420">(740) 529-1420</a>.</p>
+                            </div>
+
                         </div>
+
                     </details>
 
-                    <details class="faqItem">
-                        <summary class="faqQuestion">Will I lose my driver's license after an OVI arrest?</summary>
+                    <details class="faqItem" name="faqGroup">
+
+                        <summary class="faqQuestion">
+                            <span class="faqQuestionText">Will I lose my driver's license after an OVI arrest?</span>
+                            <span class="faqGlyph" aria-hidden="true"></span>
+                        </summary>
+
                         <div class="faqAnswer">
-                            <p>This answer is under review before publication. To ask it directly, call <a class="noWrap tabularFigures" href="tel:+17405291420">(740) 529-1420</a>.</p>
+
+                            <div class="faqAnswerInner">
+                                <p>This answer is under review before publication. To ask it directly, call <a class="noWrap tabularFigures" href="tel:+17405291420">(740) 529-1420</a>.</p>
+                            </div>
+
                         </div>
+
                     </details>
 
-                    <details class="faqItem">
-                        <summary class="faqQuestion">What type of protection order do I need in Ohio?</summary>
+                    <details class="faqItem" name="faqGroup">
+
+                        <summary class="faqQuestion">
+                            <span class="faqQuestionText">What type of protection order do I need in Ohio?</span>
+                            <span class="faqGlyph" aria-hidden="true"></span>
+                        </summary>
+
                         <div class="faqAnswer">
-                            <p>This answer is under review before publication. To ask it directly, call <a class="noWrap tabularFigures" href="tel:+17405291420">(740) 529-1420</a>.</p>
+
+                            <div class="faqAnswerInner">
+                                <p>This answer is under review before publication. To ask it directly, call <a class="noWrap tabularFigures" href="tel:+17405291420">(740) 529-1420</a>.</p>
+                            </div>
+
                         </div>
+
                     </details>
 
-                    <details class="faqItem">
-                        <summary class="faqQuestion">What is the difference between a contested and an uncontested divorce?</summary>
+                    <details class="faqItem" name="faqGroup">
+
+                        <summary class="faqQuestion">
+                            <span class="faqQuestionText">What is the difference between a contested and an uncontested divorce?</span>
+                            <span class="faqGlyph" aria-hidden="true"></span>
+                        </summary>
+
                         <div class="faqAnswer">
-                            <p>This answer is under review before publication. To ask it directly, call <a class="noWrap tabularFigures" href="tel:+17405291420">(740) 529-1420</a>.</p>
+
+                            <div class="faqAnswerInner">
+                                <p>This answer is under review before publication. To ask it directly, call <a class="noWrap tabularFigures" href="tel:+17405291420">(740) 529-1420</a>.</p>
+                            </div>
+
                         </div>
+
                     </details>
 
-                    <details class="faqItem">
-                        <summary class="faqQuestion">How is child custody decided?</summary>
+                    <details class="faqItem" name="faqGroup">
+
+                        <summary class="faqQuestion">
+                            <span class="faqQuestionText">How is child custody decided?</span>
+                            <span class="faqGlyph" aria-hidden="true"></span>
+                        </summary>
+
                         <div class="faqAnswer">
-                            <p>This answer is under review before publication. To ask it directly, call <a class="noWrap tabularFigures" href="tel:+17405291420">(740) 529-1420</a>.</p>
+
+                            <div class="faqAnswerInner">
+                                <p>This answer is under review before publication. To ask it directly, call <a class="noWrap tabularFigures" href="tel:+17405291420">(740) 529-1420</a>.</p>
+                            </div>
+
                         </div>
+
                     </details>
 
-                    <details class="faqItem">
-                        <summary class="faqQuestion">What should I bring to a first meeting?</summary>
+                    <details class="faqItem" name="faqGroup">
+
+                        <summary class="faqQuestion">
+                            <span class="faqQuestionText">What should I bring to a first meeting?</span>
+                            <span class="faqGlyph" aria-hidden="true"></span>
+                        </summary>
+
                         <div class="faqAnswer">
-                            <p>This answer is under review before publication. To ask it directly, call <a class="noWrap tabularFigures" href="tel:+17405291420">(740) 529-1420</a>.</p>
+
+                            <div class="faqAnswerInner">
+                                <p>This answer is under review before publication. To ask it directly, call <a class="noWrap tabularFigures" href="tel:+17405291420">(740) 529-1420</a>.</p>
+                            </div>
+
                         </div>
+
                     </details>
 
-                    <details class="faqItem">
-                        <summary class="faqQuestion">When does an estate need to go through probate?</summary>
+                    <details class="faqItem" name="faqGroup">
+
+                        <summary class="faqQuestion">
+                            <span class="faqQuestionText">When does an estate need to go through probate?</span>
+                            <span class="faqGlyph" aria-hidden="true"></span>
+                        </summary>
+
                         <div class="faqAnswer">
-                            <p>This answer is under review before publication. To ask it directly, call <a class="noWrap tabularFigures" href="tel:+17405291420">(740) 529-1420</a>.</p>
+
+                            <div class="faqAnswerInner">
+                                <p>This answer is under review before publication. To ask it directly, call <a class="noWrap tabularFigures" href="tel:+17405291420">(740) 529-1420</a>.</p>
+                            </div>
+
                         </div>
+
                     </details>
 
                 </div>
@@ -1637,20 +1988,45 @@
     </main>
 
 
+    <!-- ============================================================
+         FOOTER
+
+         Four columns and a bottom bar. Every destination here is
+         real: the in-page anchors exist in this document, and the
+         two legal pages exist as files. Nothing links to a page
+         that has not been built, and no social profile is
+         published until a verified URL is supplied — the markup
+         and the styling for that row are ready below, commented
+         out, so it is an uncomment rather than a rebuild.
+    ============================================================ -->
+
     <footer class="siteFooter" data-scene="dark">
 
         <div class="container siteFooterInner">
 
             <div class="siteFooterIdentity">
 
-                <img
-                    class="siteFooterWordmark"
-                    src="graphics/logos/theTwo_Logo_web.webp"
-                    alt="Austin G. Ervin, Attorney at Law, LLC"
-                    width="900"
-                    height="181"
-                    loading="lazy"
-                >
+                <a class="siteFooterLockup" href="#mainContent" aria-label="Austin G. Ervin, Attorney at Law — home">
+
+                    <img
+                        class="siteFooterShield"
+                        src="graphics/logos/aeShield_web.webp"
+                        alt=""
+                        width="272"
+                        height="320"
+                        loading="lazy"
+                    >
+
+                    <img
+                        class="siteFooterWordmark"
+                        src="graphics/logos/aeWordmark_web.webp"
+                        alt="Austin G. Ervin, Attorney at Law, LLC"
+                        width="1100"
+                        height="170"
+                        loading="lazy"
+                    >
+
+                </a>
 
                 <address class="siteFooterAddress">
                     602 Chillicothe Street, Suite 206<br>
@@ -1661,41 +2037,188 @@
                     (740) 529-1420
                 </a>
 
+                <!-- SOCIAL — data/social.json is empty and no
+                     verified profile URL has been supplied.
+                     Publishing a guess on a regulated attorney page
+                     is not an option, so nothing renders. When the
+                     URLs arrive, uncomment this block and fill the
+                     hrefs; `.siteFooterSocial` is already styled.
+
+                <ul class="siteFooterSocial" role="list">
+
+                    <li>
+                        <a class="socialLink" href="" aria-label="Austin G. Ervin on Facebook" target="_blank" rel="noopener">
+                            <svg class="socialGlyph" aria-hidden="true" focusable="false"><use href="#facebookGlyph"/></svg>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a class="socialLink" href="" aria-label="Austin G. Ervin on LinkedIn" target="_blank" rel="noopener">
+                            <svg class="socialGlyph" aria-hidden="true" focusable="false"><use href="#linkedinGlyph"/></svg>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a class="socialLink" href="" aria-label="Austin G. Ervin on Google" target="_blank" rel="noopener">
+                            <svg class="socialGlyph" aria-hidden="true" focusable="false"><use href="#googleGlyph"/></svg>
+                        </a>
+                    </li>
+
+                </ul>
+                -->
+
             </div>
 
             <nav class="siteFooterNav" aria-label="Footer">
 
-                <ul class="siteFooterList" role="list">
+                <div class="siteFooterColumn">
 
-                    <li><a href="#practice">Practice Areas</a></li>
+                    <h2 class="siteFooterColumnTitle">Explore</h2>
 
-                    <li><a href="#attorney">About</a></li>
+                    <ul class="siteFooterList" role="list">
 
-                    <li><a href="#faq">Common Questions</a></li>
+                        <li><a href="#mainContent">Home</a></li>
 
-                    <li><a href="#contact">Contact</a></li>
+                        <li><a href="#practice">Practice Areas</a></li>
 
-                </ul>
+                        <li><a href="#attorney">About Austin</a></li>
+
+                        <li><a href="#faq">Common Questions</a></li>
+
+                        <li><a href="#contact">Contact</a></li>
+
+                        <li><a href="#contact">Request a Consultation</a></li>
+
+                    </ul>
+
+                </div>
+
+                <div class="siteFooterColumn">
+
+                    <h2 class="siteFooterColumnTitle">Practice</h2>
+
+                    <ul class="siteFooterList" role="list">
+
+                        <li><a href="#practice">Criminal Defense</a></li>
+
+                        <li><a href="#practice">OVI and DUI Defense</a></li>
+
+                        <li><a href="#practice">Family Law</a></li>
+
+                        <li><a href="#practice">Divorce and Separation</a></li>
+
+                        <li><a href="#practice">Child Custody and Support</a></li>
+
+                        <li><a href="#practice">Estate Planning</a></li>
+
+                    </ul>
+
+                </div>
+
+                <div class="siteFooterColumn">
+
+                    <h2 class="siteFooterColumnTitle">Legal</h2>
+
+                    <ul class="siteFooterList" role="list">
+
+                        <li><a href="legal/privacyPolicy.html">Privacy Policy</a></li>
+
+                        <li><a href="legal/termsOfUse.html">Terms of Use</a></li>
+
+                        <li><a href="#legalNotice">Legal Disclaimer</a></li>
+
+                        <li><a href="legal/accessibility.html">Accessibility</a></li>
+
+                    </ul>
+
+                </div>
 
             </nav>
 
         </div>
 
-        <div class="container siteFooterLegal">
+        <div class="container siteFooterLegal" id="legalNotice">
 
             <p class="disclaimerText">
                 Attorney advertising. The information on this site is general and is not legal
                 advice. Contacting this office does not create an attorney&ndash;client
-                relationship.
-            </p>
-
-            <p class="siteFooterCopyright">
-                &copy; 2026 Austin G. Ervin, Attorney at Law, LLC
+                relationship. Prior results do not predict a similar outcome in any other
+                matter.
             </p>
 
         </div>
 
+        <div class="container siteFooterBar">
+
+            <p class="siteFooterCopyright">
+                &copy;&nbsp;<span data-currentYear>2026</span> Austin G. Ervin, Attorney at Law, LLC
+            </p>
+
+            <!-- The developer credit sits at a whisper until it is
+                 hovered or focused. It is a signature, and a
+                 signature that competes with the firm's own
+                 branding is an advertisement. -->
+            <a class="devCredit" href="https://nulostudio.com" target="_blank" rel="noopener">
+
+                <span class="devCreditLabel">Developed by</span>
+
+                <img
+                    class="devCreditLogo"
+                    src="graphics/logos/devCredit/nuloStudioCredit.png"
+                    alt="Nulo Studio"
+                    width="220"
+                    height="135"
+                    loading="lazy"
+                >
+
+            </a>
+
+        </div>
+
     </footer>
+
+
+    <!-- ============================================================
+         REVIEW DETAIL
+
+         A native <dialog>. Escape, the focus trap and inerting the
+         page behind it are the platform's job, not ours, and a
+         moving card is the wrong place to grow text: expanding a
+         marquee card in place changes the height of a track that
+         is still travelling, and the thing the visitor wanted to
+         read walks off the edge while they read it.
+
+         Empty and closed in the markup. With the script deleted it
+         never opens — and it never needs to, because every card
+         already holds its complete text in the DOM; the clamp is a
+         CSS mask, not a truncation.
+    ============================================================ -->
+
+    <dialog class="reviewDialog" data-reviewDialog aria-labelledby="reviewDialogTitle">
+
+        <div class="reviewDialogInner">
+
+            <button class="reviewDialogClose" type="button" data-dialogClose aria-label="Close review">
+                <svg aria-hidden="true" focusable="false"><use href="#closeGlyph"/></svg>
+            </button>
+
+            <p class="reviewDialogBadge">
+                <svg class="reviewDialogMark" viewBox="0 0 48 48" aria-hidden="true" focusable="false"><use href="#googleGlyph"/></svg>
+                <span class="reviewDialogStars" data-dialogStars></span>
+            </p>
+
+            <blockquote class="reviewDialogQuote">
+                <p data-dialogText></p>
+            </blockquote>
+
+            <figcaption class="reviewDialogMeta">
+                <span class="reviewDialogName" id="reviewDialogTitle" data-dialogAuthor></span>
+                <span class="reviewDialogSource">Google review</span>
+            </figcaption>
+
+        </div>
+
+    </dialog>
 
 
     <script src="js/siteJS.js" defer></script>

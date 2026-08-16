@@ -360,13 +360,13 @@
 
 
     /**
-     * Clamps a review and gives it the control that undoes the
-     * clamp. Runs on originals BEFORE they are duplicated, so the
-     * two halves of a track are identical — a clone left at full
+     * Clamps a quote and reports whether anything was actually cut.
+     * Runs on originals BEFORE they are duplicated, so the two
+     * halves of a track are identical — a clone left at full
      * length would make the halves different heights and the
      * -50% translate would no longer land where it started.
      */
-    function clampReview(quote)
+    function clampQuote(quote)
     {
 
         const body = quote.querySelector('p');
@@ -374,7 +374,7 @@
         if (!body)
         {
 
-            return;
+            return false;
 
         }
 
@@ -386,9 +386,22 @@
 
             quote.classList.remove('isClamped');
 
-            return;
+            return false;
 
         }
+
+        return true;
+
+    }
+
+
+    /**
+     * The hero's three are static, so they grow in place. The
+     * whole card is standing still; there is nothing for the text
+     * to walk away from.
+     */
+    function addInlineExpander(quote)
+    {
 
         const button = document.createElement('button');
 
@@ -408,6 +421,240 @@
             button.textContent = open ? 'Show less' : 'Read full review';
 
             button.setAttribute('aria-expanded', open ? 'true' : 'false');
+
+        });
+
+        quote.insertAdjacentElement('afterend', button);
+
+    }
+
+
+    /* ============================================================
+       REVIEW DETAIL DIALOG
+
+       A marquee card is the wrong place to grow text. Expanding
+       one in place changes the height of a track that is still
+       travelling, and the paragraph the visitor opened slides off
+       the edge while they are reading it.
+
+       So the marquee hands its full text to a native <dialog>.
+       Escape, the focus trap, inerting the page behind it and
+       returning focus to whatever opened it are the platform's
+       work, and the platform does all four correctly. Both tracks
+       are paused for as long as it is open, so closing the dialog
+       does not reveal that the row has moved on without you.
+
+       Nothing here is load-bearing. Every card already holds its
+       complete text in the DOM — the clamp is a CSS mask, not a
+       truncation — so with this file deleted the words are simply
+       all visible.
+    ============================================================ */
+
+    const reviewDialog = document.querySelector('[data-reviewDialog]');
+
+    const dialogUsable = Boolean(reviewDialog && typeof reviewDialog.showModal === 'function');
+
+    const reviewSection = document.querySelector('[data-reviews]');
+
+    let dialogOpener = null;
+
+
+    /* The row itself carries `role="img"` and the label, rather
+       than a wrapper inside it. A nested span was not a flex
+       container, so the five marks — which base.css sets to
+       `display: block` — stacked into a vertical column. */
+
+    function fillStars(row, rating)
+    {
+
+        if (!rating)
+        {
+
+            row.removeAttribute('role');
+
+            row.removeAttribute('aria-label');
+
+            row.innerHTML = '';
+
+            return;
+
+        }
+
+        let marks = '';
+
+        for (let i = 0; i < 5; i += 1)
+        {
+
+            marks += '<svg class="' + (i < rating ? 'isLit' : 'isUnlit')
+                + '" viewBox="0 0 20 19" focusable="false"><use href="#starGlyph"/></svg>';
+
+        }
+
+        row.innerHTML = marks;
+
+        row.setAttribute('role', 'img');
+
+        row.setAttribute('aria-label', 'Rated ' + rating + ' out of 5 on Google');
+
+    }
+
+
+    function openReviewDialog(card, trigger)
+    {
+
+        const body = card.querySelector('.reviewText p');
+
+        const author = card.querySelector('.reviewAuthor');
+
+        if (!body || !author)
+        {
+
+            return;
+
+        }
+
+        reviewDialog.querySelector('[data-dialogText]').textContent = body.textContent;
+
+        reviewDialog.querySelector('[data-dialogAuthor]').textContent = author.textContent.trim();
+
+        fillStars(
+            reviewDialog.querySelector('[data-dialogStars]'),
+            Number(card.getAttribute('data-rating'))
+        );
+
+        dialogOpener = trigger;
+
+        if (reviewSection)
+        {
+
+            reviewSection.setAttribute('data-paused', '');
+
+        }
+
+        reviewDialog.showModal();
+
+    }
+
+
+    if (dialogUsable)
+    {
+
+        reviewDialog.addEventListener('close', function ()
+        {
+
+            if (reviewSection)
+            {
+
+                reviewSection.removeAttribute('data-paused');
+
+            }
+
+            if (dialogOpener && document.contains(dialogOpener))
+            {
+
+                dialogOpener.focus();
+
+            }
+
+            dialogOpener = null;
+
+        });
+
+        reviewDialog.querySelector('[data-dialogClose]').addEventListener('click', function ()
+        {
+
+            reviewDialog.close();
+
+        });
+
+        /* The backdrop is the dialog's own box outside its inner
+           panel, so a click that lands on the element itself —
+           never on a child — is a click on the backdrop. */
+        reviewDialog.addEventListener('click', function (event)
+        {
+
+            if (event.target === reviewDialog)
+            {
+
+                reviewDialog.close();
+
+            }
+
+        });
+
+    }
+
+
+    /**
+     * Gives a marquee card the one control it can honestly offer.
+     *
+     *   complete text   → opens the detail dialog
+     *   truncated + URL → goes to the review on Google
+     *   truncated, none → no control at all
+     *
+     * A "Read full review" button on a record that ends in
+     * Google's "… More" would promise words this project has
+     * never been given.
+     */
+    function addMarqueeControl(card, quote)
+    {
+
+        const truncated = card.hasAttribute('data-truncated');
+
+        const source = card.getAttribute('data-sourceUrl');
+
+        if (truncated)
+        {
+
+            if (!source)
+            {
+
+                return;
+
+            }
+
+            const link = document.createElement('a');
+
+            link.className = 'reviewExpand isExternal';
+
+            link.href = source;
+
+            link.target = '_blank';
+
+            link.rel = 'noopener';
+
+            link.innerHTML = '<span>View on Google</span>'
+                + '<svg class="reviewExpandIcon" aria-hidden="true" focusable="false"><use href="#externalGlyph"/></svg>';
+
+            quote.insertAdjacentElement('afterend', link);
+
+            return;
+
+        }
+
+        if (!dialogUsable)
+        {
+
+            addInlineExpander(quote);
+
+            return;
+
+        }
+
+        const button = document.createElement('button');
+
+        button.type = 'button';
+
+        button.className = 'reviewExpand';
+
+        button.textContent = 'Read full review';
+
+        button.setAttribute('aria-haspopup', 'dialog');
+
+        button.addEventListener('click', function ()
+        {
+
+            openReviewDialog(card, button);
 
         });
 
@@ -502,7 +749,12 @@
 
             quote.style.setProperty('--heroQuoteCap', `${cap}px`);
 
-            clampReview(quote);
+            if (clampQuote(quote))
+            {
+
+                addInlineExpander(quote);
+
+            }
 
         });
 
@@ -547,10 +799,10 @@
 
                 const quote = card.querySelector('.reviewText');
 
-                if (quote)
+                if (quote && clampQuote(quote))
                 {
 
-                    clampReview(quote);
+                    addMarqueeControl(card, quote);
 
                 }
 
@@ -591,10 +843,8 @@
 
        Hover covers a mouse and `:focus-within` covers a keyboard.
        A finger has neither, so holding the section still is what
-       stands in for both. */
-
-    const reviewSection = document.querySelector('[data-reviews]');
-
+       stands in for both. `reviewSection` is declared above, with
+       the dialog that also pauses it. */
 
     if (reviewSection)
     {
@@ -623,6 +873,18 @@
                 function ()
                 {
 
+                    /* The dialog owns the pause while it is open.
+                       Without this guard, lifting a finger — or a
+                       pointer crossing the section's edge on the
+                       way to the dialog — restarts both tracks
+                       underneath the thing being read. */
+                    if (reviewDialog && reviewDialog.open)
+                    {
+
+                        return;
+
+                    }
+
                     reviewSection.removeAttribute('data-paused');
 
                 },
@@ -630,6 +892,96 @@
             );
 
         }
+
+    }
+
+
+    /* ============================================================
+       FAQ ACCORDION
+
+       Still native <details>. `name="faqGroup"` already makes the
+       group exclusive in every current browser, and the first item
+       carries `open` in the markup — so with this file deleted the
+       accordion opens, closes, keys and announces correctly, and
+       the visitor still lands on an answer already showing.
+
+       Two things are added on top. The exclusivity is enforced in
+       script as well, because an older engine that ignores `name`
+       would otherwise let every panel stand open at once. And
+       `aria-expanded` is mirrored onto the summary, which the
+       project maintains on every other disclosure control.
+
+       The `+` / `−` is CSS on `.faqGlyph` — two rules on one
+       pseudo-element, not two glyphs swapped by script.
+    ============================================================ */
+
+    const faqItems = Array.from(document.querySelectorAll('.faqItem'));
+
+
+    function reportFaq(item)
+    {
+
+        const summary = item.querySelector('.faqQuestion');
+
+        if (summary)
+        {
+
+            summary.setAttribute('aria-expanded', item.open ? 'true' : 'false');
+
+        }
+
+    }
+
+
+    for (const item of faqItems)
+    {
+
+        reportFaq(item);
+
+        item.addEventListener('toggle', function ()
+        {
+
+            if (item.open)
+            {
+
+                for (const other of faqItems)
+                {
+
+                    if (other !== item && other.open)
+                    {
+
+                        other.open = false;
+
+                    }
+
+                }
+
+            }
+
+            for (const each of faqItems)
+            {
+
+                reportFaq(each);
+
+            }
+
+        });
+
+    }
+
+
+    /* ============================================================
+       COPYRIGHT YEAR
+
+       The markup ships the current year as text, so the footer is
+       never blank and never wrong on the day this is read. This
+       only keeps it right next January.
+    ============================================================ */
+
+    for (const stamp of document.querySelectorAll('[data-currentYear]'))
+    {
+
+        stamp.textContent = String(new Date().getFullYear());
 
     }
 

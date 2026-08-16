@@ -166,11 +166,37 @@ function sequence (name)
 }
 
 
+/* Every card carries what the detail dialog needs, and — where
+   the record admits it — where the rest of the words actually
+   live.
+
+   `truncated` is the honest flag. When it is true the dataset
+   holds only the part Google showed before "… More", so the card
+   must not offer to expand something we do not have. It gets a
+   link to the source instead, and only if a `sourceUrl` was
+   supplied. A truncated record with no URL gets neither control:
+   an excerpt with no route to the rest is still better than a
+   dead button or an invented link. */
+
 function card (r)
 {
 
+    const truncated = r.truncated === true;
+
+    const source = typeof r.sourceUrl === "string" && r.sourceUrl.length > 0
+        ? r.sourceUrl
+        : "";
+
+    const attrs = [
+        `class="reviewCard"`,
+        `data-reviewId="${escapeHtml(r.id)}"`,
+        typeof r.rating === "number" ? `data-rating="${r.rating}"` : "",
+        truncated ? `data-truncated` : "",
+        truncated && source ? `data-sourceUrl="${escapeHtml(source)}"` : ""
+    ].filter(Boolean).join(" ");
+
     return `
-                        <li class="reviewCard">
+                        <li ${attrs}>
 
                             <blockquote class="reviewText">
                                 <p>${escapeHtml(r.text)}</p>
@@ -241,6 +267,19 @@ console.log(`hero cards                   ${heroReviews.length}  (${heroReviews.
 console.log(`top track                    ${top.length} unique  →  ${top.map((r) => r.author).join(" · ")}`);
 console.log(`bottom track                 ${bottom.length} unique  →  ${bottom.map((r) => r.author).join(" · ")}`);
 console.log(`sequences differ             ${top.some((r, i) => bottom[i] !== r) ? "yes" : "NO — the rows are the same reel"}`);
+
+const truncated = data.reviews.filter((r) => r.truncated === true);
+const truncatedWithSource = truncated.filter((r) => typeof r.sourceUrl === "string" && r.sourceUrl.length > 0);
+
+console.log(`complete reviews             ${data.reviews.length - truncated.length}  → these expand in the detail dialog`);
+console.log(`truncated by Google's "More" ${truncated.length}  → ${truncatedWithSource.length} carry a sourceUrl and link out`);
+
+if (truncated.length > truncatedWithSource.length)
+{
+
+    console.log(`NOTE                         ${truncated.length - truncatedWithSource.length} truncated review(s) have no sourceUrl, so they show no control at all.`);
+
+}
 
 if (shared > 0 && usable > top.length)
 {

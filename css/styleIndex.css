@@ -486,12 +486,30 @@
 }
 
 
+/* ── The brand lockup ──
+
+   Shield left, wordmark right, on one baseline. The gap is the
+   only thing holding them together, so it is tuned rather than
+   inherited: too wide and they read as two logos that happen to
+   be adjacent, too narrow and the shield's gold rim runs into
+   the A of AUSTIN.
+
+   NO FILTER ON EITHER IMAGE. The supplied artwork is metallic —
+   a gradient from #F1D589 through #CCA65C — and the previous
+   `brightness(0.46) saturate(1.5)` grade on the light and stone
+   scenes flattened all of it into one brown. That grade was
+   there to buy contrast against cream; the shield's black body
+   now does that job on its own, and a logo is exempt from
+   1.4.3 in any case. Do not put it back. */
+
 .logoLockup
 {
 
     display: inline-flex;
 
     align-items: center;
+
+    gap: clamp(0.5rem, 0.85vw, 0.8rem);
 
     flex: none;
 
@@ -502,40 +520,69 @@
 }
 
 
-/* The wordmark is gold artwork. Gold on a light ground measures
-   2.31:1 — fine for a logo under WCAG 1.4.3, and still hard to
-   read, which is the thing the bar is for. On light and stone
-   scenes it is graded down to the approved ink tone; on the dark
-   scenes it is left alone, where gold on black is at its best. */
+.logoShield
+{
+
+    flex: none;
+
+    width: auto;
+
+    height: 36px;
+
+}
+
+
+/* The compact tier is the shield alone. Shrinking the full
+   wordmark to fit 320px would put ATTORNEY AT LAW, LLC at four
+   pixels of cap height, which is not a smaller logo but an
+   illegible one. */
 
 .logoWordmarkImage
 {
 
+    display: none;
+
     width: auto;
 
-    height: 28px;
-
-    transition: filter 520ms ease;
+    height: 24px;
 
 }
 
 
-[data-scene='light'] .logoWordmarkImage,
-[data-scene='stone'] .logoWordmarkImage
+@media (min-width: 600px)
 {
 
-    filter: brightness(0.46) saturate(1.5) contrast(1.12);
+    .logoShield
+    {
 
-}
+        height: 42px;
 
-
-@media (min-width: 700px)
-{
+    }
 
     .logoWordmarkImage
     {
 
-        height: 34px;
+        display: block;
+
+    }
+
+}
+
+
+@media (min-width: 1440px)
+{
+
+    .logoShield
+    {
+
+        height: 46px;
+
+    }
+
+    .logoWordmarkImage
+    {
+
+        height: 27px;
 
     }
 
@@ -1392,7 +1439,7 @@
 
 
 /* The narrowest tier. At 320 the container is 280px and the
-   wordmark, the call button and the menu control do not fit at
+   shield, the call button and the menu control do not fit at
    their default sizes — measured, not assumed. The lockup gives
    up height first, then the gaps close. */
 
@@ -1413,10 +1460,10 @@
 
     }
 
-    .logoWordmarkImage
+    .logoShield
     {
 
-        height: 22px;
+        height: 32px;
 
     }
 
@@ -2570,11 +2617,66 @@
 
 
 /* ============================================================
-   CHAPTER TWO · THE HARDEST WEEK
+   SECTION EYEBROW
 
+   The hero's "PORTSMOUTH, OHIO" rule-and-caption, lifted out of
+   the hero so the chapters that need a label can use the same
+   one. Declared once here rather than three times below.
 ============================================================ */
 
-.chapterStatement
+.sectionEyebrow
+{
+
+    display: flex;
+
+    align-items: center;
+
+    gap: var(--space4);
+
+    margin: 0 0 var(--space5);
+
+    color: var(--accentPrimary);
+
+    font-family: var(--fontFamilyBody);
+
+    font-size: var(--fontCaption);
+
+    font-weight: 500;
+
+    letter-spacing: 0.2em;
+
+    text-transform: uppercase;
+
+}
+
+
+.sectionEyebrowRule
+{
+
+    flex: none;
+
+    width: clamp(28px, 5vw, 52px);
+
+    height: 1px;
+
+    background-color: var(--accentStroke);
+
+}
+
+
+/* ============================================================
+   CHAPTER TWO · A MESSAGE FROM AUSTIN
+
+   Type left, film right. The chapter that replaced the
+   statement, and the one place on the page where Austin speaks
+   in the first person rather than being described.
+
+   It is deliberately short. Its whole job is to make him a
+   person and then hand the visitor to the practice areas — the
+   biography is two chapters down, where it belongs.
+============================================================ */
+
+.chapterMessage
 {
 
     padding-block: clamp(var(--space10), 14vh, var(--space12));
@@ -2586,14 +2688,32 @@
 }
 
 
-.statementBlock
+.messageInner
 {
 
-    max-width: 20ch;
+    display: grid;
 
-    font-size: clamp(2.25rem, 1.1rem + 4.6vw, 4.75rem);
+    grid-template-columns: 1fr;
 
-    line-height: 1.1;
+    align-items: center;
+
+    gap: var(--space9);
+
+}
+
+
+.messageHeading
+{
+
+    max-width: 16ch;
+
+    font-family: var(--fontFamilyDisplay);
+
+    font-size: clamp(2.125rem, 1.2rem + 3.4vw, 3.875rem);
+
+    line-height: 1.06;
+
+    letter-spacing: var(--trackingDisplay);
 
 }
 
@@ -2606,12 +2726,12 @@
 }
 
 
-.statementBody
+.messageBody
 {
 
-    max-width: 46ch;
+    max-width: 48ch;
 
-    margin: var(--space8) 0 0 auto;
+    margin: var(--space6) 0 0;
 
     color: var(--textSecondary);
 
@@ -2622,17 +2742,379 @@
 }
 
 
+.messagePoints
+{
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: var(--space4);
+
+    max-width: 52ch;
+
+    margin: var(--space7) 0 0;
+
+    padding: 0;
+
+    list-style: none;
+
+}
+
+
+.messagePoint
+{
+
+    display: grid;
+
+    grid-template-columns: auto minmax(0, 1fr);
+
+    align-items: start;
+
+    gap: var(--space4);
+
+    color: var(--textSecondary);
+
+    font-size: var(--fontBodySm);
+
+    line-height: 1.55;
+
+}
+
+
+/* The tick is drawn, not typed — a unicode check inherits
+   whatever the system face thinks a tick looks like. */
+
+.messagePointIcon
+{
+
+    width: 14px;
+
+    height: 11px;
+
+    margin-block-start: 0.45em;
+
+    color: var(--accentPrimary);
+
+}
+
+
+.messageAction
+{
+
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: var(--space3);
+
+    margin-block-start: var(--space7);
+
+    color: var(--textLink);
+
+    font-family: var(--fontFamilyBody);
+
+    font-size: var(--fontBodySm);
+
+    font-weight: 500;
+
+    text-decoration: none;
+
+}
+
+
+.messageAction > span
+{
+
+    padding-block-end: 2px;
+
+    border-block-end: 1px solid transparent;
+
+    transition: border-color 260ms ease;
+
+}
+
+
+.messageAction:hover > span,
+.messageAction:focus-visible > span
+{
+
+    border-block-end-color: currentColor;
+
+}
+
+
+.messageAction .megaArrow
+{
+
+    width: 24px;
+
+    height: 10px;
+
+    transition: transform 260ms var(--easeRespond);
+
+}
+
+
+.messageAction:hover .megaArrow
+{
+
+    transform: translateX(4px);
+
+}
+
+
+/* ── The film frame ──
+
+   A designed placeholder. It is 16:9 with a poster, a graded
+   veil, a gold mark and a status chip, and it is built so the
+   real film drops in without the composition moving: replace
+   the <img class="filmPoster"> with
+
+       <video class="filmPoster" poster="…" controls playsinline>
+
+   and delete `.filmMark` and `.filmStatus`. Nothing else in
+   this chapter needs to change.
+
+   There is no play BUTTON, on purpose. A control that does
+   nothing when pressed is a defect, not a placeholder — so the
+   mark is decorative and the chip states plainly why. */
+
+.messageFilm
+{
+
+    margin: 0;
+
+}
+
+
+.filmFrame
+{
+
+    position: relative;
+
+    overflow: hidden;
+
+    aspect-ratio: 16 / 9;
+
+    background-color: var(--colorBlackDeep);
+
+    border: 1px solid rgb(193 158 97 / 0.28);
+
+    box-shadow:
+        0 40px 80px -40px rgb(0 0 0 / 0.9),
+        0 2px 0 0 rgb(255 255 255 / 0.02) inset;
+
+}
+
+
+.filmPoster
+{
+
+    display: block;
+
+    width: 100%;
+
+    height: 100%;
+
+    object-fit: cover;
+
+    object-position: 50% 42%;
+
+    filter: grayscale(0.32) brightness(0.52) contrast(1.1) saturate(0.75);
+
+}
+
+
+/* Two ramps: a warm centre bloom so the mark has something to
+   sit on, and a foot that goes solid so the chip is readable
+   over whatever the poster happens to be doing down there. */
+
+.filmVeil
+{
+
+    position: absolute;
+
+    inset: 0;
+
+    background:
+        radial-gradient(46% 52% at 50% 46%, rgb(193 158 97 / 0.16) 0%, rgb(193 158 97 / 0) 68%),
+        linear-gradient(to bottom, rgb(11 11 13 / 0.1) 40%, rgb(11 11 13 / 0.86) 100%);
+
+    pointer-events: none;
+
+}
+
+
+.filmMark
+{
+
+    position: absolute;
+
+    inset-block-start: 50%;
+
+    inset-inline-start: 50%;
+
+    display: grid;
+
+    place-items: center;
+
+    width: clamp(62px, 9vw, 88px);
+
+    aspect-ratio: 1;
+
+    transform: translate(-50%, -50%);
+
+    border: 1px solid rgb(193 158 97 / 0.55);
+
+    border-radius: 50%;
+
+    background-color: rgb(11 11 13 / 0.42);
+
+    backdrop-filter: blur(2px);
+
+    pointer-events: none;
+
+}
+
+
+.filmMarkGlyph
+{
+
+    width: 28%;
+
+    height: auto;
+
+    margin-inline-start: 12%;
+
+    color: var(--accentPrimary);
+
+}
+
+
+.filmStatus
+{
+
+    position: absolute;
+
+    inset-block-end: var(--space5);
+
+    inset-inline-start: var(--space5);
+
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: var(--space3);
+
+    margin: 0;
+
+    padding: var(--space2) var(--space4);
+
+    background-color: rgb(11 11 13 / 0.72);
+
+    border: 1px solid rgb(246 245 243 / 0.14);
+
+    color: var(--colorWhite);
+
+    font-size: var(--fontCaption);
+
+    letter-spacing: 0.14em;
+
+    text-transform: uppercase;
+
+}
+
+
+.filmStatusDot
+{
+
+    width: 6px;
+
+    height: 6px;
+
+    border-radius: 50%;
+
+    background-color: var(--accentPrimary);
+
+}
+
+
+/* Two corner ticks, on the diagonal. A full drawn border would
+   be a second frame inside the first; two corners read as a
+   viewfinder and leave the poster alone. */
+
+.filmCorner
+{
+
+    position: absolute;
+
+    width: 22px;
+
+    height: 22px;
+
+    border: 0 solid rgb(193 158 97 / 0.6);
+
+    pointer-events: none;
+
+}
+
+
+.filmCornerTl
+{
+
+    inset-block-start: var(--space4);
+
+    inset-inline-start: var(--space4);
+
+    border-block-start-width: 1px;
+
+    border-inline-start-width: 1px;
+
+}
+
+
+.filmCornerBr
+{
+
+    inset-block-end: var(--space4);
+
+    inset-inline-end: var(--space4);
+
+    border-block-end-width: 1px;
+
+    border-inline-end-width: 1px;
+
+}
+
+
+.filmCaption
+{
+
+    max-width: 46ch;
+
+    margin-block-start: var(--space4);
+
+    color: var(--textMuted);
+
+    font-size: var(--fontCaption);
+
+    line-height: 1.6;
+
+    letter-spacing: 0;
+
+}
+
+
 @media (min-width: 900px)
 {
 
-    .statementBody
+    .messageInner
     {
 
-        margin-block-start: var(--space9);
+        grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
 
-        padding-inline-start: var(--space9);
-
-        border-inline-start: 1px solid var(--borderSubtle);
+        gap: var(--space10);
 
     }
 
@@ -2695,30 +3177,66 @@
 }
 
 
-.credentialList
+/* ── Credentials, as architecture ──
+
+   Four verified facts. The old treatment was a stack of
+   label-left / value-right rows, which is a specification table:
+   correct, and completely inert next to the rest of the page.
+
+   They are a bay of cells now — a hairline grid with the fact
+   stated large and the qualifier beneath it, so admissions read
+   as standing rather than as data. The frame is drawn with a
+   single outer rule plus one-sided cell rules, which is what
+   keeps the interior lines a hairline instead of two hairlines
+   sitting on each other.
+
+   Nothing unverified is here. The Shawnee State baccalaureate in
+   data/attorneys.json carries verified:false and stays out. */
+
+.credentialBar
 {
+
+    display: grid;
+
+    grid-template-columns: repeat(2, minmax(0, 1fr));
 
     margin: var(--space8) 0 0;
 
-    border-block-start: 1px solid var(--borderSubtle);
+    border: 1px solid var(--borderSubtle);
+
+    background-color: rgb(255 255 255 / 0.35);
 
 }
 
 
-.credentialRow
+.credentialCell
 {
 
-    display: flex;
+    padding: var(--space5);
 
-    align-items: baseline;
+    border-block-start: 1px solid var(--borderSubtle);
 
-    justify-content: space-between;
+    border-inline-start: 1px solid var(--borderSubtle);
 
-    gap: var(--space5);
+}
 
-    padding-block: var(--space4);
 
-    border-block-end: 1px solid var(--borderSubtle);
+/* The first cell of each row owns no left rule, and the first
+   row owns no top rule — otherwise the outer border is doubled
+   on two sides. */
+
+.credentialCell:nth-child(2n + 1)
+{
+
+    border-inline-start: 0;
+
+}
+
+
+.credentialCell:nth-child(-n + 2)
+{
+
+    border-block-start: 0;
 
 }
 
@@ -2730,25 +3248,86 @@
 
     font-family: var(--fontFamilyDisplay);
 
-    font-size: var(--fontHeadingSm);
+    font-size: 1.375rem;
 
-    font-weight: 500;
+    font-weight: 600;
+
+    line-height: 1.15;
 
 }
 
 
+/* Tracked, but not so tracked that the office address needs
+   three lines to fit a quarter of the bar. */
+
 .credentialValue
 {
 
-    margin: 0;
+    margin: var(--space2) 0 0;
 
     color: var(--textMuted);
 
-    font-size: var(--fontBodySm);
+    font-size: 0.8125rem;
 
-    letter-spacing: 0.04em;
+    line-height: 1.5;
 
-    text-align: end;
+    letter-spacing: 0.05em;
+
+    text-transform: uppercase;
+
+}
+
+
+.attorneyActions
+{
+
+    display: flex;
+
+    flex-wrap: wrap;
+
+    align-items: center;
+
+    gap: var(--space5) var(--space7);
+
+    margin-block-start: var(--space8);
+
+}
+
+
+/* Four across only once a cell can hold "602 Chillicothe St,
+   Suite 206" in two lines. Measured: below about 760px the
+   fourth cell is 130px wide and the address takes three. */
+
+@media (min-width: 760px)
+{
+
+    .credentialBar
+    {
+
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+
+    }
+
+    .credentialCell:nth-child(2n + 1)
+    {
+
+        border-inline-start: 1px solid var(--borderSubtle);
+
+    }
+
+    .credentialCell:first-child
+    {
+
+        border-inline-start: 0;
+
+    }
+
+    .credentialCell
+    {
+
+        border-block-start: 0;
+
+    }
 
 }
 
@@ -2759,9 +3338,71 @@
     .attorneyInner
     {
 
-        grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+        grid-template-columns: minmax(0, 0.78fr) minmax(0, 1.22fr);
+
+        align-items: center;
 
         gap: var(--space10);
+
+    }
+
+    /* The bar spans the body column, so it breaks out of the
+       text measure and reads as a base under the paragraph
+       rather than as another paragraph. */
+    .credentialBar
+    {
+
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    }
+
+    .credentialCell:nth-child(2n + 1)
+    {
+
+        border-inline-start: 0;
+
+    }
+
+    .credentialCell
+    {
+
+        border-block-start: 1px solid var(--borderSubtle);
+
+    }
+
+    .credentialCell:nth-child(-n + 2)
+    {
+
+        border-block-start: 0;
+
+    }
+
+}
+
+
+@media (min-width: 1200px)
+{
+
+    .credentialBar
+    {
+
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+
+    }
+
+    .credentialCell
+    {
+
+        border-block-start: 0;
+
+        border-inline-start: 1px solid var(--borderSubtle);
+
+    }
+
+    .credentialCell:first-child
+    {
+
+        border-inline-start: 0;
 
     }
 
@@ -2770,77 +3411,71 @@
 
 
 
-/* ── The attorney, overlapping ──
+/* ── THE PORTRAIT PLATE ──
 
-   Two planes rather than two columns: a wide media frame, and
-   Austin inset over its lower corner so the composition
-   interlocks. The frame is 16:9 and holds a photograph today;
-   swapping the <img> for a <video> later changes nothing else. */
+   V2 put a square crop of the hero portrait on a small cream
+   card, inset over a courtroom photograph. Three separate faults
+   compounded: the square crop with `object-position: 52% 16%`
+   cut the top of Austin's head off; a 900×1085 asset shown at
+   under 260px with no ground behind it read as a passport
+   photograph glued to the scene; and the courtroom underneath
+   was doing the work the portrait was supposed to do.
 
-.attorneyStage
+   There is no better source. `austinTransparent.png` is 1374×1145
+   with the subject occupying 943×1136, and `austinPortrait_web`
+   is already that crop at 900×1085. So the answer is not a
+   sharper file, it is to stop shrinking the one we have.
+
+   Austin is now the section's principal image, at his own aspect
+   ratio, on a lit stone ground, with the hero's bottom dissolve
+   so he stands in the scene. No crop, so nothing is cut off.
+   The courtroom moved to the film frame in chapter two, where it
+   earns its place as the poster. */
+
+.attorneyPlate
 {
 
     position: relative;
 
-    padding-block-end: clamp(var(--space9), 12vw, var(--space12));
+    justify-self: center;
 
-}
-
-
-.attorneyMedia
-{
+    width: min(100%, 460px);
 
     margin: 0;
 
-    overflow: hidden;
-
 }
 
 
-.attorneyMediaImage
-{
+/* Warm light behind him, echoing the radial the chapter already
+   carries. It sits under the portrait and is masked to an
+   ellipse so it never reads as a box. */
 
-    display: block;
-
-    width: 100%;
-
-    height: auto;
-
-    aspect-ratio: 16 / 10;
-
-    object-fit: cover;
-
-    object-position: 50% 40%;
-
-    filter: grayscale(0.28) contrast(1.06) brightness(0.94);
-
-}
-
-
-.attorneyInset
+.attorneyPlateGround
 {
 
     position: absolute;
 
-    inset-block-end: 0;
+    z-index: 0;
 
-    inset-inline-start: clamp(var(--space5), 5vw, var(--space8));
+    inset: 4% -4% 12%;
 
-    width: clamp(150px, 34%, 260px);
+    border-radius: 50%;
 
-    margin: 0;
+    background:
+        radial-gradient(58% 56% at 50% 44%, rgb(255 255 255 / 0.9) 0%, rgb(255 255 255 / 0) 70%),
+        radial-gradient(70% 62% at 50% 52%, rgb(193 158 97 / 0.22) 0%, rgb(193 158 97 / 0) 74%);
 
-    padding: var(--space4) var(--space4) var(--space5);
-
-    background-color: var(--surfaceCard, #F8F6F1);
-
-    box-shadow: 0 30px 60px -28px rgb(23 21 18 / 0.55);
+    filter: blur(10px);
 
 }
 
 
-.attorneyInsetImage
+.attorneyPlateImage
 {
+
+    position: relative;
+
+    z-index: 1;
 
     display: block;
 
@@ -2848,59 +3483,67 @@
 
     height: auto;
 
-    aspect-ratio: 1;
+    /* The same dissolve the hero uses. Without it the cutout
+       ends on a hard horizontal at his waist, which is the
+       giveaway that a person has been placed rather than
+       photographed here. */
+    -webkit-mask-image: linear-gradient(to bottom, #000 78%, rgb(0 0 0 / 0) 100%);
 
-    object-fit: cover;
+    mask-image: linear-gradient(to bottom, #000 78%, rgb(0 0 0 / 0) 100%);
 
-    object-position: 52% 16%;
+    filter: contrast(1.02) saturate(0.96);
 
 }
 
 
-.attorneyInsetCaption
+.attorneyPlateCaption
 {
+
+    position: relative;
+
+    z-index: 2;
 
     display: flex;
 
     flex-direction: column;
 
-    gap: 2px;
+    gap: 4px;
 
-    margin-block-start: var(--space4);
+    margin-block-start: calc(var(--space6) * -1);
 
-    padding-block-start: var(--space3);
+    padding-block-start: var(--space4);
 
-    border-block-start: 1px solid var(--borderSubtle);
+    border-block-start: 1px solid var(--accentStroke);
 
 }
 
 
-.attorneyInsetName
+.attorneyPlateName
 {
 
     color: var(--textPrimary);
 
     font-family: var(--fontFamilyDisplay);
 
-    font-size: 1.16rem;
+    font-size: 1.3rem;
 
     font-weight: 600;
 
     line-height: 1.15;
 
+    letter-spacing: 0;
+
 }
 
 
-.attorneyInsetRole
+.attorneyPlateRole
 {
 
     color: var(--textMuted);
 
     font-size: var(--fontCaption);
 
-    letter-spacing: 0.06em;
-
-    white-space: nowrap;
+    letter-spacing: 0.12em;
 
     text-transform: uppercase;
 
@@ -3110,6 +3753,32 @@
 }
 
 
+/* ── THE FILE SELECTOR ──
+
+   The V2 controls were three headings with `01 / 02 / 03` in
+   front of them and a 5%-white fill on the open one. Aron did
+   not realise they were clickable, which is the only test that
+   matters. Three faults, all fixed here:
+
+     the numerals read as a list index, so the strip read as a
+     contents page rather than as a control — removed;
+
+     the open state was a 5% tint, which is invisible over an
+     photograph — it is now a filled surface with a gold top
+     edge and the panel's own ground, so the open file is
+     unmistakable at a glance;
+
+     nothing was drawn around the closed ones, so there was no
+     object to click — they are contained surfaces now, with a
+     visible edge, a hover that lifts, and a count underneath
+     that says there is something behind them.
+
+   The mechanism is unchanged: three radio inputs that are
+   siblings of both the strip and the panels, so `~` reaches and
+   the whole thing works with the script deleted. Do not nest the
+   inputs inside `.caseTabs` — that is the fault recorded in the
+   journal. */
+
 .caseTabs
 {
 
@@ -3117,15 +3786,10 @@
 
     flex-wrap: wrap;
 
-    gap: var(--space2);
-
-    border-block-end: 1px solid var(--borderSubtle);
+    gap: var(--space3);
 
 }
 
-
-/* A tab, not a button. It sits on the rule and the open one
-   joins the panel beneath it by covering that rule. */
 
 .caseTab
 {
@@ -3134,33 +3798,27 @@
 
     display: flex;
 
-    align-items: baseline;
+    flex-direction: column;
 
-    gap: var(--space3);
+    gap: 2px;
+
+    min-width: clamp(128px, 15vw, 180px);
 
     padding: var(--space4) var(--space6);
 
-    border: 1px solid transparent;
+    background-color: rgb(11 11 13 / 0.42);
 
-    border-block-end: 0;
+    border: 1px solid rgb(246 245 243 / 0.16);
 
     color: var(--textMuted);
 
     cursor: pointer;
 
-    transition: color 260ms ease, background-color 260ms ease, border-color 260ms ease;
-
-}
-
-
-.caseTabIndex
-{
-
-    font-family: var(--fontFamilyBody);
-
-    font-size: var(--fontCaption);
-
-    letter-spacing: 0.14em;
+    transition:
+        color 220ms ease,
+        background-color 220ms ease,
+        border-color 220ms ease,
+        transform 220ms var(--easeRespond);
 
 }
 
@@ -3170,11 +3828,31 @@
 
     font-family: var(--fontFamilyDisplay);
 
-    font-size: clamp(1.4rem, 1.1rem + 1vw, 1.95rem);
+    font-size: clamp(1.35rem, 1.1rem + 0.9vw, 1.8rem);
 
     font-weight: 600;
 
+    line-height: 1.1;
+
     letter-spacing: -0.012em;
+
+}
+
+
+.caseTabMeta
+{
+
+    font-family: var(--fontFamilyBody);
+
+    font-size: var(--fontCaption);
+
+    font-weight: 500;
+
+    letter-spacing: 0.14em;
+
+    text-transform: uppercase;
+
+    opacity: 0.72;
 
 }
 
@@ -3182,24 +3860,70 @@
 .caseTab:hover
 {
 
+    background-color: rgb(11 11 13 / 0.62);
+
+    border-color: var(--accentStroke);
+
     color: var(--textPrimary);
+
+    transform: translateY(-2px);
 
 }
 
+
+/* The open file. Gold rule across the top edge, the panel's own
+   paper as the ground, and ink type — the same three signals the
+   rest of the site uses for "this one is live". */
 
 #caseCriminal:checked ~ .caseTabs [for='caseCriminal'],
 #caseFamily:checked ~ .caseTabs [for='caseFamily'],
 #caseEstate:checked ~ .caseTabs [for='caseEstate']
 {
 
-    background-color: rgb(247 245 241 / 0.05);
+    background-color: var(--colorWarm);
 
-    border-color: var(--borderSubtle);
+    border-color: var(--colorWarm);
 
-    color: var(--textPrimary);
+    color: var(--colorBlack);
+
+    transform: none;
 
 }
 
+
+#caseCriminal:checked ~ .caseTabs [for='caseCriminal'] .caseTabMeta,
+#caseFamily:checked ~ .caseTabs [for='caseFamily'] .caseTabMeta,
+#caseEstate:checked ~ .caseTabs [for='caseEstate'] .caseTabMeta
+{
+
+    color: var(--colorGoldInk);
+
+    opacity: 1;
+
+}
+
+
+#caseCriminal:checked ~ .caseTabs [for='caseCriminal']::before,
+#caseFamily:checked ~ .caseTabs [for='caseFamily']::before,
+#caseEstate:checked ~ .caseTabs [for='caseEstate']::before
+{
+
+    position: absolute;
+
+    inset-block-start: -1px;
+
+    inset-inline: -1px;
+
+    height: 3px;
+
+    background-color: var(--accentPrimary);
+
+    content: "";
+
+}
+
+
+/* A pointer under the open tab, aimed at the panel it opened. */
 
 #caseCriminal:checked ~ .caseTabs [for='caseCriminal']::after,
 #caseFamily:checked ~ .caseTabs [for='caseFamily']::after,
@@ -3208,13 +3932,17 @@
 
     position: absolute;
 
-    inset-block-end: -1px;
+    inset-block-end: -7px;
 
-    inset-inline: 0;
+    inset-inline-start: 50%;
 
-    height: 1px;
+    width: 14px;
 
-    background-color: rgb(247 245 241 / 0.05);
+    height: 14px;
+
+    transform: translateX(-50%) rotate(45deg);
+
+    background-color: var(--colorWarm);
 
     content: "";
 
@@ -3228,7 +3956,7 @@
 
     outline: 2px solid var(--focusRing);
 
-    outline-offset: 2px;
+    outline-offset: 3px;
 
 }
 
@@ -3514,6 +4242,187 @@
 }
 
 
+/* ── THE INDEX ──
+
+   Everything the office handles, on screen at all times.
+
+   A three-way tab is a good way to present depth and a bad way
+   to present breadth: two thirds of the list is behind a control
+   at any moment, and a visitor who came looking for probate has
+   no reason to open the estate file to find out whether probate
+   is even here. The mega menu does not solve it either — it only
+   helps the visitor who already opened it.
+
+   So the full list stays under the file, and each entry is a
+   second <label> on the radio that owns it. Selecting "Probate"
+   opens the estate file. That keeps every service one interaction
+   from its detail without inventing a practice-area page that
+   does not exist yet. */
+
+.caseIndex
+{
+
+    margin-block-start: clamp(var(--space8), 7vh, var(--space10));
+
+    padding-block-start: var(--space6);
+
+    border-block-start: 1px solid var(--borderSubtle);
+
+}
+
+
+.caseIndexLabel
+{
+
+    margin: 0 0 var(--space5);
+
+    color: var(--accentPrimary);
+
+    font-size: var(--fontCaption);
+
+    font-weight: 500;
+
+    letter-spacing: 0.2em;
+
+    text-transform: uppercase;
+
+}
+
+
+.caseIndexList
+{
+
+    display: flex;
+
+    flex-wrap: wrap;
+
+    gap: var(--space3);
+
+    margin: 0;
+
+    padding: 0;
+
+    list-style: none;
+
+}
+
+
+.caseChip
+{
+
+    display: inline-flex;
+
+    align-items: center;
+
+    min-height: 44px;
+
+    padding: var(--space2) var(--space5);
+
+    background-color: rgb(11 11 13 / 0.38);
+
+    border: 1px solid rgb(246 245 243 / 0.14);
+
+    color: var(--textSecondary);
+
+    font-size: var(--fontBodySm);
+
+    cursor: pointer;
+
+    transition: color 200ms ease, border-color 200ms ease, background-color 200ms ease;
+
+}
+
+
+.caseChip:hover
+{
+
+    background-color: rgb(11 11 13 / 0.62);
+
+    border-color: var(--accentStroke);
+
+    color: var(--textPrimary);
+
+}
+
+
+/* The chip belonging to the open file is lit, so the index and
+   the tab strip never disagree about what is showing. */
+
+#caseCriminal:checked ~ .caseIndex [for='caseCriminal'],
+#caseFamily:checked ~ .caseIndex [for='caseFamily'],
+#caseEstate:checked ~ .caseIndex [for='caseEstate']
+{
+
+    border-color: var(--accentPrimary);
+
+    color: var(--textPrimary);
+
+}
+
+
+.caseIndexAction
+{
+
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: var(--space3);
+
+    margin-block-start: var(--space6);
+
+    color: var(--textLink);
+
+    font-size: var(--fontBodySm);
+
+    font-weight: 500;
+
+    text-decoration: none;
+
+}
+
+
+.caseIndexAction > span
+{
+
+    padding-block-end: 2px;
+
+    border-block-end: 1px solid transparent;
+
+    transition: border-color 260ms ease;
+
+}
+
+
+.caseIndexAction:hover > span,
+.caseIndexAction:focus-visible > span
+{
+
+    border-block-end-color: currentColor;
+
+}
+
+
+.caseIndexAction .megaArrow
+{
+
+    width: 24px;
+
+    height: 10px;
+
+    transition: transform 260ms var(--easeRespond);
+
+}
+
+
+.caseIndexAction:hover .megaArrow
+{
+
+    transform: translateX(4px);
+
+}
+
+
 /* ============================================================
    CHAPTER FIVE · WHAT HAPPENS NEXT
 
@@ -3531,6 +4440,74 @@
 }
 
 
+/* ── THE PANEL ──
+
+   The steps used to be three columns spanning the full container
+   with nothing holding them, which left the most practical
+   chapter on the page reading as the loosest — a heading, then
+   air, then three paragraphs floating on a background.
+
+   They are inset into one contained surface now. The width is
+   capped well inside the container so the scene Aron approved
+   stays visible on all four sides: the panel floats over the
+   environment rather than replacing it, which is the whole
+   difference between an inset object and a tinted band. */
+
+.processPanelHead
+{
+
+    margin-block-end: clamp(var(--space7), 6vh, var(--space9));
+
+}
+
+
+.processHeading
+{
+
+    max-width: 16ch;
+
+    margin: 0;
+
+    font-family: var(--fontFamilyDisplay);
+
+    font-size: clamp(2rem, 1.3rem + 2.6vw, 3.25rem);
+
+    line-height: 1.06;
+
+    letter-spacing: var(--trackingDisplay);
+
+}
+
+
+/* THE PANEL — the three steps and nothing else.
+
+   Black, and deliberately narrower than the container, so the
+   light scene stays visible around all four sides. That is the
+   whole difference between an object inset into the environment
+   and a band that has replaced it: a panel wide enough to touch
+   the gutters stops reading as a panel.
+
+   The heading above it and the response note below it stay on
+   the open background on purpose. */
+
+.processPanel
+{
+
+    max-width: 56rem;
+
+    margin-inline: auto;
+
+    padding: clamp(var(--space6), 4vw, var(--space9));
+
+    background-color: var(--colorBlack);
+
+    box-shadow:
+        0 1px 0 0 rgb(255 255 255 / 0.06) inset,
+        0 50px 90px -50px rgb(23 21 18 / 0.65);
+
+}
+
+
 .processList
 {
 
@@ -3538,9 +4515,9 @@
 
     grid-template-columns: 1fr;
 
-    gap: var(--space8);
+    gap: var(--space7);
 
-    margin: var(--space9) 0 0;
+    margin: 0;
 
     padding: 0;
 
@@ -3549,8 +4526,13 @@
 }
 
 
+/* Inside the black panel the scene supplies the ink, so these
+   rules never name a colour that only works on one ground. */
+
 .processStep
 {
+
+    position: relative;
 
     padding-block-start: var(--space5);
 
@@ -3559,25 +4541,56 @@
 }
 
 
-/* The ink-toned gold, not the stroke gold. `--accentStroke`
-   measures 3.26:1 on the light scene, and these numerals are
-   set below the size that would let 3:1 stand — they are text,
-   not decoration, because they carry the sequence. */
+.processStepIndex
+{
+
+    display: flex;
+
+    align-items: baseline;
+
+    gap: var(--space3);
+
+    margin: 0;
+
+}
+
+
+.processStepWord
+{
+
+    color: var(--textMuted);
+
+    font-family: var(--fontFamilyBody);
+
+    font-size: var(--fontCaption);
+
+    font-weight: 500;
+
+    letter-spacing: 0.2em;
+
+    text-transform: uppercase;
+
+}
+
+
+/* On the dark panel `--textLink` resolves to the full gold,
+   which carries its own contrast there. The token does the
+   scene-switching, so this rule does not have to. */
 
 .processNumeral
 {
-
-    display: block;
 
     color: var(--textLink);
 
     font-family: var(--fontFamilyDisplay);
 
-    font-size: var(--fontHeadingSm);
+    font-size: 1.625rem;
 
-    font-weight: 500;
+    font-weight: 600;
 
-    letter-spacing: 0.14em;
+    line-height: 1;
+
+    letter-spacing: 0.06em;
 
 }
 
@@ -3585,15 +4598,15 @@
 .processStepHeading
 {
 
-    margin: var(--space4) 0 0;
+    margin: var(--space3) 0 0;
 
     color: var(--textPrimary);
 
     font-family: var(--fontFamilyDisplay);
 
-    font-size: var(--fontDisplayMd);
+    font-size: clamp(1.375rem, 1.2rem + 0.7vw, 1.75rem);
 
-    font-weight: 500;
+    font-weight: 600;
 
     line-height: 1.16;
 
@@ -3614,6 +4627,44 @@
 }
 
 
+/* Outside the panel, centred under it, on the light scene. */
+
+.processNote
+{
+
+    display: flex;
+
+    align-items: baseline;
+
+    justify-content: center;
+
+    gap: var(--space3);
+
+    max-width: none;
+
+    margin: var(--space6) 0 0;
+
+    color: var(--textSecondary);
+
+    font-size: var(--fontBodySm);
+
+}
+
+
+.processNoteIcon
+{
+
+    flex: none;
+
+    width: 14px;
+
+    height: 11px;
+
+    color: var(--accentStroke);
+
+}
+
+
 @media (min-width: 900px)
 {
 
@@ -3623,6 +4674,29 @@
         grid-template-columns: repeat(3, minmax(0, 1fr));
 
         gap: var(--space7);
+
+    }
+
+    /* The connective line. One rule at the top of the row, drawn
+       once by the steps' own borders, plus a gold tick above each
+       numeral so the three read as a progression rather than as
+       three unrelated cards. */
+    .processStep::before
+    {
+
+        position: absolute;
+
+        inset-block-start: -1px;
+
+        inset-inline-start: 0;
+
+        width: 28px;
+
+        height: 2px;
+
+        background-color: var(--accentPrimary);
+
+        content: "";
 
     }
 
@@ -4223,6 +5297,45 @@
 }
 
 
+.reviewExpand:focus-visible
+{
+
+    outline: 2px solid var(--focusRing);
+
+    outline-offset: 3px;
+
+}
+
+
+/* The variant a truncated review gets. It is a link, not a
+   button, because it leaves the site — and it says so, with the
+   external glyph and the word Google, so nobody presses it
+   expecting the text to appear here. */
+
+.reviewExpand.isExternal
+{
+
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: var(--space2);
+
+    text-decoration: none;
+
+}
+
+
+.reviewExpandIcon
+{
+
+    width: 13px;
+
+    height: 13px;
+
+}
+
+
 .reviewMeta
 {
 
@@ -4410,40 +5523,111 @@
 }
 
 
-.faqQuestion::after
+.faqQuestionText
 {
+
+    max-width: 54ch;
+
+}
+
+
+/* ── The + / − ──
+
+   Drawn from two bars on one element, not two glyphs swapped by
+   script and not a typed character: a unicode minus is a
+   different width from a plus in most faces, so the control
+   would shift sideways every time it opened.
+
+   The horizontal bar is always there. The vertical one is the
+   ::after, and it rotates to horizontal and lands on top of its
+   sibling — so + becomes − by turning through 90°, and the two
+   states are the same object rather than two. */
+
+.faqGlyph
+{
+
+    position: relative;
 
     flex: none;
 
-    width: 11px;
+    width: 18px;
 
-    height: 11px;
+    height: 18px;
 
-    border-inline-end: 1px solid var(--accentStroke);
+    margin-block-start: 0.25em;
 
-    border-block-end: 1px solid var(--accentStroke);
+}
 
-    transform: rotate(45deg);
+
+.faqGlyph::before,
+.faqGlyph::after
+{
+
+    position: absolute;
+
+    inset-block-start: 50%;
+
+    inset-inline-start: 0;
+
+    width: 100%;
+
+    height: 1.5px;
+
+    background-color: var(--accentStroke);
+
+    transform: translateY(-50%);
 
     content: "";
 
-    transition: transform 320ms cubic-bezier(0.16, 1, 0.30, 1);
+    transition:
+        transform 320ms cubic-bezier(0.16, 1, 0.30, 1),
+        background-color 260ms ease;
 
 }
 
 
-.faqItem[open] .faqQuestion::after
+.faqGlyph::after
 {
 
-    transform: rotate(225deg);
+    transform: translateY(-50%) rotate(90deg);
 
 }
 
 
-.faqQuestion:hover
+.faqItem[open] .faqGlyph::after
+{
+
+    transform: translateY(-50%) rotate(0deg);
+
+}
+
+
+.faqItem[open] .faqGlyph::before,
+.faqItem[open] .faqGlyph::after,
+.faqQuestion:hover .faqGlyph::before,
+.faqQuestion:hover .faqGlyph::after
+{
+
+    background-color: var(--accentPrimary);
+
+}
+
+
+.faqQuestion:hover,
+.faqItem[open] .faqQuestion
 {
 
     color: var(--accentPrimary);
+
+}
+
+
+.faqQuestion:focus-visible
+{
+
+    outline: 2px solid var(--focusRing);
+
+    outline-offset: -4px;
 
 }
 
@@ -4462,12 +5646,58 @@
 }
 
 
+/* The opening is a fade and a short rise on the answer itself.
+   `<details>` does not animate its own height, and the usual
+   max-height workaround guesses a number that is wrong for every
+   answer of a different length — which is exactly the broken
+   height calculation this avoids. Nothing here depends on
+   knowing how tall the panel is. */
+
+.faqAnswerInner
+{
+
+    animation: faqOpen 320ms cubic-bezier(0.16, 1, 0.30, 1) both;
+
+}
+
+
+@keyframes faqOpen
+{
+
+    from { opacity: 0; transform: translateY(-6px); }
+
+    to   { opacity: 1; transform: none; }
+
+}
+
+
 .faqAnswer p
 {
 
     max-width: 62ch;
 
     margin: 0;
+
+}
+
+
+@media (prefers-reduced-motion: reduce)
+{
+
+    .faqAnswerInner
+    {
+
+        animation: none;
+
+    }
+
+    .faqGlyph::before,
+    .faqGlyph::after
+    {
+
+        transition: none;
+
+    }
 
 }
 
@@ -4604,7 +5834,38 @@
 
     grid-template-columns: 1fr;
 
-    gap: var(--space8);
+    gap: var(--space9);
+
+}
+
+
+/* The same lockup as the bar, stacked: the shield over the
+   wordmark rather than beside it, because the footer column is
+   narrow and a horizontal lockup would set the width of the
+   whole column. */
+
+.siteFooterLockup
+{
+
+    display: inline-flex;
+
+    flex-direction: column;
+
+    align-items: flex-start;
+
+    gap: var(--space4);
+
+    text-decoration: none;
+
+}
+
+
+.siteFooterShield
+{
+
+    width: auto;
+
+    height: 52px;
 
 }
 
@@ -4612,7 +5873,7 @@
 .siteFooterWordmark
 {
 
-    width: min(100%, 250px);
+    width: min(100%, 260px);
 
     height: auto;
 
@@ -4659,6 +5920,103 @@
 }
 
 
+/* ── Social ──
+
+   Styled and unused. data/social.json is `[]` and no verified
+   profile URL has ever been supplied, so the markup for this row
+   is commented out in index.html rather than published with
+   guessed hrefs. The rules stay here so turning it on is an
+   uncomment and nothing else. */
+
+.siteFooterSocial
+{
+
+    display: flex;
+
+    gap: var(--space3);
+
+    margin: var(--space6) 0 0;
+
+    padding: 0;
+
+    list-style: none;
+
+}
+
+
+.socialLink
+{
+
+    display: grid;
+
+    place-items: center;
+
+    width: 44px;
+
+    height: 44px;
+
+    border: 1px solid var(--borderSubtle);
+
+    color: var(--textMuted);
+
+    transition: color 200ms ease, border-color 200ms ease;
+
+}
+
+
+.socialLink:hover,
+.socialLink:focus-visible
+{
+
+    border-color: var(--accentStroke);
+
+    color: var(--accentPrimary);
+
+}
+
+
+.socialGlyph
+{
+
+    width: 18px;
+
+    height: 18px;
+
+}
+
+
+.siteFooterNav
+{
+
+    display: grid;
+
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+
+    gap: var(--space8) var(--space7);
+
+}
+
+
+.siteFooterColumnTitle
+{
+
+    margin: 0 0 var(--space5);
+
+    color: var(--textPrimary);
+
+    font-family: var(--fontFamilyBody);
+
+    font-size: var(--fontCaption);
+
+    font-weight: 600;
+
+    letter-spacing: 0.16em;
+
+    text-transform: uppercase;
+
+}
+
+
 .siteFooterList
 {
 
@@ -4686,10 +6044,13 @@
 
     text-decoration: none;
 
+    transition: color 200ms ease;
+
 }
 
 
-.siteFooterList a:hover
+.siteFooterList a:hover,
+.siteFooterList a:focus-visible
 {
 
     color: var(--accentPrimary);
@@ -4712,7 +6073,7 @@
 .disclaimerText
 {
 
-    max-width: 70ch;
+    max-width: 78ch;
 
     margin: 0;
 
@@ -4725,14 +6086,99 @@
 }
 
 
+/* ── The bottom bar ──
+
+   Copyright left, developer credit right. */
+
+.siteFooterBar
+{
+
+    display: flex;
+
+    flex-wrap: wrap;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: var(--space5);
+
+    margin-block-start: var(--space6);
+
+    padding-block-start: var(--space5);
+
+    border-block-start: 1px solid var(--borderSubtle);
+
+}
+
+
 .siteFooterCopyright
 {
 
-    margin: var(--space4) 0 0;
+    margin: 0;
 
     color: var(--textMuted);
 
     font-size: var(--fontCaption);
+
+}
+
+
+/* A signature, not an advertisement. It sits at a whisper and
+   comes up to full only when it is deliberately hovered or
+   focused, so it never competes with Austin's own branding a few
+   lines above it. */
+
+.devCredit
+{
+
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: var(--space3);
+
+    text-decoration: none;
+
+}
+
+
+/* The label is a fixed quiet. Only the mark lifts on hover —
+   the wording is not the signature, the logo is. */
+
+.devCreditLabel
+{
+
+    color: var(--textMuted);
+
+    font-size: var(--fontCaption);
+
+    letter-spacing: 0.1em;
+
+    opacity: 0.42;
+
+}
+
+
+.devCreditLogo
+{
+
+    width: 92px;
+
+    height: auto;
+
+    opacity: 0.22;
+
+    transition: opacity 300ms ease;
+
+}
+
+
+.devCredit:hover .devCreditLogo,
+.devCredit:focus-visible .devCreditLogo
+{
+
+    opacity: 1;
 
 }
 
@@ -4743,11 +6189,18 @@
     .siteFooterInner
     {
 
-        grid-template-columns: minmax(0, 1fr) auto;
+        grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.6fr);
 
         align-items: start;
 
         gap: var(--space10);
+
+    }
+
+    .siteFooterNav
+    {
+
+        grid-template-columns: repeat(3, minmax(0, 1fr));
 
     }
 
@@ -4937,5 +6390,248 @@
     align-items: center;
 
     gap: var(--space2);
+
+}
+
+
+/* ============================================================
+   REVIEW DETAIL DIALOG
+
+   A native <dialog>, so the focus trap, Escape, inerting the
+   page behind it and the top layer are the platform's work
+   rather than ours. It is styled as one of the review cards
+   enlarged — the same paper, the same gold top edge — so opening
+   one reads as picking a card up rather than as a modal
+   arriving from somewhere else.
+
+   Both marquee tracks are paused for as long as it is open. That
+   is the point of it: growing a card in a moving row changes the
+   height of a track that is still travelling, and the paragraph
+   walks off the edge while it is being read.
+============================================================ */
+
+.reviewDialog
+{
+
+    width: min(92vw, 46rem);
+
+    max-height: min(86vh, 46rem);
+
+    padding: 0;
+
+    background-color: var(--colorWarm);
+
+    border: 0;
+
+    border-block-start: 3px solid var(--accentPrimary);
+
+    box-shadow: 0 60px 120px -40px rgb(0 0 0 / 0.7);
+
+    color: var(--colorBlack);
+
+}
+
+
+.reviewDialog::backdrop
+{
+
+    background-color: rgb(11 11 13 / 0.7);
+
+    backdrop-filter: blur(3px);
+
+}
+
+
+.reviewDialogInner
+{
+
+    position: relative;
+
+    padding: clamp(var(--space6), 5vw, var(--space9));
+
+}
+
+
+.reviewDialogClose
+{
+
+    position: absolute;
+
+    inset-block-start: var(--space4);
+
+    inset-inline-end: var(--space4);
+
+    display: grid;
+
+    place-items: center;
+
+    width: 44px;
+
+    height: 44px;
+
+    background: none;
+
+    border: 1px solid rgb(11 11 13 / 0.12);
+
+    color: var(--colorMutedInk);
+
+    cursor: pointer;
+
+    transition: color 200ms ease, border-color 200ms ease;
+
+}
+
+
+.reviewDialogClose svg
+{
+
+    width: 18px;
+
+    height: 18px;
+
+}
+
+
+.reviewDialogClose:hover,
+.reviewDialogClose:focus-visible
+{
+
+    border-color: var(--colorGoldInk);
+
+    color: var(--colorGoldInk);
+
+}
+
+
+.reviewDialogBadge
+{
+
+    display: flex;
+
+    align-items: center;
+
+    gap: var(--space3);
+
+    margin: 0 0 var(--space6);
+
+}
+
+
+.reviewDialogMark
+{
+
+    width: 20px;
+
+    height: 20px;
+
+}
+
+
+.reviewDialogStars
+{
+
+    display: inline-flex;
+
+    gap: 3px;
+
+}
+
+
+.reviewDialogStars svg
+{
+
+    width: 15px;
+
+    height: 14px;
+
+}
+
+
+.reviewDialogStars .isLit
+{
+
+    color: var(--colorGold);
+
+}
+
+
+.reviewDialogStars .isUnlit
+{
+
+    color: rgb(11 11 13 / 0.16);
+
+}
+
+
+.reviewDialogQuote
+{
+
+    margin: 0;
+
+}
+
+
+.reviewDialogQuote p
+{
+
+    max-width: 58ch;
+
+    margin: 0;
+
+    color: var(--colorBlack);
+
+    font-family: var(--fontFamilyDisplay);
+
+    font-size: clamp(1.25rem, 1.05rem + 0.8vw, 1.625rem);
+
+    font-weight: 500;
+
+    line-height: 1.45;
+
+}
+
+
+.reviewDialogMeta
+{
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 3px;
+
+    margin-block-start: var(--space6);
+
+    padding-block-start: var(--space5);
+
+    border-block-start: 1px solid rgb(11 11 13 / 0.12);
+
+}
+
+
+.reviewDialogName
+{
+
+    color: var(--colorBlack);
+
+    font-family: var(--fontFamilyDisplay);
+
+    font-size: 1.25rem;
+
+    font-weight: 600;
+
+}
+
+
+.reviewDialogSource
+{
+
+    color: var(--colorMutedInk);
+
+    font-size: var(--fontCaption);
+
+    letter-spacing: 0.12em;
+
+    text-transform: uppercase;
 
 }

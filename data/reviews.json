@@ -34,7 +34,8 @@
     "author": "exactly as Google renders it",
     "rating": "1-5 only if the individual rating was supplied; otherwise null",
     "text": "verbatim",
-    "truncated": "true when the source ended in Google's '… More'",
+    "truncated": "true when the source ended in Google's '… More'. A truncated record must never be expanded on the page — we do not hold the rest of the words. It renders a 'View on Google' link instead, and only if sourceUrl is present.",
+    "sourceUrl": "the direct Google URL for THIS review, if one was supplied. Never construct or guess one. Absent means the card shows no control at all, which is the correct failure.",
     "dimension": "which trust dimension it evidences — used to curate the hero three",
     "hero": "true for the three carried on the hero's lower edge",
     "carousel": "true to carry it in the marquee"

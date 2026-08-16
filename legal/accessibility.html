@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Accessibility | Austin G. Ervin, Attorney at Law</title>
+
+    <!-- Not indexed while the documents are unfinished. Remove
+         this once the final copy is in place. -->
+    <meta name="robots" content="noindex">
+
+    <meta name="theme-color" content="#0B0B0D">
+
+    <link rel="icon" href="../graphics/logos/favicon_32.png" sizes="32x32">
+
+    <link rel="apple-touch-icon" href="../graphics/logos/favicon_180.png">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap">
+
+    <link rel="stylesheet" href="../css/tokens.css">
+
+    <link rel="stylesheet" href="../css/base.css">
+
+    <link rel="stylesheet" href="../css/layout.css">
+
+    <link rel="stylesheet" href="../css/styleLegal.css">
+
+</head>
+
+<body class="legalPage" data-scene="light">
+
+    <header class="legalHeader">
+
+        <div class="container">
+
+            <a class="legalLockup" href="../index.html" aria-label="Austin G. Ervin, Attorney at Law &mdash; home">
+
+                <img class="legalShield" src="../graphics/logos/aeShield_web.webp" alt="" width="272" height="320">
+
+                <img class="legalWordmark" src="../graphics/logos/aeWordmark_web.webp" alt="Austin G. Ervin, Attorney at Law, LLC" width="1100" height="170">
+
+            </a>
+
+        </div>
+
+    </header>
+
+    <main class="legalMain">
+
+        <div class="container legalInner">
+
+            <p class="legalEyebrow">Legal</p>
+
+            <h1 class="legalTitle">Accessibility</h1>
+
+
+
+            <div class="legalBody">
+
+                <h2>Where this stands</h2>
+
+                <p>
+                    This office wants its website to be usable by everyone &mdash; including
+                    people using a screen reader, a keyboard alone, magnification, or a
+                    reduced-motion setting.
+                </p>
+
+                <p>
+                    The site is built with that in mind. Every control can be reached with a
+                    keyboard, headings and landmarks are structured for screen readers,
+                    disclosure controls report their own state, and the motion on the page stops
+                    for anyone whose system asks it to.
+                </p>
+
+                <p>
+                    <strong>No formal conformance claim is made here.</strong> An independent
+                    audit against WCAG has not yet been carried out, so this page does not claim
+                    a conformance level it has not earned. That audit is planned before launch.
+                </p>
+
+                <h2>If something here does not work for you</h2>
+
+                <p>
+                    Tell this office and it will be fixed. Call
+                    <a class="noWrap" href="tel:+17405291420">(740) 529-1420</a> or write to 602
+                    Chillicothe Street, Suite 206, Portsmouth, Ohio 45662. Please say which page
+                    you were on and what you were trying to do.
+                </p>
+
+                <p>
+                    If you need information from this site in another format, this office will
+                    supply it by telephone or in writing.
+                </p>
+
+            </div>
+
+            <a class="legalBack" href="../index.html">Back to the homepage</a>
+
+        </div>
+
+    </main>
+
+    <footer class="legalFooter">
+
+        <div class="container">
+
+            <p>
+                Attorney advertising. The information on this site is general and is not legal
+                advice. Contacting this office does not create an attorney&ndash;client
+                relationship.
+            </p>
+
+            <p>
+                &copy; <span data-currentYear>2026</span> Austin G. Ervin, Attorney at Law, LLC
+                &middot; 602 Chillicothe Street, Suite 206, Portsmouth, Ohio 45662
+                &middot; <a href="tel:+17405291420">(740) 529-1420</a>
+            </p>
+
+        </div>
+
+    </footer>
+
+    <script>
+        for (const stamp of document.querySelectorAll('[data-currentYear]'))
+        {
+            stamp.textContent = String(new Date().getFullYear());
+        }
+    </script>
+
+</body>
+
+</html>

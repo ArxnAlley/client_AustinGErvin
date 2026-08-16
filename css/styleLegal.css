@@ -1,0 +1,294 @@
+/* ============================================================
+   LEGAL PAGES
+
+   The three documents the footer links to. They are deliberately
+   plain: one column, one measure, no scenes and no motion. A
+   privacy policy is a document, not a composition, and the only
+   thing it owes the visitor is legibility.
+
+   Load order: tokens → base → THIS.
+============================================================ */
+
+.legalPage
+{
+
+    min-height: 100vh;
+
+    display: flex;
+
+    flex-direction: column;
+
+    background-color: var(--surfaceBase);
+
+}
+
+
+.legalHeader
+{
+
+    padding-block: var(--space6);
+
+    border-block-end: 1px solid var(--borderSubtle);
+
+}
+
+
+.legalLockup
+{
+
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 0.75rem;
+
+    text-decoration: none;
+
+}
+
+
+.legalShield
+{
+
+    width: auto;
+
+    height: 40px;
+
+}
+
+
+.legalWordmark
+{
+
+    display: none;
+
+    width: auto;
+
+    height: 24px;
+
+}
+
+
+@media (min-width: 600px)
+{
+
+    .legalWordmark
+    {
+
+        display: block;
+
+    }
+
+}
+
+
+.legalMain
+{
+
+    flex: 1 0 auto;
+
+    padding-block: clamp(var(--space9), 10vh, var(--space12));
+
+}
+
+
+.legalInner
+{
+
+    max-width: 68ch;
+
+}
+
+
+.legalEyebrow
+{
+
+    margin: 0 0 var(--space4);
+
+    color: var(--accentPrimary);
+
+    font-size: var(--fontCaption);
+
+    font-weight: 500;
+
+    letter-spacing: 0.2em;
+
+    text-transform: uppercase;
+
+}
+
+
+.legalTitle
+{
+
+    margin: 0;
+
+    font-size: clamp(2rem, 1.4rem + 2.4vw, 3.25rem);
+
+    line-height: 1.06;
+
+}
+
+
+/* The status note. It is a panel rather than a paragraph because
+   the single most important thing on two of these three pages is
+   that the document is not finished — burying that in body copy
+   would be the dishonest way to present it. */
+
+.legalStatus
+{
+
+    margin-block-start: var(--space7);
+
+    padding: var(--space5) var(--space6);
+
+    background-color: var(--surfaceRaised);
+
+    border-inline-start: 3px solid var(--accentPrimary);
+
+}
+
+
+.legalStatus p
+{
+
+    margin: 0;
+
+    color: var(--textSecondary);
+
+    font-size: var(--fontBodySm);
+
+    line-height: 1.65;
+
+}
+
+
+.legalBody
+{
+
+    margin-block-start: var(--space7);
+
+}
+
+
+.legalBody h2
+{
+
+    margin: var(--space8) 0 var(--space4);
+
+    font-size: var(--fontDisplayMd);
+
+    line-height: 1.2;
+
+}
+
+
+.legalBody p,
+.legalBody li
+{
+
+    color: var(--textSecondary);
+
+    font-size: var(--fontBodySm);
+
+    line-height: 1.7;
+
+}
+
+
+.legalBody p
+{
+
+    margin: 0 0 var(--space4);
+
+}
+
+
+.legalBody ul
+{
+
+    margin: 0 0 var(--space4);
+
+    padding-inline-start: var(--space5);
+
+}
+
+
+.legalBody li
+{
+
+    margin-block-end: var(--space2);
+
+}
+
+
+.legalBody a
+{
+
+    color: var(--textLink);
+
+}
+
+
+.legalBack
+{
+
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: var(--space3);
+
+    margin-block-start: var(--space8);
+
+    color: var(--textLink);
+
+    font-size: var(--fontBodySm);
+
+    font-weight: 500;
+
+    text-decoration: none;
+
+}
+
+
+.legalBack:hover
+{
+
+    text-decoration: underline;
+
+}
+
+
+.legalFooter
+{
+
+    padding-block: var(--space6);
+
+    border-block-start: 1px solid var(--borderSubtle);
+
+}
+
+
+.legalFooter p
+{
+
+    max-width: 78ch;
+
+    margin: 0 0 var(--space3);
+
+    color: var(--textMuted);
+
+    font-size: var(--fontCaption);
+
+    line-height: 1.6;
+
+}
+
+
+.legalFooter p:last-child
+{
+
+    margin-block-end: 0;
+
+}
