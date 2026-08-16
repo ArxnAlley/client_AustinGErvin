@@ -443,11 +443,26 @@
 
     background-color: transparent;
 
-    border-block-end: 1px solid transparent;
+    /* The stuck hairline is an inset shadow, not a border. A
+       border is part of the border box, so a 1px one made the bar
+       measure `--headerClearance` + 1 while everything that clears
+       it — the hero's negative pull-up, `scroll-padding` — is
+       measured in `--headerClearance` exactly. The hero came up a
+       pixel short and the body's cream showed through as a line
+       across the top of the viewport. A shadow takes no layout,
+       so the bar is its clearance and nothing else, and the
+       transparent placeholder border that used to reserve the
+       space against a stuck-state shift is no longer needed.
+
+       Declared transparent here rather than left at `none` so the
+       stuck transition interpolates a colour between two identical
+       shadows instead of growing one out of nothing. */
+
+    box-shadow: inset 0 -1px 0 0 transparent;
 
     transition:
         background-color 520ms ease,
-        border-color 520ms ease;
+        box-shadow 520ms ease;
 
 }
 
@@ -457,7 +472,7 @@
 
     background-color: color-mix(in srgb, var(--surfaceBase) 84%, transparent);
 
-    border-block-end-color: var(--borderSubtle);
+    box-shadow: inset 0 -1px 0 0 var(--borderSubtle);
 
     backdrop-filter: saturate(1.2) blur(14px);
 
@@ -6766,7 +6781,7 @@
 .devCreditLogo
 {
 
-    width: 92px;
+    width: 74px;
 
     height: auto;
 
