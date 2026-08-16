@@ -5907,13 +5907,503 @@
 
     max-width: 58ch;
 
-    margin: var(--space9) auto 0;
+    margin: var(--space6) auto 0;
 
     color: var(--textMuted);
 
     font-size: var(--fontCaption);
 
     line-height: 1.6;
+
+}
+
+
+/* ============================================================
+   CONSULTATION FORM
+
+   The one place on this page where the visitor writes rather than
+   reads, so it stops centring and squares up: text-align left,
+   labels above fields, one column.
+
+   Paper on the dark, like the hero's review cards — the same
+   move, for the same reason. A form drawn in outlines on black
+   asks somebody to type their custody dispute into a void; a lit
+   sheet is where you write things down.
+============================================================ */
+
+.finalCtaGrid
+{
+
+    display: grid;
+
+    grid-template-columns: 1fr;
+
+    gap: var(--space8);
+
+    margin-block-start: var(--space9);
+
+    text-align: start;
+
+}
+
+
+.consultForm
+{
+
+    position: relative;
+
+    padding: clamp(var(--space6), 4vw, var(--space8));
+
+    background-color: var(--colorWarm);
+
+    border-block-start: 3px solid var(--accentPrimary);
+
+    box-shadow: 0 40px 80px -40px rgb(0 0 0 / 0.75);
+
+    color: var(--colorBlack);
+
+}
+
+
+.consultFormTitle
+{
+
+    margin: 0 0 var(--space6);
+
+    color: var(--colorBlack);
+
+    font-family: var(--fontFamilyDisplay);
+
+    font-size: 1.75rem;
+
+    font-weight: 600;
+
+    line-height: 1.15;
+
+}
+
+
+/* The honeypot. Not `display: none` — some bots skip anything
+   hidden that way, and a real screen reader would otherwise be
+   the only visitor who ever meets it. Off-canvas, zero size,
+   removed from the accessibility tree by aria-hidden on its
+   wrapper, and out of the tab order via tabindex="-1". */
+
+.consultTrap
+{
+
+    position: absolute;
+
+    inset-inline-start: -9999px;
+
+    width: 1px;
+
+    height: 1px;
+
+    overflow: hidden;
+
+}
+
+
+.consultField
+{
+
+    margin-block-end: var(--space5);
+
+}
+
+
+.consultLabel
+{
+
+    display: block;
+
+    margin-block-end: var(--space2);
+
+    color: var(--colorBlack);
+
+    font-family: var(--fontFamilyBody);
+
+    font-size: var(--fontBodySm);
+
+    font-weight: 600;
+
+}
+
+
+.consultRequired
+{
+
+    color: var(--colorGoldInk);
+
+}
+
+
+.consultOptional
+{
+
+    margin-inline-start: var(--space2);
+
+    color: var(--colorMutedInk);
+
+    font-size: var(--fontCaption);
+
+    font-weight: 400;
+
+    letter-spacing: 0.06em;
+
+    text-transform: uppercase;
+
+}
+
+
+.consultInput
+{
+
+    display: block;
+
+    width: 100%;
+
+    /* 16px minimum. Anything smaller and iOS Safari zooms the
+       whole page on focus, which on a phone reads as the site
+       breaking the moment somebody taps a field. */
+    padding: var(--space4);
+
+    background-color: #FFFFFF;
+
+    border: 1px solid rgb(11 11 13 / 0.18);
+
+    border-radius: var(--radiusButton);
+
+    color: var(--colorBlack);
+
+    font-family: var(--fontFamilyBody);
+
+    font-size: 16px;
+
+    line-height: 1.5;
+
+    transition: border-color 200ms ease, box-shadow 200ms ease;
+
+}
+
+
+.consultInput::placeholder
+{
+
+    color: var(--colorMutedInk);
+
+}
+
+
+.consultInput:hover
+{
+
+    border-color: rgb(11 11 13 / 0.34);
+
+}
+
+
+.consultInput:focus
+{
+
+    outline: none;
+
+    border-color: var(--colorGoldInk);
+
+    box-shadow: 0 0 0 3px rgb(193 158 97 / 0.28);
+
+}
+
+
+.consultInput:focus-visible
+{
+
+    outline: 2px solid var(--colorGoldInk);
+
+    outline-offset: 1px;
+
+}
+
+
+.consultTextarea
+{
+
+    min-height: 8rem;
+
+    resize: vertical;
+
+}
+
+
+.consultInput.isInvalid
+{
+
+    border-color: #9B2C1E;
+
+    background-color: #FEF9F8;
+
+}
+
+
+/* Empty until it has something to say, so it occupies no space
+   in the resting layout and does not push the form around when
+   it appears. */
+
+.consultError
+{
+
+    margin: 0;
+
+    color: #8C2618;
+
+    font-size: var(--fontCaption);
+
+    line-height: 1.5;
+
+}
+
+
+.consultError:not(:empty)
+{
+
+    margin-block-start: var(--space2);
+
+}
+
+
+.consultSubmit
+{
+
+    width: 100%;
+
+    margin-block-start: var(--space6);
+
+    justify-content: center;
+
+}
+
+
+.consultSubmit[disabled]
+{
+
+    cursor: not-allowed;
+
+    opacity: 0.6;
+
+}
+
+
+.consultForm.isSent .consultSubmit[disabled]
+{
+
+    /* A sent form is not a broken one. Full strength, so the
+       button reads as done rather than as unavailable. */
+    opacity: 1;
+
+}
+
+
+.consultStatus
+{
+
+    margin: 0;
+
+    color: var(--colorMutedInk);
+
+    font-size: var(--fontBodySm);
+
+    line-height: 1.55;
+
+}
+
+
+.consultStatus:not(:empty)
+{
+
+    margin-block-start: var(--space5);
+
+    padding: var(--space4);
+
+    border-inline-start: 3px solid var(--colorMutedInk);
+
+    background-color: rgb(11 11 13 / 0.03);
+
+}
+
+
+.consultStatus.isWorking
+{
+
+    border-inline-start-color: var(--colorGoldInk);
+
+}
+
+
+.consultStatus.isSuccess
+{
+
+    border-inline-start-color: #2F6B45;
+
+    background-color: rgb(47 107 69 / 0.07);
+
+    color: #204C31;
+
+}
+
+
+.consultStatus.isError
+{
+
+    border-inline-start-color: #8C2618;
+
+    background-color: rgb(140 38 24 / 0.06);
+
+    color: #8C2618;
+
+}
+
+
+.consultDisclaimer
+{
+
+    max-width: none;
+
+    margin: var(--space5) 0 0;
+
+    color: var(--colorMutedInk);
+
+    font-size: var(--fontCaption);
+
+    line-height: 1.6;
+
+}
+
+
+/* ── The aside ──
+
+   The telephone is still here and still first among equals for
+   anyone who can use it. The form exists for everyone who
+   cannot. */
+
+.finalCtaAside
+{
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: flex-start;
+
+    gap: var(--space4);
+
+}
+
+
+.finalCtaAsideLead
+{
+
+    margin: 0;
+
+    color: var(--textPrimary);
+
+    font-family: var(--fontFamilyDisplay);
+
+    font-size: 1.5rem;
+
+    font-weight: 600;
+
+    line-height: 1.2;
+
+}
+
+
+.finalCtaAsideNote
+{
+
+    margin: 0;
+
+    color: var(--textMuted);
+
+    font-size: var(--fontBodySm);
+
+}
+
+
+.finalCtaAddress
+{
+
+    margin: var(--space2) 0 0;
+
+    color: var(--textMuted);
+
+    font-size: var(--fontBodySm);
+
+    font-style: normal;
+
+    line-height: 1.7;
+
+}
+
+
+.finalCtaAside .finalCtaNote
+{
+
+    margin: var(--space4) 0 0;
+
+    max-width: 46ch;
+
+}
+
+
+@media (min-width: 860px)
+{
+
+    .finalCtaGrid
+    {
+
+        grid-template-columns: minmax(0, 1.25fr) minmax(0, 0.75fr);
+
+        gap: var(--space9);
+
+        align-items: start;
+
+    }
+
+    .consultSubmit
+    {
+
+        width: auto;
+
+    }
+
+}
+
+
+@media (min-width: 1024px)
+{
+
+    .finalCtaGrid
+    {
+
+        max-width: 62rem;
+
+        margin-inline: auto;
+
+    }
+
+}
+
+
+@media (prefers-reduced-motion: reduce)
+{
+
+    .consultInput
+    {
+
+        transition: none;
+
+    }
 
 }
 

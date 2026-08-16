@@ -2089,23 +2089,158 @@
                         describe the matter.
                     </p>
 
-                    <div class="finalCtaActions">
+                    <!-- CONSULTATION INTAKE
 
-                        <a class="buttonPrimary" href="tel:+17405291420">
-                            Call (740) 529-1420
-                        </a>
+                         Every "Request a consultation" control on
+                         this site — the header button, the hero, both
+                         mega menus, twelve practice rows, the attorney
+                         chapter and the footer — already points at
+                         `#contact`. So the form lives here, at that
+                         anchor, rather than behind a modal: they all
+                         arrive at it without a line of routing code,
+                         and it is reachable with the script deleted.
 
-                        <a class="buttonGhost" href="tel:+17405291420">
-                            Request a consultation
-                        </a>
+                         It also closes a real gap. Until now every one
+                         of those controls ended at a telephone dialer,
+                         which is no use to somebody who cannot safely
+                         make a call — a protection-order petitioner,
+                         anyone at work, anyone with the other party in
+                         the next room.
+
+                         The form posts to a Google Apps Script web app
+                         (appsScript/, deployment steps in its README).
+                         Nothing is stored: the email is the record. -->
+
+                    <div class="finalCtaGrid">
+
+                        <form class="consultForm" data-consultForm novalidate>
+
+                            <p class="consultFormTitle">Request a consultation</p>
+
+                            <!-- The honeypot. Hidden from sight, from
+                                 assistive technology and from the tab
+                                 order, and never autofilled — the name
+                                 is deliberately one no browser
+                                 associates with a person. Anything in
+                                 it is a bot, and the server drops the
+                                 submission while reporting success. -->
+                            <div class="consultTrap" aria-hidden="true">
+                                <label for="consultCompany">Company</label>
+                                <input type="text" id="consultCompany" name="company" tabindex="-1" autocomplete="off">
+                            </div>
+
+                            <div class="consultField">
+                                <label class="consultLabel" for="consultName">
+                                    Name <span class="consultRequired" aria-hidden="true">*</span>
+                                </label>
+                                <input
+                                    class="consultInput"
+                                    type="text"
+                                    id="consultName"
+                                    name="name"
+                                    autocomplete="name"
+                                    required
+                                    maxlength="120"
+                                    aria-describedby="consultNameError"
+                                >
+                                <p class="consultError" id="consultNameError" data-errorFor="name"></p>
+                            </div>
+
+                            <div class="consultField">
+                                <label class="consultLabel" for="consultPhone">
+                                    Phone number <span class="consultRequired" aria-hidden="true">*</span>
+                                </label>
+                                <input
+                                    class="consultInput"
+                                    type="tel"
+                                    id="consultPhone"
+                                    name="phone"
+                                    autocomplete="tel"
+                                    inputmode="tel"
+                                    required
+                                    maxlength="40"
+                                    aria-describedby="consultPhoneError"
+                                >
+                                <p class="consultError" id="consultPhoneError" data-errorFor="phone"></p>
+                            </div>
+
+                            <div class="consultField">
+                                <label class="consultLabel" for="consultEmail">
+                                    Email <span class="consultOptional">optional</span>
+                                </label>
+                                <input
+                                    class="consultInput"
+                                    type="email"
+                                    id="consultEmail"
+                                    name="email"
+                                    autocomplete="email"
+                                    inputmode="email"
+                                    maxlength="254"
+                                    aria-describedby="consultEmailError"
+                                >
+                                <p class="consultError" id="consultEmailError" data-errorFor="email"></p>
+                            </div>
+
+                            <div class="consultField">
+                                <label class="consultLabel" for="consultReason">
+                                    Reason for contacting <span class="consultRequired" aria-hidden="true">*</span>
+                                </label>
+                                <textarea
+                                    class="consultInput consultTextarea"
+                                    id="consultReason"
+                                    name="reason"
+                                    rows="4"
+                                    required
+                                    maxlength="4000"
+                                    aria-describedby="consultReasonError"
+                                ></textarea>
+                                <p class="consultError" id="consultReasonError" data-errorFor="reason"></p>
+                            </div>
+
+                            <button class="buttonPrimary consultSubmit" type="submit" data-consultSubmit>
+                                <span data-submitLabel>Request a Consultation</span>
+                            </button>
+
+                            <!-- One live region for the whole form.
+                                 `polite`, so it is announced after the
+                                 visitor stops typing rather than
+                                 interrupting them mid-field. -->
+                            <p class="consultStatus" data-consultStatus role="status" aria-live="polite"></p>
+
+                            <p class="consultDisclaimer">
+                                Submitting this form does not create an attorney&ndash;client
+                                relationship. Do not include confidential or time-sensitive
+                                information.
+                            </p>
+
+                        </form>
+
+                        <div class="finalCtaAside">
+
+                            <p class="finalCtaAsideLead">Rather speak to someone now?</p>
+
+                            <a class="buttonPrimary" href="tel:+17405291420">
+                                Call (740) 529-1420
+                            </a>
+
+                            <p class="finalCtaAsideNote">
+                                Most inquiries receive a response within one business&nbsp;day.
+                            </p>
+
+                            <address class="finalCtaAddress">
+                                602 Chillicothe Street, Suite 206<br>
+                                Portsmouth, Ohio 45662
+                            </address>
+
+                            <p class="finalCtaNote">
+                                Contacting this office does not create an attorney&ndash;client
+                                relationship. Please do not send confidential information until a
+                                relationship has been established in writing.
+                            </p>
+
+                        </div>
 
                     </div>
-
-                    <p class="finalCtaNote">
-                        Contacting this office does not create an attorney&ndash;client relationship.
-                        Please do not send confidential information until a relationship has been
-                        established in writing.
-                    </p>
 
                 </div>
 
@@ -2376,6 +2511,11 @@
     <script src="js/siteJS.js" defer></script>
 
     <script src="js/indexJS.js" defer></script>
+
+    <!-- The consultation form. Its endpoint constant is the one
+         value that changes after the Apps Script is deployed —
+         see appsScript/README.md. -->
+    <script src="js/consultationJS.js" defer></script>
 
 
 </body>
