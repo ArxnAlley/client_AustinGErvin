@@ -122,6 +122,36 @@ record is a one-value change plus `node scripts/buildReviews.mjs`.
 
 ---
 
+### TD-020 · "View all practice areas" has no page to point at
+**Status:** open · **Area:** `section.chapterPractice`
+
+The chip grid was replaced with a single `View all practice areas`
+link. No standalone practice-areas page exists, so it points at
+`#practice` — the anchor the header link and both menus already
+use. It is not broken and it is not invented, but it is
+self-referential.
+
+**Next action:** repoint it at the practice-areas page when one is
+built. That page is also where the eight practice-area content
+files should land — `content/practiceAreas/` is empty and always
+has been, while twelve records now name a body path.
+
+### DATA-021 · The practice list is written out by hand in four places
+**Status:** open · **Area:** `index.html`, `data/practiceAreas.json`
+
+The twelve areas appear in the practice section, the Practice
+Areas mega menu, the mobile accordion and the footer column. All
+four are hand-maintained and were brought into parity on
+2026-08-16. Nothing enforces it.
+
+**Risk:** an edit that touches one surface and not the other three
+ships a site that contradicts itself about what the office does —
+on a regulated page.
+**Next action:** extend `scripts/buildReviews.mjs`, or add a
+sibling generator, to render all four from
+`data/practiceAreas.json`. Verify with the parity probe recorded
+in the journal until then.
+
 ## P2 — quality
 
 ### DATA-008 · Review corpus is six of roughly forty-six
@@ -259,6 +289,9 @@ finger).
 | ASK-011 | Verified social URLs, office hours, after-hours policy, Maps URL, form endpoint | VIS-005, TD-013 |
 | ASK-012 | Privacy policy and terms copy, or approval to draft | LEGAL-014 |
 | ASK-013 | Higher-resolution portrait crop; video for the V2.1 placeholder | VIS-002 |
+| ASK-019 | **Does Austin handle protection orders?** They were published on the homepage and in all three menus until 2026-08-16 and were withdrawn because they are absent from his confirmed list. A criminal and family practice in southern Ohio almost certainly does handle them, so this reads as an omission rather than a decision. Three FAQ entries still ask about them and were left alone pending his answer. | practice areas, FAQ |
+| ASK-020 | **Has the 2026 Dayton Criminal Defense College Trial School been completed?** The site says "Attended", with the year, and deliberately does not say completed, graduated or certified. Upgrade the wording only on written confirmation. | attorney chapter |
+| ASK-021 | **A figure for jury trial experience he can substantiate.** His word was "extensive"; it is not published, because an unsubstantiated quantity claim is what Ohio Prof. Cond. R. 7.1 prohibits. | attorney chapter |
 
 ### Waiting on Aron
 

@@ -3,128 +3,307 @@
         "id": "criminal-defense",
         "status": "published",
         "parent": null,
-        "cluster": "criminal-defense",
+        "cluster": "criminal-traffic",
         "title": "Criminal Defense",
         "titleShort": "Criminal Defense",
-        "blurb": "Defense of misdemeanor and felony charges, from investigation through trial and sentencing.",
+        "blurb": "Misdemeanor and felony charges, from investigation through trial and sentencing.",
         "icon": "iconShield",
-        "homepagePriority": null,
-        "jurisdictions": ["OH"],
+        "homepagePriority": 0,
+        "jurisdictions": [
+            "OH",
+            "KY"
+        ],
         "urgency": "emergency",
-        "relatedAreas": ["ovi-dui", "protection-orders"],
+        "relatedAreas": [
+            "ovi-dui",
+            "traffic-offenses",
+            "expungements"
+        ],
         "body": "content/practiceAreas/criminal-defense.md",
-        "searchTerms": ["criminal lawyer", "defense attorney", "felony", "misdemeanor"]
+        "searchTerms": [
+            "criminal lawyer",
+            "defense attorney",
+            "felony",
+            "misdemeanor"
+        ]
     },
     {
         "id": "ovi-dui",
         "status": "published",
         "parent": "criminal-defense",
-        "cluster": "criminal-defense",
-        "title": "OVI and DUI Defense",
-        "titleShort": "OVI / DUI",
+        "cluster": "criminal-traffic",
+        "title": "DUI / OVI Defense",
+        "titleShort": "DUI / OVI",
         "blurb": "Impaired-driving charges, licence suspension, test refusal, and driving privileges.",
         "icon": "iconShield",
-        "homepagePriority": null,
-        "jurisdictions": ["OH"],
+        "homepagePriority": 1,
+        "jurisdictions": [
+            "OH",
+            "KY"
+        ],
         "urgency": "emergency",
-        "relatedAreas": ["criminal-defense"],
+        "relatedAreas": [
+            "criminal-defense",
+            "traffic-offenses"
+        ],
         "body": "content/practiceAreas/ovi-dui.md",
-        "searchTerms": ["OVI", "DUI", "DWI", "drunk driving", "license suspension"]
+        "searchTerms": [
+            "OVI",
+            "DUI",
+            "DWI",
+            "drunk driving",
+            "license suspension"
+        ]
     },
     {
-        "id": "family-law",
+        "id": "traffic-offenses",
         "status": "published",
         "parent": null,
-        "cluster": "family-law",
-        "title": "Family Law",
-        "titleShort": "Family Law",
-        "blurb": "Divorce, custody, support, and protection order matters across southern Ohio.",
+        "cluster": "criminal-traffic",
+        "title": "Traffic Offenses",
+        "titleShort": "Traffic",
+        "blurb": "Citations, points, suspensions, and the charges that carry more than a fine.",
         "icon": "iconShield",
         "homepagePriority": null,
-        "jurisdictions": ["OH"],
+        "jurisdictions": [
+            "OH",
+            "KY"
+        ],
         "urgency": "high",
-        "relatedAreas": ["divorce", "child-custody", "protection-orders"],
-        "body": "content/practiceAreas/family-law.md",
-        "searchTerms": ["family lawyer", "family attorney"]
+        "relatedAreas": [
+            "ovi-dui",
+            "criminal-defense"
+        ],
+        "body": "content/practiceAreas/trafficOffenses.md",
+        "searchTerms": [
+            "traffic lawyer",
+            "speeding ticket",
+            "driving under suspension",
+            "reckless operation"
+        ]
+    },
+    {
+        "id": "expungements",
+        "status": "published",
+        "parent": null,
+        "cluster": "criminal-traffic",
+        "title": "Expungements & Record Sealing",
+        "titleShort": "Expungements",
+        "blurb": "Sealing and expunging eligible records so an old case stops answering for you.",
+        "icon": "iconShield",
+        "homepagePriority": null,
+        "jurisdictions": [
+            "OH"
+        ],
+        "urgency": "planning",
+        "relatedAreas": [
+            "criminal-defense"
+        ],
+        "body": "content/practiceAreas/expungements.md",
+        "searchTerms": [
+            "expungement",
+            "record sealing",
+            "seal a record",
+            "clear my record"
+        ]
     },
     {
         "id": "divorce",
         "status": "published",
-        "parent": "family-law",
-        "cluster": "family-law",
-        "title": "Divorce and Separation",
+        "parent": null,
+        "cluster": "family-juvenile",
+        "title": "Divorce",
         "titleShort": "Divorce",
-        "blurb": "Contested and uncontested divorce, property division, and parenting arrangements.",
+        "blurb": "Contested and uncontested divorce, dissolution, and division of property.",
         "icon": "iconShield",
-        "homepagePriority": null,
-        "jurisdictions": ["OH"],
+        "homepagePriority": 2,
+        "jurisdictions": [
+            "OH",
+            "KY"
+        ],
         "urgency": "high",
-        "relatedAreas": ["child-custody", "family-law"],
+        "relatedAreas": [
+            "child-custody"
+        ],
         "body": "content/practiceAreas/divorce.md",
-        "searchTerms": ["divorce lawyer", "separation", "dissolution"]
+        "searchTerms": [
+            "divorce lawyer",
+            "separation",
+            "dissolution"
+        ]
     },
     {
         "id": "child-custody",
         "status": "published",
-        "parent": "family-law",
-        "cluster": "family-law",
-        "title": "Child Custody and Support",
+        "parent": null,
+        "cluster": "family-juvenile",
+        "title": "Child Custody",
         "titleShort": "Custody",
-        "blurb": "Parental rights, parenting time, support calculation, and modifications.",
+        "blurb": "Parental rights, parenting time, support, and modifications after an order.",
         "icon": "iconShield",
-        "homepagePriority": null,
-        "jurisdictions": ["OH"],
+        "homepagePriority": 3,
+        "jurisdictions": [
+            "OH",
+            "KY"
+        ],
         "urgency": "high",
-        "relatedAreas": ["divorce", "family-law"],
+        "relatedAreas": [
+            "divorce",
+            "juvenile-law"
+        ],
         "body": "content/practiceAreas/child-custody.md",
-        "searchTerms": ["custody lawyer", "child support", "parenting time"]
+        "searchTerms": [
+            "custody lawyer",
+            "child support",
+            "parenting time",
+            "visitation"
+        ]
     },
     {
-        "id": "protection-orders",
-        "status": "published",
-        "parent": "family-law",
-        "cluster": "family-law",
-        "title": "Protection Orders",
-        "titleShort": "Protection Orders",
-        "blurb": "Representation for petitioners and respondents in civil protection order proceedings.",
-        "icon": "iconShield",
-        "homepagePriority": null,
-        "jurisdictions": ["OH"],
-        "urgency": "emergency",
-        "relatedAreas": ["criminal-defense", "child-custody"],
-        "body": "content/practiceAreas/protection-orders.md",
-        "searchTerms": ["protection order", "restraining order", "CPO", "domestic violence"]
-    },
-    {
-        "id": "estate-planning",
+        "id": "juvenile-law",
         "status": "published",
         "parent": null,
-        "cluster": "estate-planning",
-        "title": "Estate Planning",
-        "titleShort": "Estate Planning",
-        "blurb": "Wills, powers of attorney, living directives, and planning to avoid probate.",
+        "cluster": "family-juvenile",
+        "title": "Juvenile Law",
+        "titleShort": "Juvenile",
+        "blurb": "Matters heard in juvenile court, where a child is the person before the judge.",
         "icon": "iconShield",
         "homepagePriority": null,
-        "jurisdictions": ["OH"],
-        "urgency": "planning",
-        "relatedAreas": ["probate"],
-        "body": "content/practiceAreas/estate-planning.md",
-        "searchTerms": ["will", "living will", "power of attorney", "trust", "estate lawyer"]
+        "jurisdictions": [
+            "OH"
+        ],
+        "urgency": "emergency",
+        "relatedAreas": [
+            "child-custody",
+            "criminal-defense"
+        ],
+        "body": "content/practiceAreas/juvenileLaw.md",
+        "searchTerms": [
+            "juvenile lawyer",
+            "juvenile court",
+            "delinquency",
+            "unruly"
+        ]
     },
     {
-        "id": "probate",
+        "id": "guardianships",
         "status": "published",
-        "parent": "estate-planning",
-        "cluster": "estate-planning",
-        "title": "Probate",
-        "titleShort": "Probate",
-        "blurb": "Estate administration, executor representation, and transfers after a death.",
+        "parent": null,
+        "cluster": "family-juvenile",
+        "title": "Guardianships",
+        "titleShort": "Guardianships",
+        "blurb": "Guardianship of a minor or an adult who can no longer decide for themselves.",
         "icon": "iconShield",
         "homepagePriority": null,
-        "jurisdictions": ["OH"],
+        "jurisdictions": [
+            "OH"
+        ],
         "urgency": "high",
-        "relatedAreas": ["estate-planning"],
+        "relatedAreas": [
+            "adoptions",
+            "wills-probate"
+        ],
+        "body": "content/practiceAreas/guardianships.md",
+        "searchTerms": [
+            "guardianship",
+            "guardian of a minor",
+            "adult guardianship"
+        ]
+    },
+    {
+        "id": "adoptions",
+        "status": "published",
+        "parent": null,
+        "cluster": "family-juvenile",
+        "title": "Adoptions",
+        "titleShort": "Adoptions",
+        "blurb": "Stepparent, relative, and agency adoptions through the probate court.",
+        "icon": "iconShield",
+        "homepagePriority": null,
+        "jurisdictions": [
+            "OH"
+        ],
+        "urgency": "planning",
+        "relatedAreas": [
+            "guardianships",
+            "child-custody"
+        ],
+        "body": "content/practiceAreas/adoptions.md",
+        "searchTerms": [
+            "adoption lawyer",
+            "stepparent adoption",
+            "adopt"
+        ]
+    },
+    {
+        "id": "personal-injury",
+        "status": "published",
+        "parent": null,
+        "cluster": "civil-planning",
+        "title": "Personal Injury",
+        "titleShort": "Personal Injury",
+        "blurb": "Claims for people hurt by someone else's conduct, from the first call onward.",
+        "icon": "iconShield",
+        "homepagePriority": 4,
+        "jurisdictions": [
+            "OH",
+            "KY"
+        ],
+        "urgency": "high",
+        "relatedAreas": [],
+        "body": "content/practiceAreas/personalInjury.md",
+        "searchTerms": [
+            "personal injury lawyer",
+            "car accident",
+            "injury attorney"
+        ]
+    },
+    {
+        "id": "evictions",
+        "status": "published",
+        "parent": null,
+        "cluster": "civil-planning",
+        "title": "Evictions",
+        "titleShort": "Evictions",
+        "blurb": "Forcible entry and detainer actions, for landlords and for tenants.",
+        "icon": "iconShield",
+        "homepagePriority": null,
+        "jurisdictions": [
+            "OH"
+        ],
+        "urgency": "emergency",
+        "relatedAreas": [],
+        "body": "content/practiceAreas/evictions.md",
+        "searchTerms": [
+            "eviction lawyer",
+            "landlord tenant",
+            "forcible entry and detainer"
+        ]
+    },
+    {
+        "id": "wills-probate",
+        "status": "published",
+        "parent": null,
+        "cluster": "civil-planning",
+        "title": "Wills & Probate",
+        "titleShort": "Wills & Probate",
+        "blurb": "Drafting a will, and administering an estate through the probate court afterwards.",
+        "icon": "iconShield",
+        "homepagePriority": null,
+        "jurisdictions": [
+            "OH"
+        ],
+        "urgency": "planning",
+        "relatedAreas": [
+            "guardianships",
+            "adoptions"
+        ],
         "body": "content/practiceAreas/probate.md",
-        "searchTerms": ["probate lawyer", "executor", "estate administration"]
+        "searchTerms": [
+            "will",
+            "probate lawyer",
+            "executor",
+            "estate administration"
+        ]
     }
 ]

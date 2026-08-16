@@ -943,23 +943,50 @@
 }
 
 
+/* Three columns, not two.
+
+   The practice list went from eight matters to twelve when
+   Austin's confirmed areas replaced the researched ones, and at
+   two columns that is six rows: the panel measured 895px at
+   1440x900 and hung 91px below the fold, 212px at 1280x800. A
+   mega panel cannot be scrolled while it is being hovered, so
+   the last row was simply unreachable.
+
+   Three columns of four rows brings it back inside the viewport
+   at every desktop width the panel appears at. The row gap is
+   tightened with it — twelve rows need less air between them
+   than eight did. */
+
 .megaList
 {
 
     display: grid;
 
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(3, minmax(0, 1fr));
 
     /* Tight within a row, generous between them. One repeated
        interval would give the title and its description equal
        standing, which is the hierarchy problem, not the fix. */
-    gap: var(--space6) var(--space7);
+    gap: var(--space5) var(--space5);
 
     margin: 0;
 
     padding: 0;
 
     list-style: none;
+
+}
+
+
+/* The questions list is still eight items and still reads better
+   in two columns — the rows there are sentences, not labels. */
+
+.megaList.isQuestions
+{
+
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    gap: var(--space6) var(--space7);
 
 }
 
@@ -3300,6 +3327,122 @@
 }
 
 
+/* ── Trial practice ──
+
+   Sits under the credential bar and reads as its second storey:
+   the bar says he is admitted, this says what he does with it.
+   No new visual language — the same hairline, the same display
+   face for the lead, the same muted body. It is authority, so it
+   is set quietly; a box with a badge in it would be the
+   advertisement Rule 7.1 is watching for. */
+
+.attorneyTrial
+{
+
+    margin-block-start: var(--space7);
+
+}
+
+
+.attorneyTrialTitle
+{
+
+    margin: 0 0 var(--space4);
+
+    color: var(--textMuted);
+
+    font-family: var(--fontFamilyBody);
+
+    font-size: var(--fontCaption);
+
+    font-weight: 600;
+
+    letter-spacing: 0.16em;
+
+    text-transform: uppercase;
+
+}
+
+
+.attorneyTrialList
+{
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: var(--space4);
+
+    margin: 0;
+
+    padding: 0;
+
+    list-style: none;
+
+}
+
+
+.attorneyTrialItem
+{
+
+    display: grid;
+
+    grid-template-columns: 1fr;
+
+    gap: 2px;
+
+    padding-inline-start: var(--space5);
+
+    border-inline-start: 2px solid var(--accentStroke);
+
+}
+
+
+.attorneyTrialLead
+{
+
+    color: var(--textPrimary);
+
+    font-family: var(--fontFamilyDisplay);
+
+    font-size: 1.125rem;
+
+    font-weight: 600;
+
+    line-height: 1.2;
+
+}
+
+
+.attorneyTrialText
+{
+
+    color: var(--textSecondary);
+
+    font-size: var(--fontBodySm);
+
+    line-height: 1.55;
+
+}
+
+
+@media (min-width: 560px)
+{
+
+    .attorneyTrialItem
+    {
+
+        grid-template-columns: 10rem minmax(0, 1fr);
+
+        align-items: baseline;
+
+        gap: var(--space5);
+
+    }
+
+}
+
+
 .attorneyActions
 {
 
@@ -3988,18 +4131,21 @@
    All three are in the document at all times. The closed ones
    are taken out of the visual flow, not out of the DOM. */
 
-/* Held to the tallest file's height. Criminal and Family carry
-   three matters, Estate carries two, so switching to Estate used
-   to collapse the block by about 85px and pull the index — and
-   whichever chip the visitor was reaching for — up under their
-   finger. `min-height` costs one empty row on the estate panel
-   and buys a page that does not move when it is used. Re-measure
-   this if a matter is ever added to a file. */
+/* Held to the tallest file's height. Family carries five
+   matters, Criminal four and Civil three, so switching files
+   would otherwise collapse the block by up to two rows and jerk
+   everything beneath it upward mid-scroll. `min-height` costs
+   empty rows on the shorter files and buys a page that does not
+   move when it is used.
+
+   MEASURED, NOT GUESSED. Re-measure whenever a matter is added
+   to or withdrawn from a file — the five-row family panel is
+   what sets these numbers. */
 
 .casePanels
 {
 
-    min-height: 27rem;
+    min-height: 34rem;
 
     padding-block-start: clamp(var(--space7), 6vh, var(--space9));
 
@@ -4012,7 +4158,7 @@
     .casePanels
     {
 
-        min-height: 34rem;
+        min-height: 42rem;
 
     }
 
@@ -4300,138 +4446,23 @@
 }
 
 
-/* ── THE INDEX ──
+/* ── THE ROUTE OUT ──
 
-   Everything the office handles, on screen at all times.
+   What used to be here was a chip grid repeating all eight
+   matters underneath the panel that had just shown three of
+   them. With twelve matters across three tabs it repeated the
+   section back to itself, so it is gone and one understated
+   link stands in its place.
 
-   A three-way tab is a good way to present depth and a bad way
-   to present breadth: two thirds of the list is behind a control
-   at any moment, and a visitor who came looking for probate has
-   no reason to open the estate file to find out whether probate
-   is even here. The mega menu does not solve it either — it only
-   helps the visitor who already opened it.
-
-   So the full list stays under the file, and each entry is a
-   second <label> on the radio that owns it. Selecting "Probate"
-   opens the estate file. That keeps every service one interaction
-   from its detail without inventing a practice-area page that
-   does not exist yet. */
-
-/* No top rule here. The last `.caseItem` already draws one, so
-   the index's own border produced two parallel hairlines with an
-   empty 66px band trapped between them. The gap is the
-   separation; one line is enough. */
+   The chip rules went with it. Do not resurrect them: the
+   accessible-name problem they caused (two labels per radio,
+   concatenated into one announcement) is documented in the
+   journal. */
 
 .caseIndex
 {
 
     margin-block-start: clamp(var(--space7), 5vh, var(--space9));
-
-}
-
-
-.caseIndexLabel
-{
-
-    margin: 0 0 var(--space5);
-
-    color: var(--accentPrimary);
-
-    font-size: var(--fontCaption);
-
-    font-weight: 500;
-
-    letter-spacing: 0.2em;
-
-    text-transform: uppercase;
-
-}
-
-
-.caseIndexList
-{
-
-    display: flex;
-
-    flex-wrap: wrap;
-
-    gap: var(--space3);
-
-    margin: 0;
-
-    padding: 0;
-
-    list-style: none;
-
-}
-
-
-.caseChip
-{
-
-    display: inline-flex;
-
-    align-items: center;
-
-    min-height: 44px;
-
-    padding: var(--space2) var(--space5);
-
-    background-color: rgb(11 11 13 / 0.38);
-
-    border: 1px solid rgb(246 245 243 / 0.14);
-
-    color: var(--textSecondary);
-
-    font-size: var(--fontBodySm);
-
-    cursor: pointer;
-
-    transition: color 200ms ease, border-color 200ms ease, background-color 200ms ease;
-
-}
-
-
-.caseChip:hover
-{
-
-    background-color: rgb(11 11 13 / 0.62);
-
-    border-color: var(--accentStroke);
-
-    color: var(--textPrimary);
-
-}
-
-
-/* The chip belonging to the open file is lit, so the index and
-   the tab strip never disagree about what is showing. */
-
-#caseCriminal:checked ~ .caseIndex [for='caseCriminal'],
-#caseFamily:checked ~ .caseIndex [for='caseFamily'],
-#caseEstate:checked ~ .caseIndex [for='caseEstate']
-{
-
-    border-color: var(--accentPrimary);
-
-    color: var(--textPrimary);
-
-}
-
-
-/* The radio carries the focus, and the radio is visually hidden,
-   so the ring has to be drawn on every label that controls it —
-   the tab strip above AND the chips down here. Without this the
-   keyboard disappears the moment it reaches the index. */
-
-#caseCriminal:focus-visible ~ .caseIndex [for='caseCriminal'],
-#caseFamily:focus-visible ~ .caseIndex [for='caseFamily'],
-#caseEstate:focus-visible ~ .caseIndex [for='caseEstate']
-{
-
-    outline: 2px solid var(--focusRing);
-
-    outline-offset: 3px;
 
 }
 
@@ -6806,5 +6837,53 @@
     inset: -8px -10px;
 
     content: "";
+
+}
+
+
+/* ============================================================
+   MEGA PANEL — THE PRACTICE LIST NEEDS THE ROOM
+
+   The practice panel now carries twelve matters where it carried
+   eight, and at the shared 0.78fr / 1.68fr split the three
+   columns were 270px each — narrow enough that "Expungements &
+   Record Sealing" broke over three lines and every title over
+   two, which put the panel back below the fold.
+
+   The lead column was mostly air anyway: a title, three lines of
+   text, and a link pinned to the bottom. It gives up width here,
+   and only here. The Questions panel keeps the original split,
+   because its rows are sentences and its lead paragraph is long.
+============================================================ */
+
+.megaInner:has(.megaList:not(.isQuestions))
+{
+
+    grid-template-columns: minmax(0, 0.56fr) 1px minmax(0, 2.1fr);
+
+}
+
+
+/* A panel can never be taller than the room under the bar.
+
+   A mega panel is open only while it is hovered or focused
+   within, so anything below the fold is unreachable — there is
+   no way to scroll the page to it without leaving the panel. On
+   a short laptop (1200x700 is the worst case where the desktop
+   nav is still showing) twelve rows overrun by 158px.
+
+   Capping the height and letting the panel itself scroll keeps
+   every row reachable, because the pointer is already inside it.
+   On any normal viewport the panel is well under this and the
+   rule does nothing. */
+
+.megaPanel
+{
+
+    max-height: calc(100vh - var(--headerClearance) - var(--space5));
+
+    overflow-y: auto;
+
+    overscroll-behavior: contain;
 
 }

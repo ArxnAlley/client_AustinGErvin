@@ -56,14 +56,20 @@
         "practiceAreas": [
             "criminal-defense",
             "ovi-dui",
-            "family-law",
+            "traffic-offenses",
+            "expungements",
             "divorce",
             "child-custody",
-            "protection-orders",
-            "estate-planning",
-            "probate"
+            "juvenile-law",
+            "guardianships",
+            "adoptions",
+            "personal-injury",
+            "evictions",
+            "wills-probate"
         ],
-        "locations": ["portsmouth-office"],
+        "locations": [
+            "portsmouth-office"
+        ],
         "portrait": {
             "src": "assets/images/portraitAustinHero.jpg",
             "alt": "Austin G. Ervin, attorney at law, Portsmouth, Ohio"

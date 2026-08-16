@@ -10,6 +10,142 @@ accident.
 
 ---
 
+## 2026-08-16 · Practice areas corrected against Austin's own list
+
+**Sections touched:** practice, attorney, header, mobile menu, footer
+
+---
+
+### The practice areas on this site were wrong
+
+Everything published until today came from research, not from
+Austin. He has now confirmed his own list, and the two disagree in
+three directions at once:
+
+**Advertised and should not have been.** Generic *Estate Planning*
+— he does wills and probate, and gave us those two words
+specifically. *Protection Orders* and a generic *Family Law*
+heading, neither of which appears on his list.
+
+**Missing entirely.** Personal Injury, Juvenile Law, Evictions,
+Traffic Offenses, Expungements & Record Sealing, Guardianships,
+Adoptions. Seven of his twelve areas were not on his own website.
+
+**Wrongly grouped.** The three files were Criminal / Family /
+Estate. They are now **Criminal & Traffic** (4), **Family &
+Juvenile** (5), **Civil & Planning** (3).
+
+Divorce and Child Custody are presented as two areas. Austin gave
+them as one item, "Divorce and Custody"; splitting the
+presentation was Aron's direction, for search and because a
+visitor names their own problem as one or the other. It does not
+add a service he did not confirm.
+
+**Protection Orders was withdrawn everywhere.** It had been
+published on the homepage and in all three navigation surfaces. It
+is absent from his confirmed list, so it is gone — but a criminal
+and family practice in southern Ohio almost certainly does handle
+them, and this is more likely an omission on his list than a
+decision. **It needs one word from him.** See ASK-019.
+
+**The FAQ still asks about protection orders** — one question in
+the Questions mega menu, one in the mobile menu, one in the FAQ
+chapter. Left alone deliberately: FAQ content is gated on the
+attorney of record, every answer is still a placeholder, and
+rewriting the questions would pre-empt the same decision ASK-019
+is waiting on. Fix both together.
+
+### Four surfaces, one list
+
+The practice areas are written out by hand in four places — the
+section, the Practice Areas mega menu, the mobile accordion, and
+the footer column. All four were updated and are verified in
+parity by `practiceCheck.mjs`. **There is no generator for this**;
+a future edit that touches one and not the other three will ship a
+site that contradicts itself. That is worth a generator the next
+time this list moves.
+
+### The mega panel outgrew the viewport
+
+Twelve rows at the old two-column split measured 895px and hung
+91px below the fold at 1440×900, 212px at 1280×800. A mega panel
+is open only while it is hovered, so anything past the fold is
+unreachable — there is no way to scroll to it without closing it.
+
+Three fixes, in order of how much each bought: three columns
+instead of two; the lead column narrowed from 0.78fr to 0.56fr,
+since it was mostly air; and every row note shortened to one line.
+809px → 658px, inside the fold at every width the desktop nav
+appears at. `.megaPanel` also now caps at the room under the bar
+and scrolls itself, so no future addition can put a row out of
+reach again.
+
+### The chip grid is gone
+
+The "All practice areas" chip grid added in V2.1 was removed at
+Aron's direction: with twelve matters across three tabs it
+repeated the section back to itself. One understated *View all
+practice areas* link replaced it.
+
+**Its destination is provisional.** No standalone practice-areas
+page exists, and a made-up URL is not available on a regulated
+page, so it points at `#practice` — the canonical anchor the
+header link and both menus already use. Repoint it the day the
+page is built (TD-020).
+
+The chip CSS and the script that gave chip presses somewhere to
+land went with it. **Do not resurrect the chips**: two labels on
+one radio concatenate into the radio's accessible name, which is
+the bug the `aria-label`s on `.caseInput` exist to contain.
+
+### Trial practice is authority, not a service
+
+Austin also confirmed jury trial experience including murder
+cases, the 2026 Dayton Criminal Defense College Trial School, and
+a typical response of one business day. None of these are practice
+areas and none went in the tab strip; they are an "In the
+courtroom" block in the attorney chapter.
+
+Three deliberate restraints in that copy, all of them one word
+away from a Rule 7.1 problem:
+
+1. **"Extensive" is not published.** It was his word. A quantity
+   claim with no substantiable figure behind it is exactly what
+   7.1 prohibits, and no count was supplied.
+2. **The murder line states the kind of matter and stops.** No
+   verdict, no outcome, no count. Adding any of those turns a
+   permitted statement of experience into a prohibited result
+   claim.
+3. **The trial school says "Attended", with a year.** Not
+   completed, not graduated, not certified. Aron's note read
+   "recently attended / is attending", which does not establish
+   the programme is finished. Do not upgrade that wording without
+   it in writing (ASK-020).
+
+The response-time line moved from "within 24 hours" to **"within
+one business day"** in both places it appears — his own wording,
+and safer, because a reader already discounts a business day for
+weekends. "Most" stays load-bearing.
+
+### The schema is closed, so the provenance lives here
+
+`displayOrder`, `_source`, `_compliance` and `_note` on
+`practiceAreas.json`, and `trialPractice` on `attorneys.json`,
+were each rejected as unrecognised fields — 16 errors between
+them. A metadata object at the head of the practice-areas array
+was worse: the validator read it as a practice area missing every
+required field, for 35 errors from one object.
+
+All of it was removed and written down here instead. `body` also
+cannot be null, so the seven new areas point at content files on
+the same convention as the existing ones — **none of which have
+ever been written**; `content/practiceAreas/` is empty.
+
+Validation is back to **37 errors / 0 warnings**, byte-identical
+to the pre-session baseline.
+
+---
+
 ## 2026-08-15 · V2 review system, and a stylesheet loss
 
 **Commits:** `75f4ea4`
