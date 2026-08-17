@@ -7501,13 +7501,40 @@
     }
 
 
-    /* The proof rail is one card tall now rather than three, so
-       the overhang has less weight to carry across the boundary. */
+    /* ── The hero proof cards ──
+
+       Removed from the phone hero. All three testimonies are the
+       same records the Reviews chapter carries in full further down
+       the page, so nothing is lost from the document — a visitor
+       gets them where they are introduced properly, under the 4.8
+       aggregate, instead of twice.
+
+       What they cost here was the landing screen. Even as a rail
+       they stood between the hero and Austin's introduction, and
+       the hero's job on a phone is the scene, the headline, the man
+       and the button.
+
+       `--proofOverhang` goes to zero with them. It exists so the
+       card group can straddle the boundary into the next chapter —
+       the hero spends it as negative margin and the chapter beneath
+       adds it back as padding. With no cards to straddle, a
+       non-zero value is just a gap the page pays for twice.
+
+       DESKTOP KEEPS THEM. This is the phone band only; the three
+       cards and their overhang are untouched from 768px up. */
+
+    .heroProof
+    {
+
+        display: none;
+
+    }
+
 
     :root
     {
 
-        --proofOverhang: clamp(3.5rem, 7vh, 4.5rem);
+        --proofOverhang: 0rem;
 
     }
 
@@ -7515,7 +7542,7 @@
     .chapterHero + [data-chapter]
     {
 
-        padding-block-start: calc(clamp(var(--space7), 5vh, var(--space9)) + var(--proofOverhang));
+        padding-block-start: clamp(var(--space7), 5vh, var(--space9));
 
     }
 
@@ -7555,21 +7582,234 @@
 
         padding-block-start: calc(var(--headerClearance) + var(--space5));
 
+        /* Measured: at `--space6` the hero came to 816px against a
+           375×812 screen, so the composition ended four pixels
+           past the fold and the scene stopped being one screen for
+           the sake of eight pixels of padding. */
+        padding-block-end: var(--space5);
+
     }
 
+
+    /* ── THE BACKDROP ──
+
+       Two separate faults, and only one of them was the grade.
+
+       THE GRADE. On desktop the valley is atmosphere behind a wide
+       band of type, pushed down to `brightness(0.46)` under a scrim
+       reaching 0.92 across the top-left. That is right there, where
+       the photograph is one element among several across 1280px. On
+       a phone it is the whole first screen, and at that grade it
+       read as an almost-black rectangle: the river, the bridge and
+       the treeline that place this practice in Scioto County were
+       all present and none of them was legible.
+
+       THE GEOMETRY, which mattered more. Both hero assets are
+       1.779 landscape — 2000×1124 and 900×506. Stretched over a
+       375×810 hero, `object-fit: cover` scales the image to 1442px
+       wide to reach the height it needs, and shows the middle 375
+       of it. That is 26 per cent of the frame. No amount of
+       brightening makes a quarter-width slice of an aerial
+       recognisable as anywhere; it can only ever be texture.
+
+       So the photograph is given a box it can actually be seen in.
+       It becomes a band across the top of the hero rather than a
+       full-bleed fill: at 62% of the hero it is roughly 1:1.35,
+       which shows about 42 per cent of the frame — enough width for
+       the river bend and the far treeline to read as a valley.
+
+       Below the band the hero's own `#08080A` continues, and the
+       band dissolves into it rather than ending on an edge. That is
+       the same move the portraits make, and it is what lets Austin
+       stand where the scene turns to ground: the photograph is
+       behind the eyebrow and the headline, and he emerges out of
+       its lower dissolve with the button on solid black beneath.
+
+       This is a deliberate reading of "occupies most of the hero".
+       Filling every pixel and being recognisable are in direct
+       conflict at this aspect ratio, and recognisable is the half
+       that was asked for. */
+
+    /* `<picture>` IS INLINE, and that is why the band needs
+       declaring at all.
+
+       `.heroBackdrop img` has carried `height: 100%` since this
+       file was written, and it has never once resolved: the img's
+       parent is the `<picture>` element, which is inline with an
+       auto height, so a percentage height against it computes to
+       `auto` and the image falls back to its natural aspect.
+       Measured at 375px, the box came out 375×211 — the full
+       uncropped photograph — while the element around it was 808px
+       tall.
+
+       This is true on desktop as well; the valley there covers
+       about 719px of a 1067px hero rather than filling it. That is
+       the approved composition, so it is LEFT ALONE — the rule
+       below is inside the mobile band and reaches nothing above
+       899px. It is recorded here because the next person to change
+       the desktop backdrop will otherwise spend an afternoon on
+       it. */
+
+    .heroBackdrop picture
+    {
+
+        display: block;
+
+        height: 100%;
+
+    }
+
+
+    .heroBackdrop
+    {
+
+        inset-block-end: auto;
+
+        /* 58% of the hero. The trade is direct and there is no
+           setting that wins both ends of it: the taller this box,
+           the less of a 1.779 frame fits across 375px. At 58% the
+           box is about 1:1.25 and roughly 45 per cent of the
+           photograph is in shot, which holds the river bend and the
+           far treeline. Past ~70% it degrades into the same
+           unreadable slice that made a full-bleed fill pointless. */
+        height: clamp(300px, 58%, 520px);
+
+    }
+
+
+    .heroBackdrop img
+    {
+
+        object-position: 50% 34%;
+
+        filter: brightness(0.78) saturate(0.82) contrast(1.05);
+
+    }
+
+
+    .heroBackdrop::after
+    {
+
+        /* The first stop is 0.72 rather than 0.60 for one reason:
+           this asset's brightest band is its own top edge, sampled
+           at a raw luminance of 218, and that is exactly where the
+           transparent header sits at scroll zero. At 0.60 the white
+           menu bars measured near 3:1 against it — a non-text
+           control on the edge of its floor. 0.72 puts that strip at
+           roughly #2E2E2E and costs the view nothing, because the
+           scrim is already down to 0.34 by 30% where the valley
+           actually needs to be seen. */
+
+        background:
+            linear-gradient(to bottom, rgb(8 8 10 / 0.72) 0%, rgb(8 8 10 / 0.34) 30%, rgb(8 8 10 / 0.50) 62%, rgb(8 8 10 / 0.88) 88%, #08080A 100%),
+            linear-gradient(96deg, rgb(8 8 10 / 0.58) 0%, rgb(8 8 10 / 0.20) 62%, rgb(8 8 10 / 0.04) 100%),
+            radial-gradient(70% 50% at 46% 28%, rgb(193 158 97 / 0.12) 0%, rgb(193 158 97 / 0) 72%);
+
+    }
+
+
+    /* Lifted from 0.72. The lede now sits over the open part of the
+       photograph rather than over near-black, and 0.72 measured
+       close to the 4.5:1 floor on the brighter patches of the
+       treeline. 0.86 clears it with room and is still plainly
+       secondary to the headline. */
+
+    .heroLede
+    {
+
+        color: rgb(247 245 241 / 0.86);
+
+    }
+
+
+    /* ── THE ORDER ──
+
+       The markup nests the eyebrow, headline, lede and actions
+       inside `.heroType`, with the portrait as its sibling. Stacked
+       that puts the whole type block — call to action included —
+       above Austin, so the button sits in the middle of the hero
+       and the composition ends on a photograph with nothing to do.
+
+       `display: contents` dissolves the wrapper so all five parts
+       are siblings in one column and can be ordered individually:
+       place, headline, lede, PORTRAIT, then the action. The hero
+       now closes on the button, which is what a landing screen is
+       for, and Austin sits in the middle of the composition rather
+       than under it.
+
+       No markup changed to do this. */
 
     .heroInner
     {
 
-        gap: var(--space5);
+        display: grid;
+
+        grid-template-columns: minmax(0, 1fr);
+
+        gap: var(--space4);
 
     }
 
 
-    .heroPlace
+    .heroType
     {
 
-        margin-block-end: var(--space5);
+        display: contents;
+
+    }
+
+
+    .chapterHero .heroPlace
+    {
+
+        order: 1;
+
+    }
+
+
+    .heroHeadline
+    {
+
+        order: 2;
+
+    }
+
+
+    .heroLede
+    {
+
+        order: 3;
+
+    }
+
+
+    .heroPortrait
+    {
+
+        order: 4;
+
+    }
+
+
+    .heroActions
+    {
+
+        order: 5;
+
+    }
+
+
+    /* The four children carried their own margins because they were
+       a stack inside one block. They are grid items on a single gap
+       now, and both would apply. */
+
+    .heroPlace,
+    .heroHeadline,
+    .heroLede,
+    .heroActions
+    {
+
+        margin-block: 0;
 
     }
 
@@ -7583,26 +7823,17 @@
 
         max-width: 34ch;
 
-        margin-block-start: var(--space5);
-
         font-size: var(--fontBody);
 
     }
 
-
-    /* Measured, not chosen. At 375×812 — the shortest screen this
-       page is built for — the portrait caption was landing 3px
-       below the fold, so the one line naming the man in the
-       photograph was the only thing cut off. These three steps
-       together buy 20px and put it back on screen with room to
-       spare. */
 
     .heroActions
     {
 
         gap: var(--space4);
 
-        margin-block-start: var(--space5);
+        margin-block-start: var(--space2);
 
     }
 
@@ -7636,12 +7867,22 @@
        hide in. Width stays at 100%, only the bottom is clipped,
        and the dissolve softens that. */
 
+    /* Centred, not set to a margin. With the action beneath him the
+       portrait is the middle object in a three-part column — type
+       above, button below — and an off-centre middle reads as a
+       photograph that did not fit rather than one that was placed.
+       The caption centres with him. */
+
     .heroPortrait
     {
 
-        justify-self: end;
+        order: 4;
 
-        width: min(82%, 300px);
+        justify-self: center;
+
+        width: min(74%, 272px);
+
+        margin-block-start: var(--space2);
 
     }
 
@@ -7655,7 +7896,11 @@
 
         z-index: 1;
 
-        aspect-ratio: 1 / 0.68;
+        /* Shows the top ~65% of the asset: crown, shoulders, chest.
+           Looser than the 56% this started at, because he is the
+           subject of the composition now rather than a note at the
+           end of it. */
+        aspect-ratio: 1 / 0.79;
 
         overflow: hidden;
 
@@ -7663,9 +7908,9 @@
            chest-up crop the image's own bottom edge is far below
            the visible window, so a mask on the image would be
            fading something nobody can see. */
-        -webkit-mask-image: linear-gradient(to bottom, #000 74%, rgb(0 0 0 / 0) 100%);
+        -webkit-mask-image: linear-gradient(to bottom, #000 76%, rgb(0 0 0 / 0) 100%);
 
-        mask-image: linear-gradient(to bottom, #000 74%, rgb(0 0 0 / 0) 100%);
+        mask-image: linear-gradient(to bottom, #000 76%, rgb(0 0 0 / 0) 100%);
 
     }
 
@@ -7682,12 +7927,14 @@
 
     /* The warm pool behind him was sized for a full-length figure
        and under a crop this much shorter it sat as a visible disc
-       below his chest. Pulled in to light the head instead. */
+       below his chest. Pulled in to light the head instead — and it
+       is what separates him from the valley now that the valley is
+       no longer crushed to black. */
 
     .heroPortrait::before
     {
 
-        inset: -6% 6% 34%;
+        inset: -8% 2% 30%;
 
     }
 
@@ -7695,80 +7942,17 @@
     .heroPortraitCaption
     {
 
-        margin-block-start: var(--space3);
+        margin-block-start: var(--space2);
 
-        text-align: right;
-
-    }
-
-
-    /* ── The proof cards ──
-
-       Three stacked cards put roughly 700px of testimony between
-       the hero and Austin's introduction, which is the section
-       that should be read first. They become one rail: a single
-       card at a time, the next one peeking, swipe to advance.
-       Nothing is removed — all three are still in the document,
-       in order, and still reachable. */
-
-    /* `ul.` is load-bearing, not decoration. base.css carries
-       `ul[role='list'] { padding: 0 }` at specificity (0,1,1), and
-       both rails are `role="list"` — a bare `.heroProofCards`
-       (0,1,0) loses to it however late in the file it sits, and
-       the padding below silently does nothing. Measured: the first
-       card sat hard against x=0 while the heading above it stood
-       on the 20px spine. */
-
-    ul.heroProofCards
-    {
-
-        display: flex;
-
-        gap: var(--space4);
-
-        overflow-x: auto;
-
-        scroll-snap-type: x mandatory;
-
-        overscroll-behavior-x: contain;
-
-        scrollbar-width: none;
-
-        /* The rail runs edge to edge — a card should leave the
-           screen at the screen's edge, not at the container's — so
-           the gutter is cancelled and then given back as padding.
-           `scroll-padding` repeats it for the snap positions,
-           without which the browser snaps the first card flush to
-           x=0 and the padding is scrolled straight out of view. */
-        margin-inline: calc(var(--containerGutter) * -1);
-
-        padding-inline: var(--containerGutter);
-
-        scroll-padding-inline: var(--containerGutter);
+        text-align: center;
 
     }
 
 
-    .heroProofCards::-webkit-scrollbar
-    {
-
-        display: none;
-
-    }
-
-
-    .heroProofCard
-    {
-
-        flex: none;
-
-        width: min(84%, 320px);
-
-        scroll-snap-align: start;
-
-        padding: var(--space5);
-
-    }
+    /* The rail lives in the 768–899 band below, not here. On a
+       phone the cards are taken out of the hero altogether — see
+       the phone band — so neither treatment is true of this whole
+       range. */
 
 
     /* ── The attorney portrait ──
@@ -7850,6 +8034,71 @@
     }
 
 
+    /* ── The proof cards, as a rail ──
+
+       Kept at this width. A tablet has the room for social proof in
+       the landing experience, and this is the band where the hero
+       is recomposed but not squeezed. Below 768 they are removed
+       from the hero entirely.
+
+       `ul.` is load-bearing, not decoration: base.css carries
+       `ul[role='list'] { padding: 0 }` at specificity (0,1,1) and
+       this list is `role="list"`, so a bare `.heroProofCards`
+       (0,1,0) loses to it however late in the file it sits and the
+       padding below would silently do nothing. */
+
+    ul.heroProofCards
+    {
+
+        display: flex;
+
+        gap: var(--space4);
+
+        overflow-x: auto;
+
+        scroll-snap-type: x mandatory;
+
+        overscroll-behavior-x: contain;
+
+        scrollbar-width: none;
+
+        /* The rail runs edge to edge — a card should leave at the
+           screen's edge, not the container's — so the gutter is
+           cancelled and given back as padding. `scroll-padding`
+           repeats it for the snap positions, without which the
+           browser snaps the first card flush to x=0 and scrolls the
+           padding straight out of view. */
+        margin-inline: calc(var(--containerGutter) * -1);
+
+        padding-inline: var(--containerGutter);
+
+        scroll-padding-inline: var(--containerGutter);
+
+    }
+
+
+    ul.heroProofCards::-webkit-scrollbar
+    {
+
+        display: none;
+
+    }
+
+
+    .heroProofCard
+    {
+
+        flex: none;
+
+        width: min(56%, 340px);
+
+        scroll-snap-align: start;
+
+        padding: var(--space5);
+
+    }
+
+
     .attorneyPlate
     {
 
@@ -7900,6 +8149,42 @@
     {
 
         display: contents;
+
+    }
+
+
+    /* THE REVEAL CANNOT RUN HERE, SO IT MUST NOT HIDE ANYTHING.
+
+       `.messageType` is the one element on the page carrying
+       `data-reveal`, and dissolving it with `display: contents`
+       leaves it with no box at all — `getBoundingClientRect()`
+       returns zeros, so the IntersectionObserver watching it never
+       reports an intersection, never adds `.isRevealed`, and the
+       reveal's opening state never clears.
+
+       That opening state is `opacity: 0`. Measured on a phone: the
+       eyebrow, heading, body, points and action were all sitting at
+       opacity 0 permanently, with the film frame — a sibling, not a
+       child, so never hidden — the only thing visible in the
+       section. The section looked like an empty box with a video in
+       it.
+
+       The children are opted out of the reveal rather than the
+       wrapper being given a box back, because the wrapper has to
+       stay dissolved for the film to sit between the heading and
+       the body. The section simply arrives already visible on a
+       phone, which is this project's stated failure mode for the
+       reveal everywhere else: nothing is ever concealed by it.
+
+       Do not remove this rule while `.messageType` is
+       `display: contents`. */
+
+    .jsReady .messageType > *
+    {
+
+        opacity: 1;
+
+        transform: none;
 
     }
 
