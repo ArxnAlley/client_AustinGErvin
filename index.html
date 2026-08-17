@@ -541,7 +541,7 @@
 
                                     <li>
                                         <a class="megaRow" href="#faq">
-                                            <span class="megaRowTitle">Will I lose my licence after an OVI?</span>
+                                            <span class="megaRowTitle">Will I lose my license after an OVI?</span>
                                             <span class="megaRowText">Suspensions, privileges, and timing.</span>
                                             <svg class="megaArrow" aria-hidden="true" focusable="false"><use href="#arrowGlyph"/></svg>
                                         </a>
@@ -746,7 +746,7 @@
 
                                 <li><a href="#faq">What happens at an arraignment?</a></li>
 
-                                <li><a href="#faq">Will I lose my licence after an OVI?</a></li>
+                                <li><a href="#faq">Will I lose my license after an OVI?</a></li>
 
                                 <li><a href="#faq">Which protection order do I need?</a></li>
 
@@ -840,14 +840,28 @@
 
                 <figure class="heroPortrait">
 
-                    <img
-                        class="heroPortraitImage"
-                        src="graphics/images/austinPortrait_web.webp"
-                        alt="Austin G. Ervin, attorney at law"
-                        width="900"
-                        height="1085"
-                        fetchpriority="high"
-                    >
+                    <!-- The frame is `display: contents` above 768px,
+                         so on the approved desktop composition it
+                         generates no box at all and the portrait is
+                         laid out exactly as it always was.
+
+                         On a phone it becomes the crop window: the
+                         same asset, reframed to head-and-shoulders by
+                         its own container rather than by a second
+                         file. See MOBILE COMPOSITION in
+                         styleIndex.css. -->
+                    <div class="heroPortraitFrame">
+
+                        <img
+                            class="heroPortraitImage"
+                            src="graphics/images/austinPortrait_web.webp"
+                            alt="Austin G. Ervin, attorney at law"
+                            width="900"
+                            height="1085"
+                            fetchpriority="high"
+                        >
+
+                    </div>
 
                     <figcaption class="heroPortraitCaption">
                         <span class="heroPortraitName">Austin G. Ervin</span>
@@ -983,11 +997,16 @@
                         <span class="statementLine">who you&rsquo;re calling.</span>
                     </h2>
 
+                    <!-- Deliberately short, and shorter again once the
+                         film is in the frame above it: a visitor who
+                         has just watched Austin explain who he is does
+                         not need it explained a second time in prose.
+                         Anything added here should be something the
+                         film does not say. -->
                     <p class="messageBody">
                         Most people who call this office have never needed an attorney
                         before. What helps first is not a strategy &mdash; it is a plain
-                        account of where things stand, what the next step is, and when it
-                        happens. That is what a first conversation is for.
+                        account of where things stand and what happens next.
                     </p>
 
                     <ul class="messagePoints" role="list">
@@ -997,11 +1016,14 @@
                             <span>Criminal, family, injury and probate matters across southern Ohio and northeastern Kentucky.</span>
                         </li>
 
-                        <li class="messagePoint">
-                            <svg class="messagePointIcon" aria-hidden="true" focusable="false"><use href="#tickGlyph"/></svg>
-                            <span>Most inquiries receive a response within one business&nbsp;day.</span>
-                        </li>
-
+                        <!-- "Most inquiries receive a response within one
+                             business day" was the second point here. It
+                             also appears under the three steps and again
+                             beside the call button at the close, and
+                             three identical sentences on one page reads
+                             as filler rather than as reassurance. Kept
+                             at the two places a visitor is deciding
+                             whether to make contact. -->
                         <li class="messagePoint">
                             <svg class="messagePointIcon" aria-hidden="true" focusable="false"><use href="#tickGlyph"/></svg>
                             <span>A first conversation costs nothing but the time it takes to describe the matter.</span>
@@ -1072,8 +1094,7 @@
 
                     <figcaption class="filmCaption">
                         A short introduction from Austin will play here &mdash; who he is,
-                        why he practises, the matters he takes, and what happens after you
-                        call.
+                        the matters he takes, and what happens after you call.
                     </figcaption>
 
                 </figure>
@@ -1114,8 +1135,8 @@
                     <h2 class="chapterHeading" id="practiceHeading">What this office handles.</h2>
 
                     <p class="practiceLedeText">
-                        Twelve kinds of matter come through this office, in three groups.
-                        Select a file to see what it covers.
+                        Twelve kinds of matter, in three files. Open the one closest to
+                        yours.
                     </p>
 
                 </div>
@@ -1185,7 +1206,7 @@
 
                             <p class="casePanelNote">
                                 <span class="casePanelStamp" aria-hidden="true">File 01</span>
-                                Charges, licences, and clearing what is already on a record.
+                                Charges, licenses, and clearing what is already on a record.
                             </p>
 
                             <ul class="caseList" role="list">
@@ -1201,7 +1222,7 @@
                                 <li class="caseItem">
                                     <a class="caseLink" href="#contact">
                                         <span class="caseName">DUI / OVI Defense</span>
-                                        <span class="caseDesc">Impaired driving, licence suspension, test refusal, and driving privileges.</span>
+                                        <span class="caseDesc">Impaired driving, license suspension, test refusal, and driving privileges.</span>
                                         <svg class="caseArrow" aria-hidden="true" focusable="false"><use href="#arrowGlyph"/></svg>
                                     </a>
                                 </li>
@@ -1379,14 +1400,22 @@
 
                     <span class="attorneyPlateGround" aria-hidden="true"></span>
 
-                    <img
-                        class="attorneyPlateImage"
-                        src="graphics/images/austinPortrait_web.webp"
-                        alt="Austin G. Ervin, attorney at law"
-                        width="900"
-                        height="1085"
-                        loading="lazy"
-                    >
+                    <!-- Same device as the hero, same reasoning:
+                         `display: contents` until 768px, so desktop
+                         is untouched and the phone gets a tighter
+                         editorial crop instead of a second hero. -->
+                    <div class="attorneyPlateFrame">
+
+                        <img
+                            class="attorneyPlateImage"
+                            src="graphics/images/austinPortrait_web.webp"
+                            alt="Austin G. Ervin, attorney at law"
+                            width="900"
+                            height="1085"
+                            loading="lazy"
+                        >
+
+                    </div>
 
                     <figcaption class="attorneyPlateCaption">
                         <span class="attorneyPlateName">Austin G. Ervin</span>
@@ -1478,7 +1507,7 @@
 
                             <li class="attorneyTrialItem">
                                 <span class="attorneyTrialLead">Trial school</span>
-                                <span class="attorneyTrialText">Attended the 2026 Dayton Criminal Defense College Trial School, an intensive programme for practising trial litigators.</span>
+                                <span class="attorneyTrialText">Attended the 2026 Dayton Criminal Defense College Trial School, an intensive program for practicing trial litigators.</span>
                             </li>
 
                         </ul>
@@ -1933,6 +1962,19 @@
 
                 <h2 class="chapterHeading" id="faqHeading">Questions people ask first.</h2>
 
+                <!-- The answers below describe general Ohio practice.
+                     The footer carries the sitewide advertising and
+                     no-relationship disclaimers; this one sits with
+                     the answers themselves, because a reader who
+                     opens an accordion may never scroll as far as
+                     the footer. Required by data/compliance.json
+                     "no-relationship" (requiredOn: home). -->
+                <p class="faqNotice">
+                    These answers describe how these matters generally work in Ohio. They
+                    are general information, not legal advice, and they cannot account for
+                    the facts of any particular case.
+                </p>
+
                 <div class="faqList">
 
                     <details class="faqItem" name="faqGroup" open>
@@ -1945,7 +1987,8 @@
                         <div class="faqAnswer">
 
                             <div class="faqAnswerInner">
-                                <p>This answer is under review before publication. To ask it directly, call <a class="noWrap tabularFigures" href="tel:+17405291420">(740) 529-1420</a>.</p>
+                                <p>You are not required to have one. Whether you want one is a different question. The decisions made early &mdash; what you say at a first appearance, what you waive, what you agree to &mdash; are usually the hardest ones to undo later.</p>
+                                <p>If you are deciding, describing the situation on the phone costs nothing, and you will be told plainly whether it is the kind of matter that needs representation.</p>
                             </div>
 
                         </div>
@@ -1962,7 +2005,8 @@
                         <div class="faqAnswer">
 
                             <div class="faqAnswerInner">
-                                <p>This answer is under review before publication. To ask it directly, call <a class="noWrap tabularFigures" href="tel:+17405291420">(740) 529-1420</a>.</p>
+                                <p>It is short, and it is not a trial. The court states the charge, advises you of your rights, and asks for a plea &mdash; ordinarily not guilty, guilty, or no contest. The judge then addresses bond and any conditions of release, and sets the next date.</p>
+                                <p>Most of what matters at an arraignment is what it sets in motion afterward rather than what happens in the room.</p>
                             </div>
 
                         </div>
@@ -1979,7 +2023,8 @@
                         <div class="faqAnswer">
 
                             <div class="faqAnswerInner">
-                                <p>This answer is under review before publication. To ask it directly, call <a class="noWrap tabularFigures" href="tel:+17405291420">(740) 529-1420</a>.</p>
+                                <p>Not automatically, and not necessarily for good &mdash; but an arrest can begin an administrative suspension that starts before any conviction and runs separately from whatever a court decides later.</p>
+                                <p>That suspension can be challenged, and limited driving privileges are sometimes available. The period for raising it is short and begins running from the arrest, which is why this is a question to ask within days rather than weeks.</p>
                             </div>
 
                         </div>
@@ -1996,7 +2041,8 @@
                         <div class="faqAnswer">
 
                             <div class="faqAnswerInner">
-                                <p>This answer is under review before publication. To ask it directly, call <a class="noWrap tabularFigures" href="tel:+17405291420">(740) 529-1420</a>.</p>
+                                <p>Ohio has more than one, and which one fits turns on two things: what the other person is to you, and whether a criminal case already exists.</p>
+                                <p>An order arising out of a family or household relationship is handled differently from one between people with no such relationship, and an order issued inside a pending criminal case is different again. Bring the facts &mdash; who the person is to you, what happened, and whether police or a court are already involved &mdash; and the right petition follows from them.</p>
                             </div>
 
                         </div>
@@ -2013,7 +2059,8 @@
                         <div class="faqAnswer">
 
                             <div class="faqAnswerInner">
-                                <p>This answer is under review before publication. To ask it directly, call <a class="noWrap tabularFigures" href="tel:+17405291420">(740) 529-1420</a>.</p>
+                                <p>A divorce is contested when the parties do not agree on something the court has to decide &mdash; property, debt, parenting time, support &mdash; and the court resolves what is left open. It is uncontested when the terms are already settled and the court is being asked to approve them.</p>
+                                <p>Ohio also offers dissolution, which is begun only after a complete agreement is reached and is not a divorce action at all. Which route is open depends on how much is genuinely agreed.</p>
                             </div>
 
                         </div>
@@ -2030,7 +2077,8 @@
                         <div class="faqAnswer">
 
                             <div class="faqAnswerInner">
-                                <p>This answer is under review before publication. To ask it directly, call <a class="noWrap tabularFigures" href="tel:+17405291420">(740) 529-1420</a>.</p>
+                                <p>Ohio courts speak of allocating parental rights and responsibilities rather than of custody, and the standard is the best interest of the child.</p>
+                                <p>The statute sets out the factors a court weighs &mdash; among them the child&rsquo;s relationship with each parent, how settled the child is at home and in school, the health of everyone involved, and each parent&rsquo;s willingness to support the child&rsquo;s relationship with the other. There is no presumption in favor of a mother or of a father.</p>
                             </div>
 
                         </div>
@@ -2047,7 +2095,8 @@
                         <div class="faqAnswer">
 
                             <div class="faqAnswerInner">
-                                <p>This answer is under review before publication. To ask it directly, call <a class="noWrap tabularFigures" href="tel:+17405291420">(740) 529-1420</a>.</p>
+                                <p>Anything with a date on it. Charging papers, citations, court notices, anything you have been served with, and any letter from a court, a prosecutor, an insurer, or another attorney.</p>
+                                <p>A written timeline helps as well &mdash; what happened and when, in order. If a hearing is already scheduled, that date is the single most useful thing you can bring.</p>
                             </div>
 
                         </div>
@@ -2064,7 +2113,8 @@
                         <div class="faqAnswer">
 
                             <div class="faqAnswerInner">
-                                <p>This answer is under review before publication. To ask it directly, call <a class="noWrap tabularFigures" href="tel:+17405291420">(740) 529-1420</a>.</p>
+                                <p>It is usually a question of how property is titled rather than of how large the estate is. Assets that pass on their own &mdash; a joint account with survivorship, a payable-on-death or transfer-on-death designation, insurance with a named beneficiary, property already held in a trust &mdash; ordinarily pass outside probate.</p>
+                                <p>What is left in the decedent&rsquo;s name alone, with no beneficiary and no survivor on the title, is generally what probate exists to move. Ohio also has simplified procedures for smaller estates.</p>
                             </div>
 
                         </div>
@@ -2085,8 +2135,8 @@
                     </h2>
 
                     <p class="finalCtaLede">
-                        The first conversation costs you nothing but the time it takes to
-                        describe the matter.
+                        Describe the matter in your own words. What happened, when, and a
+                        number you can be reached on is enough to start.
                     </p>
 
                     <!-- CONSULTATION INTAKE

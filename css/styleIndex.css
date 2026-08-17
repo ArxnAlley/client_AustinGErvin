@@ -5587,10 +5587,35 @@
 }
 
 
+/* The general-information notice.
+
+   Quiet, but not hidden: it is the disclaimer that belongs WITH
+   the answers rather than in the footer, because a reader who
+   opens one accordion may never scroll far enough to meet the
+   sitewide notice. Muted ink at body size — legible at a normal
+   reading distance, which a disclaimer set in 11px grey is
+   not. */
+
+.faqNotice
+{
+
+    max-width: 62ch;
+
+    margin: var(--space6) 0 0;
+
+    color: var(--textMuted);
+
+    font-size: var(--fontBodySm);
+
+    line-height: 1.65;
+
+}
+
+
 .faqList
 {
 
-    margin-block-start: var(--space9);
+    margin-block-start: var(--space7);
 
     border-block-start: 1px solid var(--borderSubtle);
 
@@ -7390,5 +7415,1055 @@
     overflow-y: auto;
 
     overscroll-behavior: contain;
+
+}
+
+
+/* ============================================================
+   MOBILE COMPOSITION — PHONES AND SMALL TABLETS
+
+   Everything past this banner is scoped to 1023px and below.
+   Nothing here can reach the approved desktop composition,
+   which begins at 1024px and is untouched by this pass.
+
+   Two bands:
+
+     <= 767px    Phones. The page is RECOMPOSED rather than
+                 stacked. The hero is rebuilt around a cropped
+                 headshot, the case selector becomes a segmented
+                 control, and both review rows become one
+                 swipeable rail.
+
+     768–1023    Small tablets. Most two-column rules in this
+                 file do not begin until 900px, so this band was
+                 already running the narrow layout at desktop
+                 measurements. It inherits the phone rhythm and
+                 corrects the dimensions that leaked into it; it
+                 is not rebuilt again.
+
+   This block is LAST in the file on purpose. Every rule in it
+   is a deliberate override of something above it at equal
+   specificity, so source order is what decides. Anything added
+   after this block will silently outrank it.
+============================================================ */
+
+
+/* ── The two crop frames ──
+
+   `.heroPortraitFrame` and `.attorneyPlateFrame` are wrappers
+   added to the markup for one reason: `object-fit` cannot crop
+   this asset. The portrait is 900×1085 — a ratio of 0.829 — and
+   any sensible portrait window is about 0.8, so `cover` finds
+   almost nothing to trim and hands back the same full-length
+   figure. A real crop needs a clipping box the image overflows.
+
+   At `display: contents` the wrapper generates no box at all,
+   so above 767px the layout is what it was before the element
+   existed. The phone band turns it into a real box, and nothing
+   else in this file has to know about it. */
+
+.heroPortraitFrame,
+.attorneyPlateFrame
+{
+
+    display: contents;
+
+}
+
+
+@media (max-width: 767px)
+{
+
+    /* ============================================================
+       CHAPTER RHYTHM
+
+       The chapters are spaced in `vh` over a 5rem floor, which is
+       right on a desktop where a chapter is a wide band and wrong
+       on a phone where it is a tall column. At 375×812 every
+       boundary spent 114px above and 114px below, so a large share
+       of the page was the gaps between it.
+
+       Roughly halved. The chapters still breathe — this is not a
+       dense layout — but the air is now proportional to a column
+       rather than to a band.
+    ============================================================ */
+
+    .chapterMessage,
+    .chapterPractice,
+    .chapterAttorney,
+    .chapterProcess,
+    .chapterReviews,
+    .chapterClose
+    {
+
+        padding-block: clamp(var(--space8), 7vh, var(--space10));
+
+    }
+
+
+    /* The proof rail is one card tall now rather than three, so
+       the overhang has less weight to carry across the boundary. */
+
+    :root
+    {
+
+        --proofOverhang: clamp(3.5rem, 7vh, 4.5rem);
+
+    }
+
+
+    .chapterHero + [data-chapter]
+    {
+
+        padding-block-start: calc(clamp(var(--space7), 5vh, var(--space9)) + var(--proofOverhang));
+
+    }
+
+}
+
+
+/* ============================================================
+   CHAPTER ONE · THE HERO, AND THE TWO PORTRAIT CROPS
+
+   Rebuilt, not shrunk.
+
+   The desktop hero is type beside a full-length portrait.
+   Stacked, that became roughly 900px of column and Austin's
+   head arrived exactly at the bottom edge of the fold — the one
+   place a portrait must never land.
+
+   The composition here is the type block, then a contained
+   head-and-shoulders crop set to the right margin with its
+   caption beneath. The eye lands on Austin inside the first
+   screen, and the hero closes on a portrait rather than running
+   off one.
+
+   THE BREAKPOINT IS 899, NOT 767, and it is content-driven
+   rather than device-driven: `.heroInner` and `.attorneyInner`
+   both become two columns at 900px, so 899 is the exact width
+   below which these sections are a single stacked column and
+   the crop is the right answer. Cutting this at 767 left a
+   768px tablet running the full-length stacked hero — measured
+   at 1974px tall, with the caption 345px below the fold.
+============================================================ */
+
+@media (max-width: 899px)
+{
+
+    .chapterHero
+    {
+
+        padding-block-start: calc(var(--headerClearance) + var(--space5));
+
+    }
+
+
+    .heroInner
+    {
+
+        gap: var(--space5);
+
+    }
+
+
+    .heroPlace
+    {
+
+        margin-block-end: var(--space5);
+
+    }
+
+
+    /* One step down from `--fontBodyLg`. At 34ch the lede is three
+       lines either way, so the smaller step buys the portrait its
+       room without costing a line. */
+
+    .heroLede
+    {
+
+        max-width: 34ch;
+
+        margin-block-start: var(--space5);
+
+        font-size: var(--fontBody);
+
+    }
+
+
+    /* Measured, not chosen. At 375×812 — the shortest screen this
+       page is built for — the portrait caption was landing 3px
+       below the fold, so the one line naming the man in the
+       photograph was the only thing cut off. These three steps
+       together buy 20px and put it back on screen with room to
+       spare. */
+
+    .heroActions
+    {
+
+        gap: var(--space4);
+
+        margin-block-start: var(--space5);
+
+    }
+
+
+    /* Full width, and on its own line. The consultation button is
+       the primary action on the page and a thumb should not have
+       to hunt for it; the phone link sits beneath rather than
+       beside it, where at 375px the two were colliding. */
+
+    .heroActions > .buttonPrimary
+    {
+
+        flex: 1 1 100%;
+
+        justify-content: center;
+
+    }
+
+
+    /* ── THE HEADSHOT ──
+
+       One asset, two compositions. The frame shows the top ~56% of
+       the portrait — a little above the crown down to the upper
+       chest — by being shorter than the image it contains and
+       clipping the rest.
+
+       There is deliberately NO horizontal zoom. The subject fills
+       the width of this asset, so scaling up to crop tighter would
+       cut his arms against two hard vertical edges — and this is a
+       cutout on transparency, so a cut edge has no background to
+       hide in. Width stays at 100%, only the bottom is clipped,
+       and the dissolve softens that. */
+
+    .heroPortrait
+    {
+
+        justify-self: end;
+
+        width: min(82%, 300px);
+
+    }
+
+
+    .heroPortraitFrame
+    {
+
+        display: block;
+
+        position: relative;
+
+        z-index: 1;
+
+        aspect-ratio: 1 / 0.68;
+
+        overflow: hidden;
+
+        /* The dissolve moves from the image to the frame. On a
+           chest-up crop the image's own bottom edge is far below
+           the visible window, so a mask on the image would be
+           fading something nobody can see. */
+        -webkit-mask-image: linear-gradient(to bottom, #000 74%, rgb(0 0 0 / 0) 100%);
+
+        mask-image: linear-gradient(to bottom, #000 74%, rgb(0 0 0 / 0) 100%);
+
+    }
+
+
+    .heroPortraitImage
+    {
+
+        -webkit-mask-image: none;
+
+        mask-image: none;
+
+    }
+
+
+    /* The warm pool behind him was sized for a full-length figure
+       and under a crop this much shorter it sat as a visible disc
+       below his chest. Pulled in to light the head instead. */
+
+    .heroPortrait::before
+    {
+
+        inset: -6% 6% 34%;
+
+    }
+
+
+    .heroPortraitCaption
+    {
+
+        margin-block-start: var(--space3);
+
+        text-align: right;
+
+    }
+
+
+    /* ── The proof cards ──
+
+       Three stacked cards put roughly 700px of testimony between
+       the hero and Austin's introduction, which is the section
+       that should be read first. They become one rail: a single
+       card at a time, the next one peeking, swipe to advance.
+       Nothing is removed — all three are still in the document,
+       in order, and still reachable. */
+
+    /* `ul.` is load-bearing, not decoration. base.css carries
+       `ul[role='list'] { padding: 0 }` at specificity (0,1,1), and
+       both rails are `role="list"` — a bare `.heroProofCards`
+       (0,1,0) loses to it however late in the file it sits, and
+       the padding below silently does nothing. Measured: the first
+       card sat hard against x=0 while the heading above it stood
+       on the 20px spine. */
+
+    ul.heroProofCards
+    {
+
+        display: flex;
+
+        gap: var(--space4);
+
+        overflow-x: auto;
+
+        scroll-snap-type: x mandatory;
+
+        overscroll-behavior-x: contain;
+
+        scrollbar-width: none;
+
+        /* The rail runs edge to edge — a card should leave the
+           screen at the screen's edge, not at the container's — so
+           the gutter is cancelled and then given back as padding.
+           `scroll-padding` repeats it for the snap positions,
+           without which the browser snaps the first card flush to
+           x=0 and the padding is scrolled straight out of view. */
+        margin-inline: calc(var(--containerGutter) * -1);
+
+        padding-inline: var(--containerGutter);
+
+        scroll-padding-inline: var(--containerGutter);
+
+    }
+
+
+    .heroProofCards::-webkit-scrollbar
+    {
+
+        display: none;
+
+    }
+
+
+    .heroProofCard
+    {
+
+        flex: none;
+
+        width: min(84%, 320px);
+
+        scroll-snap-align: start;
+
+        padding: var(--space5);
+
+    }
+
+
+    /* ── The attorney portrait ──
+
+       The same crop device, framed looser: this one is a profile
+       portrait rather than a landing image, so it keeps more of
+       the torso. It lives in this block rather than the phone
+       block because `.attorneyInner` goes two-column at the same
+       900px the hero does — at `min(100%, 460px)` on a stacked
+       column it was 404px of photograph before the biography
+       started, which is a second hero rather than a profile. */
+
+    .attorneyPlate
+    {
+
+        width: 100%;
+
+    }
+
+
+    .attorneyPlateFrame
+    {
+
+        display: block;
+
+        position: relative;
+
+        z-index: 1;
+
+        aspect-ratio: 1 / 0.82;
+
+        overflow: hidden;
+
+        -webkit-mask-image: linear-gradient(to bottom, #000 78%, rgb(0 0 0 / 0) 100%);
+
+        mask-image: linear-gradient(to bottom, #000 78%, rgb(0 0 0 / 0) 100%);
+
+    }
+
+
+    .attorneyPlateImage
+    {
+
+        -webkit-mask-image: none;
+
+        mask-image: none;
+
+    }
+
+
+    /* The caption rides up over the dissolve on desktop. Against a
+       crop this much shorter that put it across his chest. */
+
+    .attorneyPlateCaption
+    {
+
+        margin-block-start: 0;
+
+    }
+
+}
+
+
+/* ── The wider stacked column, 768 to 899 ──
+
+   Same composition, more room. A 300px portrait that reads as
+   deliberate on a 375px screen reads as timid on a 768px one,
+   and the type beside it is running at a much larger step.
+============================================================ */
+
+@media (min-width: 768px) and (max-width: 899px)
+{
+
+    .heroPortrait
+    {
+
+        width: min(52%, 380px);
+
+    }
+
+
+    .attorneyPlate
+    {
+
+        width: min(72%, 520px);
+
+    }
+
+
+    .attorneyPlateFrame
+    {
+
+        aspect-ratio: 1 / 0.74;
+
+    }
+
+}
+
+
+@media (max-width: 767px)
+{
+
+    /* ============================================================
+       CHAPTER TWO · THE INTRODUCTION
+
+       Austin's film comes first after the landing experience, and
+       above the explanatory copy the film will eventually replace.
+
+       `.messageType` goes to `display: contents` so its children
+       become siblings of the film frame and can be ordered
+       individually. Nothing is duplicated and nothing is hidden —
+       the order becomes eyebrow, heading, FILM, body, points,
+       action.
+    ============================================================ */
+
+    .messageInner
+    {
+
+        display: flex;
+
+        flex-direction: column;
+
+        gap: var(--space5);
+
+    }
+
+
+    .messageType
+    {
+
+        display: contents;
+
+    }
+
+
+    .chapterMessage .sectionEyebrow
+    {
+
+        order: 1;
+
+    }
+
+
+    .messageHeading
+    {
+
+        order: 2;
+
+    }
+
+
+    .messageFilm
+    {
+
+        order: 3;
+
+        margin: 0;
+
+    }
+
+
+    .messageBody
+    {
+
+        order: 4;
+
+    }
+
+
+    .messagePoints
+    {
+
+        order: 5;
+
+    }
+
+
+    .messageAction
+    {
+
+        order: 6;
+
+    }
+
+
+    /* These carried their own top margins because they were a
+       stack inside one block. They are flex items with a gap now,
+       and both would apply. */
+
+    .messageBody,
+    .messagePoints,
+    .messageAction
+    {
+
+        margin-block-start: 0;
+
+    }
+
+
+    /* ============================================================
+       CHAPTER THREE · THE CASE FILES
+
+       The concept is untouched — three files, the same radio
+       mechanism, the same FILE numbering, serif names, gold rules
+       and dark ground.
+
+       What changes is the cost of using it. The tabs are sized
+       from `clamp(128px, 15vw, 180px)` with 2rem of side padding
+       and wrap onto three rows on a phone: about 300px of selector
+       before a visitor reaches a single practice area. They become
+       one row of three segments, roughly 70px tall.
+    ============================================================ */
+
+    .caseTabs
+    {
+
+        display: grid;
+
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+
+        gap: var(--space2);
+
+    }
+
+
+    .caseTab
+    {
+
+        align-items: center;
+
+        gap: 1px;
+
+        min-width: 0;
+
+        padding: var(--space3) var(--space2);
+
+        text-align: center;
+
+    }
+
+
+    .caseTabName
+    {
+
+        font-size: 0.95rem;
+
+        line-height: 1.15;
+
+    }
+
+
+    .caseTabMeta
+    {
+
+        font-size: 0.625rem;
+
+        letter-spacing: 0.08em;
+
+    }
+
+
+    /* The pointer under the open tab is 14px across and a segment
+       is now about 100px. Halved, so it reads as a notch rather
+       than as a third of the tab. */
+
+    #caseCriminal:checked ~ .caseTabs [for='caseCriminal']::after,
+    #caseFamily:checked ~ .caseTabs [for='caseFamily']::after,
+    #caseEstate:checked ~ .caseTabs [for='caseEstate']::after
+    {
+
+        inset-block-end: -4px;
+
+        width: 8px;
+
+        height: 8px;
+
+    }
+
+
+    /* The reserved height exists so that switching files does not
+       collapse the block under a reader mid-scroll. On a phone the
+       panels are a single column and the gap between a three-row
+       and a five-row file is most of a screen, so reserving the
+       tallest costs two empty screens on the other two. It was
+       already 0 below 600px; this extends that to the whole phone
+       band. */
+
+    .casePanels
+    {
+
+        min-height: 0;
+
+        padding-block-start: var(--space6);
+
+    }
+
+
+    /* 32px above and below each row is right when a row is a wide
+       band with a lot of empty middle. On a phone the description
+       already wraps to three lines, so the row has its own height
+       and the padding is only distance between them. */
+
+    .caseLink
+    {
+
+        gap: var(--space2) var(--space4);
+
+        padding: var(--space5) var(--space4);
+
+        margin-inline: calc(var(--space4) * -1);
+
+    }
+
+
+    /* ============================================================
+       CHAPTER FOUR · THE ATTORNEY
+
+       The portrait is the section's principal image on desktop and
+       stays principal here. What it must not be is a second
+       full-screen hero, which at `min(100%, 460px)` on a 335px
+       column is what it became: 404px of photograph before the
+       biography starts.
+
+       Same crop device as the hero, framed a little looser — this
+       one is a profile portrait rather than a landing image, so it
+       keeps more of the torso.
+    ============================================================ */
+
+    .attorneyInner
+    {
+
+        gap: var(--space6);
+
+    }
+
+
+    /* ============================================================
+       CHAPTER SIX · THE REVIEWS
+
+       Two tracks travelling in opposite directions is a desktop
+       device: it reads as a wall of endorsement seen at a
+       distance. On a phone one card is most of the screen, so the
+       same motion is a single card sliding out from under the
+       sentence being read.
+
+       It becomes a rail — one card at a time, snapped, swipeable,
+       moving only when a finger moves it. The animation is not
+       slowed, it is switched off: a slow marquee still takes the
+       words away from a slow reader.
+
+       The second track is dropped on a phone rather than stacked,
+       and the script's duplicate cards with it. Those exist so a
+       -50% translate can loop without a seam, and with no
+       translate running they are six identical scroll stops. Every
+       review is still present in the first track.
+    ============================================================ */
+
+    .reviewMarquee
+    {
+
+        margin-block-start: var(--space7);
+
+    }
+
+
+    .reviewTrackViewport + .reviewTrackViewport
+    {
+
+        display: none;
+
+    }
+
+
+    .reviewTrackViewport
+    {
+
+        overflow-x: auto;
+
+        scroll-snap-type: x mandatory;
+
+        overscroll-behavior-x: contain;
+
+        scroll-padding-inline: var(--containerGutter);
+
+        scrollbar-width: none;
+
+        /* The feather softened cards entering and leaving a moving
+           row. Nothing enters or leaves now, and a fade sitting on
+           the edge of the one card being read is only unreadable
+           text. */
+        -webkit-mask-image: none;
+
+        mask-image: none;
+
+    }
+
+
+    .reviewTrackViewport::-webkit-scrollbar
+    {
+
+        display: none;
+
+    }
+
+
+    [data-marquee][data-ready] .reviewTrack.isLeadingLeft,
+    [data-marquee][data-ready] .reviewTrack.isLeadingRight
+    {
+
+        animation-name: none;
+
+    }
+
+
+    ul.reviewTrack
+    {
+
+        width: auto;
+
+        padding-inline: var(--containerGutter);
+
+    }
+
+
+    .reviewTrack [data-clone]
+    {
+
+        display: none;
+
+    }
+
+
+    /* `start`, not `centre`. The first card cannot be centred
+       without scrolling past zero, so a centred rail opens with
+       its first testimonial jammed against the left edge while
+       every card after it sits correctly. */
+
+    .reviewCard
+    {
+
+        width: min(84%, 340px);
+
+        margin-inline-end: var(--space4);
+
+        scroll-snap-align: start;
+
+    }
+
+
+    /* ============================================================
+       THE FOOTER
+
+       Twelve practice links, six explore links and four legal
+       links is a screen and a half of list on a phone — and the
+       practice column is a third copy of a list that is already in
+       the menu and in the case files.
+
+       It is dropped here rather than rebuilt: "Practice Areas" in
+       the Explore column reaches the same section, and every
+       individual matter is one tap away once there. Navigation,
+       contact, legal, branding, copyright and the studio credit
+       all stay.
+    ============================================================ */
+
+    .siteFooterInner
+    {
+
+        gap: var(--space7);
+
+    }
+
+
+    .siteFooterNav
+    {
+
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+
+        gap: var(--space6) var(--space5);
+
+    }
+
+
+    /* By position: Explore, Practice, Legal. */
+
+    .siteFooterNav > .siteFooterColumn:nth-child(2)
+    {
+
+        display: none;
+
+    }
+
+
+    .siteFooterAddress
+    {
+
+        margin-block-start: var(--space4);
+
+    }
+
+
+    .siteFooterShield
+    {
+
+        height: 40px;
+
+    }
+
+
+    .siteFooterWordmark
+    {
+
+        width: min(100%, 210px);
+
+    }
+
+
+    /* ============================================================
+       OVERFLOW GUARD
+
+       NOT a fix for a live defect. The page was measured at 375,
+       390, 430, 768 and 899 before this pass and the document
+       overflowed its viewport by 0px at every one of them, so
+       there was never an accidental sideways scroll to remove.
+
+       `body { overflow-x: hidden }` was written here and then
+       taken out again. It is the reflex answer to this problem and
+       it is the wrong one on this page: it makes the body a
+       potential scroll container, which is the classic way to
+       break `position: sticky` on a descendant — and the sticky
+       header is the one component on this site that must not
+       break. Nothing measurable was being bought with it.
+
+       What is left is the cheap, side-effect-free half. The
+       service map is a 1100×1650 portrait asset behind the county
+       list and the only element on the page with the intrinsic
+       width to cause the problem later; capping it costs nothing
+       and keeps it honest. The rails each contain their own axis
+       with `overscroll-behavior-x`, so no rail can hand its
+       momentum to the document.
+    ============================================================ */
+
+    .serviceMap
+    {
+
+        max-width: 100%;
+
+    }
+
+}
+
+
+/* ============================================================
+   SMALL TABLETS — 768 TO 1023
+
+   The two-column rules in this file begin at 900px, so this band
+   was already rendering a narrow single-column layout at desktop
+   measurements. It is not recomposed a second time: it keeps the
+   phone's compact controls where they are still right for a
+   touch screen, and gives back the room a 768px column has.
+============================================================ */
+
+@media (min-width: 768px) and (max-width: 1023px)
+{
+
+    .chapterMessage,
+    .chapterPractice,
+    .chapterAttorney,
+    .chapterProcess,
+    .chapterReviews,
+    .chapterClose
+    {
+
+        padding-block: clamp(var(--space9), 9vh, var(--space11));
+
+    }
+
+
+    /* 42rem of reserved height for a five-row file, on a viewport
+       where a five-row file is nothing like that tall. The
+       clearest case of a desktop dimension leaking downward: at
+       768px it left roughly 300px of empty dark under the Civil
+       file. */
+
+    .casePanels
+    {
+
+        min-height: 0;
+
+    }
+
+
+    /* Still a touch screen, so the segmented control still wins —
+       with the room to hold its type at full size. */
+
+    .caseTabs
+    {
+
+        display: grid;
+
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+
+        gap: var(--space3);
+
+    }
+
+
+    .caseTab
+    {
+
+        min-width: 0;
+
+        padding: var(--space4);
+
+    }
+
+
+    /* Touch, so the rail rather than the marquee — same reasoning
+       as the phone band. */
+
+    .reviewTrackViewport + .reviewTrackViewport
+    {
+
+        display: none;
+
+    }
+
+
+    .reviewTrackViewport
+    {
+
+        overflow-x: auto;
+
+        scroll-snap-type: x mandatory;
+
+        overscroll-behavior-x: contain;
+
+        scroll-padding-inline: var(--containerGutter);
+
+        scrollbar-width: none;
+
+    }
+
+
+    .reviewTrackViewport::-webkit-scrollbar
+    {
+
+        display: none;
+
+    }
+
+
+    [data-marquee][data-ready] .reviewTrack.isLeadingLeft,
+    [data-marquee][data-ready] .reviewTrack.isLeadingRight
+    {
+
+        animation-name: none;
+
+    }
+
+
+    /* See the phone band: `ul.` clears `ul[role='list']`. */
+
+    ul.reviewTrack
+    {
+
+        width: auto;
+
+        padding-inline: var(--containerGutter);
+
+    }
+
+
+    .reviewTrack [data-clone]
+    {
+
+        display: none;
+
+    }
+
+
+    .reviewCard
+    {
+
+        width: min(62%, 380px);
+
+        scroll-snap-align: start;
+
+    }
+
+
+    .serviceMap
+    {
+
+        max-width: 100%;
+
+    }
 
 }
